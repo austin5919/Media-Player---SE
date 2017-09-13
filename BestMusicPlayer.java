@@ -33,7 +33,11 @@ public class BestMusicPlayer extends Application {
 		return songname;
 	}
 	
-	
+	/**
+     * Returns the Button.
+     *
+     * @return  A Button object.
+     */
 	public static Button getButton() { 
 		return new Button();
 	}
