@@ -18,13 +18,22 @@ import javafx.stage.*;
  * @author Kyle Burke <paithanq@gmail.com>
  */
 public class BestMusicPlayer extends Application {
-public static Label songtitle = new Label("No song currently playing.");
-public static String songname = "Pride of the Wolverines";
-public static String getSongName() {
-    return songname;
-}
-public static String MONKEY_TITLE = "The Best Music Player Ever!";
-public static Button getButton() { return new Button();}
+	
+	//fields
+	private static Label songtitle = new Label("No song currently playing.");
+	private static String songname = "Pride of the Wolverines";
+	private static String appTitle = "The Best Music Player Ever!";
+	
+	/**
+	 * 
+	 */
+	public static String getSongName() {
+		return songname;
+	}
+	
+	public static Button getButton() { 
+		return new Button();
+	}
 
 /**
  * Main method to launch the program.
@@ -37,10 +46,10 @@ public static void main(String[] args) {launch(args);}
     public void start(Stage primaryStage) 
     {
         //solution from stackoverflow user Sagar Damani at: https://stackoverflow.com/questions/14025718/javafx-toolkit-not-initialized-when-trying-to-play-an-mp3-file-through-mediap
-                final JFXPanel bananarama = new JFXPanel();
+        //        final JFXPanel bananarama = new JFXPanel();
         
         
-        primaryStage.setTitle(this.MONKEY_TITLE);
+        primaryStage.setTitle(this.appTitle);
         Button button = getButton();
         button.setText("Play Wolverines Pride (3:42)");
         button.setOnAction(new EventHandler<ActionEvent>() {
@@ -53,12 +62,12 @@ public static void main(String[] args) {launch(args);}
                 mediaPlayer.play();
                 songtitle.setText(BestMusicPlayer.getSongName());}});
         
-        GridPane paneofgridmonkeys = new GridPane();
-        paneofgridmonkeys.setAlignment(Pos.CENTER);
-        paneofgridmonkeys.setVgap(10);
-        paneofgridmonkeys.add(button, 0, 0);
-        paneofgridmonkeys.add(songtitle, 0, 1);
-        primaryStage.setScene(new Scene(paneofgridmonkeys, 300, 250));
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setVgap(10);
+        gridPane.add(button, 0, 0);
+        gridPane.add(songtitle, 0, 1);
+        primaryStage.setScene(new Scene(gridPane, 300, 250));
         primaryStage.show();
     }
 
