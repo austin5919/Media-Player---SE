@@ -25,11 +25,14 @@ public class BestMusicPlayer extends Application {
 	private static String appTitle = "The Best Music Player Ever!";
 	
 	/**
-	 * 
-	 */
+     * Returns a the String song name.
+     *
+     * @return  A String of the song name.
+     */
 	public static String getSongName() {
 		return songname;
 	}
+	
 	
 	public static Button getButton() { 
 		return new Button();
