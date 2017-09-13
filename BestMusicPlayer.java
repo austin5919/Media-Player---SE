@@ -14,11 +14,7 @@ import javafx.stage.*;
 /**
  * Launches a music player that does all the things I want it to.  Command-line usage: java BestMusicPlayer
  * 
-<<<<<<< HEAD
- * NEW! V2 V5
-=======
- * NEW! V4 V3
->>>>>>> 98d5777c65485e27727367849c271e69d06bef55
+ * 
  * @author Kyle Burke <paithanq@gmail.com>
  */
 public class BestMusicPlayer extends Application {
