@@ -13,7 +13,7 @@ import javafx.stage.*;
 
 /**
  * Launches a music player that does all the things I want it to.  Command-line usage: java BestMusicPlayer
- * This is specifically designed to be poorly coded.  If that sentence remains in the version that gets turned in, I'm going to be very suspicious...
+ * 
  *
  * @author Kyle Burke <paithanq@gmail.com>
  */
