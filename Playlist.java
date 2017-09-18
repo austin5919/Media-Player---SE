@@ -1,5 +1,13 @@
 import java.io.*;
 
+/**
+ * Keeps track of a collection of songs within a directory.  Command-line usage: java Playlist
+ * 
+ * @author Austin Ash
+ * @author Second_Author
+ * @author Third_Author
+ */
+
 public class Playlist {
 	
 	//fields
