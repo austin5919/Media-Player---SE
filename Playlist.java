@@ -1,5 +1,4 @@
 import java.io.*;
-import java.io.file.*;
 
 public class Playlist {
 	
@@ -18,7 +17,7 @@ public class Playlist {
 	 * Sets the directory for search for songs.
 	 * 
 	 * @param directory  A String representing the directory to look for MP3 files
-	 * @exception IllegalArgumentException  If directory does not exist.
+	 * @throws IllegalArgumentException  If directory does not exist.
 	 */
 	public void setSongsDirectory(String directory) {
 		File dir = new File(directory);
@@ -32,7 +31,7 @@ public class Playlist {
 	 * Sets the directory for search for songs.
 	 * 
 	 * @param directory  A File representing the directory to look for MP3 files
-	 * @exception IllegalArgumentException  If directory does not exist.
+	 * @throws IllegalArgumentException  If directory does not exist.
 	 */
 	public void setSongsDirectory(File directory) {
 		this.setSongsDirectory(directory.toString());
@@ -134,8 +133,7 @@ public class Playlist {
 		}
 		allWorking = allWorking && testPass;
 		System.out.println("Test F Pass?: " + testPass);
-		
-		
+
 		// print the overall result of the tests.
 		if (allWorking) {
 			System.out.println("Everything works!");
