@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import javafx.scene.media.*;
 
 /**
  * Keeps track of a collection of songs within a directory.  Command-line usage: java Playlist
@@ -11,9 +12,10 @@ import java.util.*;
 public class Playlist {
     
     //fields
-    File songsDirectory;
-    ArrayList<String> songNames = new ArrayList<String>();
-    Media currentSong;
+    private File songsDirectory;
+    private ArrayList<File> songs;
+    private ArrayList<String> songNames;
+    private Media currentSong;
 /*    = new Media(new File(song).toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(media);
                 mediaPlayer.play();
@@ -38,15 +40,25 @@ public class Playlist {
     }
     
     /**
-     *
-     *
+     * Scans the directory for available music (.mp3)
      */
-    
-    
+	public void scanForMusic(){
+		this.songs = new ArrayList<File>();
+		this.songNames = new ArrayList<String>();
+		
+		File[] files = this.songsDirectory.listFiles();
+		for (File file : files) {
+	        if (file.isFile() && file.getName().endsWith(".mp3"))  {
+				this.songs.add(file);
+				this.songNames.add(file.getName());
+			}
+		}
+    }
+	
     /**
      * Sets the directory for search for songs.
      * 
-     * @param directory  A String representing the directory to look for MP3 files
+     * @param directory  A String representing the directory to look for MP3 files.
      * @throws IllegalArgumentException  If directory does not exist.
      */
     public void setSongsDirectory(String directory) {
