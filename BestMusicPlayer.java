@@ -13,7 +13,7 @@ import javafx.stage.*;
 
 /**
  * Launches a music player that does all the things I want it to.  Command-line usage: java BestMusicPlayer
- * Test01
+ * 
  * 
  * @author Kyle Burke <paithanq@gmail.com>
  */
@@ -55,6 +55,8 @@ public static void main(String[] args) {launch(args);}
         //solution from stackoverflow user Sagar Damani at: https://stackoverflow.com/questions/14025718/javafx-toolkit-not-initialized-when-trying-to-play-an-mp3-file-through-mediap
         //        final JFXPanel bananarama = new JFXPanel();
         
+
+		
         
         primaryStage.setTitle(this.appTitle);
         Button button = getButton();
@@ -76,6 +78,29 @@ public static void main(String[] args) {launch(args);}
         gridPane.add(songtitle, 0, 1);
         primaryStage.setScene(new Scene(gridPane, 300, 250));
         primaryStage.show();
+		
+		
+		final double BUTTONS_PER_LINE = 8;
+		final double NUM_BUTTON_LINES = 8;
+		final double BUTTON_PADDING   = 5;
+
+		GridPane grid = new GridPane();
+        //grid.setPadding(new Insets(BUTTON_PADDING));
+        //grid.setHgap(BUTTON_PADDING);
+        //grid.setVgap(BUTTON_PADDING);
+
+        for (int r = 0; r < NUM_BUTTON_LINES; r++) {
+            for (int c = 0; c < BUTTONS_PER_LINE; c++) {
+                grid.add(new Button(r + ":" + c), c, r);
+            }
+        }
+
+        ScrollPane scrollPane = new ScrollPane(grid);
+
+        primaryStage.setScene(new Scene(scrollPane));
+        primaryStage.show();
+		
+		
     }
 
 } //end of BestMusicPlayer.java
