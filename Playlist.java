@@ -36,6 +36,8 @@ public class Playlist {
      * @param directory  A File representing the initial directory to look for MP3 Files
      */
     public Playlist(File directory) {
+		this.songs = new ArrayList<File>();
+		this.songNames = new ArrayList<String>();
         this.setSongsDirectory(directory);
     }
     
@@ -58,10 +60,19 @@ public class Playlist {
 	/**
 	 * Gets the song names.
 	 * 
-	 * @return A copy of ArrayList<String> of song names.
+	 * @return A copy ArrayList<String> of the song names.
 	 */
 	public ArrayList<String> getSongNames() {
-		return (ArrayList<String>) songNames.clone();
+		return (ArrayList<String>) this.songNames.clone();
+	}
+	
+	/**
+	 * Gets the songs.
+	 *
+	 * @return A copy ArrayList<File> of the songs.
+	 */
+	public ArrayList<File> getSongs() {
+		return (ArrayList<File>) this.songs.clone();
 	}
 	
     /**
