@@ -58,10 +58,9 @@ public class Playlist {
 	/**
 	 * Gets the song names.
 	 * 
-	 * @return An ArrayList<String> of song names.
+	 * @return A copy of ArrayList<String> of song names.
 	 */
 	public ArrayList<String> getSongNames() {
-		ArrayList<String> songList = new ArrayList<String>();
 		return (ArrayList<String>) songNames.clone();
 	}
 	
