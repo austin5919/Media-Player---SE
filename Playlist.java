@@ -54,6 +54,16 @@ public class Playlist {
 			}
 		}
     }
+    
+	/**
+	 * Gets the song names.
+	 * 
+	 * @return An ArrayList<String> of song names.
+	 */
+	public ArrayList<String> getSongNames() {
+		ArrayList<String> songList = new ArrayList<String>();
+		return (ArrayList<String>) songNames.clone();
+	}
 	
     /**
      * Sets the directory for search for songs.
