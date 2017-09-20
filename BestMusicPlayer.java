@@ -59,9 +59,4 @@ public class BestMusicPlayer extends Application{
     private Label getLabel(){
         return new Label();
     }
-    
-    private void getFileChooser(){
-        
-      
-    } 
 }
