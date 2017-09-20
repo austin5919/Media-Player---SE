@@ -116,7 +116,7 @@ public class MediaController {
      * this thirdSongButton
      * @param event helps handle events
      */
-    private void handleThirdButtonAction(ActionEvent event) {
+    private void handleThirdSongButtonAction(ActionEvent event) {
         setMediaPlayer(this.thirdSong);
         playMedia();
         //System.out.println("bling");
