@@ -25,37 +25,37 @@ public class MediaController {
     private MediaPlayer mediaPlayer;
     
     public Button setFirstSongButton(Button button){
-        firstSongButton = button;
-        firstSongButton.setText("Pride Of The Wolverines");
-        firstSongButton.setOnAction(this::handleButton1Action);
+        this.firstSongButton = button;
+        this.firstSongButton.setText("Pride Of The Wolverines");
+        this.firstSongButton.setOnAction(this::handleButton1Action);
         return button;
     }
     
     public Button setSecondSongButton(Button button){
-        secondSongButton = button;
-        secondSongButton.setText("Prefunk Loop");
-        secondSongButton.setOnAction(this::handleButton2Action);
+        this.secondSongButton = button;
+        this.secondSongButton.setText("Prefunk Loop");
+        this.secondSongButton.setOnAction(this::handleButton2Action);
         return button;
     }
     
     public Button setThirdSongButton(Button button){
-        thirdSongButton = button;
-        thirdSongButton.setText("Here We Go");
-        thirdSongButton.setOnAction(this::handleButton3Action);
+        this.thirdSongButton = button;
+        this.thirdSongButton.setText("Here We Go");
+        this.thirdSongButton.setOnAction(this::handleButton3Action);
         return button;
     }
     
     public Button setFileChooserButton(Button button){
-        fileChooserButton = button;
+        this.fileChooserButton = button;
         //System.out.println();
-        fileChooserButton.setText("Browse a file");
-        fileChooserButton.setOnAction(this::handleButton4Action);
+        this.fileChooserButton.setText("Browse a file");
+        this.fileChooserButton.setOnAction(this::handleButton4Action);
         return button;
     }
     
     private void handleButton1Action(ActionEvent event) {
      
-        setMediaPlayer(firstSong);
+        setMediaPlayer(this.firstSong);
         playMedia();
         
         //System.out.println("dasdada");
@@ -63,14 +63,14 @@ public class MediaController {
     
     private void handleButton2Action(ActionEvent event) {
         
-        setMediaPlayer(secondSong);
+        setMediaPlayer(this.secondSong);
         playMedia();
         //System.out.println("walaa");
     }
     
     
     private void handleButton3Action(ActionEvent event) {
-        setMediaPlayer(thirdSong);
+        setMediaPlayer(this.thirdSong);
         playMedia();
         //System.out.println("bling");
     }
@@ -96,7 +96,7 @@ public class MediaController {
         } 
         
         Media media = new Media(new File(song).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+        this.mediaPlayer = new MediaPlayer(media);
     }
     
     private void playMedia(){
