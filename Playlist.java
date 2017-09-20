@@ -4,7 +4,7 @@ import javafx.scene.media.*;
 import java.lang.*;
 
 /**
- * Keeps track of a collection of songs within a directory.  Command-line usage: java Playlist
+ * Keeps track of a collection of songs within a directory.  Command-line usage: java PlaylistAFASF
  * 
  * @author Austin Ash
  * @author Jose Cruz

@@ -6,6 +6,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 
+/**
+ * controls the view events and interacts with data
+ * 
+ * @author Austin Ash
+ * @author Jose Cruz
+ */
 public class MediaController {
     MediaController(){
         
@@ -23,59 +29,106 @@ public class MediaController {
     private Button fileChooserButton;
     
     private MediaPlayer mediaPlayer;
-    
+	
+    /**
+     * sets the values and settings of the button passed in
+     * at the moment this one controls the firstSongButton
+     * @param button a button to help handle click events
+     * @return a button
+     */
     public Button setFirstSongButton(Button button){
-        firstSongButton = button;
-        firstSongButton.setText("Pride Of The Wolverines");
-        firstSongButton.setOnAction(this::handleButton1Action);
+        this.firstSongButton = button;
+        this.firstSongButton.setText("Pride Of The Wolverines");
+        this.firstSongButton.setOnAction(this::handleFirstSongButtonAction);
         return button;
     }
     
+    /**
+     * sets the values and settings of the button passed in
+     * at the moment this one controls the secondSongButton
+     * @param button to help handle click events
+     * @return a button
+     */
     public Button setSecondSongButton(Button button){
-        secondSongButton = button;
-        secondSongButton.setText("Prefunk Loop");
-        secondSongButton.setOnAction(this::handleButton2Action);
+        this.secondSongButton = button;
+        this.secondSongButton.setText("Prefunk Loop");
+        this.secondSongButton.setOnAction(this::handleSecondSongButtonAction);
         return button;
     }
-    
+	
+    /**
+     * sets the values and settings of the button passed in
+     * at the moment this one controls the thirdSongButton
+     * @param button a button to help handle click events
+     * @return a button
+     */
     public Button setThirdSongButton(Button button){
-        thirdSongButton = button;
-        thirdSongButton.setText("Here We Go");
-        thirdSongButton.setOnAction(this::handleButton3Action);
+        this.thirdSongButton = button;
+        this.thirdSongButton.setText("Here We Go");
+        this.thirdSongButton.setOnAction(this::handleThirdSongButtonAction);
         return button;
     }
-    
+	
+    /**
+     * sets the values and settings of the button passed in
+     * at the moment this one controls the fileChooserButton
+     * @param button a button to help handle click events
+     * @return a button
+     */
     public Button setFileChooserButton(Button button){
-        fileChooserButton = button;
+        this.fileChooserButton = button;
         //System.out.println();
-        fileChooserButton.setText("Browse a file");
-        fileChooserButton.setOnAction(this::handleButton4Action);
+        this.fileChooserButton.setText("Browse a file");
+        this.fileChooserButton.setOnAction(this::handleFileChooserButtonAction);
         return button;
     }
-    
-    private void handleButton1Action(ActionEvent event) {
+	
+    /**
+     * controls the behavior of a button
+     * this method handles events that belong to
+     * this firstSongButton
+     * @param event helps handle events
+     */
+    private void handleFirstSongButtonAction(ActionEvent event) {
      
-        setMediaPlayer(firstSong);
+        setMediaPlayer(this.firstSong);
         playMedia();
         
         //System.out.println("dasdada");
     }
-    
-    private void handleButton2Action(ActionEvent event) {
+	
+    /**
+     * controls the behavior of a button
+     * this method handles events that belong to
+     * this secondSongButton
+     * @param event helps handle events
+     */
+    private void handleSecondSongButtonAction(ActionEvent event) {
         
-        setMediaPlayer(secondSong);
+        setMediaPlayer(this.secondSong);
         playMedia();
         //System.out.println("walaa");
     }
     
-    
-    private void handleButton3Action(ActionEvent event) {
-        setMediaPlayer(thirdSong);
+    /**
+     * controls the behavior of a button
+     * this method handles events that belong to
+     * this thirdSongButton
+     * @param event helps handle events
+     */
+    private void handleThirdSongButtonAction(ActionEvent event) {
+        setMediaPlayer(this.thirdSong);
         playMedia();
         //System.out.println("bling");
     }
-    
-    private void handleButton4Action(ActionEvent event) {
+	
+    /**
+     * controls the behavior of a button
+     * this method handles events that belong to
+     * this fileChooserButton
+     * @param event helps handle events
+     */
+    private void handleFileChooserButtonAction(ActionEvent event) {
         FileChooser getFile = new FileChooser();
         File  theFile = getFile.showOpenDialog(null);
         
@@ -88,7 +141,11 @@ public class MediaController {
         //System.out.println("bling");
     }
     
-    
+    /**
+     * checks if there is anything playing and pauses if
+     * there is and then sets a new instance of a song
+     * @param song takes in the song you want to play
+     */
     private void setMediaPlayer(String song){
         
         if(isMediaPlayerNull() == false){
@@ -96,9 +153,12 @@ public class MediaController {
         } 
         
         Media media = new Media(new File(song).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+        this.mediaPlayer = new MediaPlayer(media);
     }
     
+    /**
+     * simply plays the instance of a media created
+     */
     private void playMedia(){
         
         if(isMediaPlayerNull() == false){
@@ -108,6 +168,10 @@ public class MediaController {
         } 
     }
     
+    /**
+     * checks if the media instance is null
+     * @return false or true depending on the status of the media
+     */
     private boolean isMediaPlayerNull(){
         if(mediaPlayer == null){
             return true;
