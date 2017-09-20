@@ -10,97 +10,58 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.stage.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-/**
- * Launches a music player that does all the things I want it to.  Command-line usage: java BestMusicPlayer
- * 
- * 
- * @author Kyle Burke <paithanq@gmail.com>
- */
-public class BestMusicPlayer extends Application {
-	
-	//fields
-	private static Label songtitle = new Label("No song currently playing.");
-	private static String songname = "Pride of the Wolverines";
-	private static String appTitle = "The Best Music Player Ever!";
-	
-	/**
-     * Returns a the String song name.
-     *
-     * @return  A String of the song name.
-     */
-	public static String getSongName() {
-		return songname;
-	}
-	
-	/**
-     * Returns the Button.
-     *
-     * @return  A Button object.
-     */
-	public static Button getButton() { 
-		return new Button();
-	}
-
-/**
- * Main method to launch the program.
- *
- * @param args  Command-line arguments for the program.  Currently unused.
- */
-public static void main(String[] args) {launch(args);}
+public class BestMusicPlayer extends Application{
     
+    public static void main(String[] args) {launch(args);}
+    private static String appTitle = "The Best Music Player Ever!";
+    
+    //interact with the control class
+    MediaController control = new MediaController();
+   
     @Override
-    public void start(Stage primaryStage) 
-    {
-        //solution from stackoverflow user Sagar Damani at: https://stackoverflow.com/questions/14025718/javafx-toolkit-not-initialized-when-trying-to-play-an-mp3-file-through-mediap
-        //        final JFXPanel bananarama = new JFXPanel();
+    public void start(Stage primaryStage){
         
-
-		
         
-        primaryStage.setTitle(this.appTitle);
-        Button button = getButton();
-        button.setText("Play Wolverines Pride (3:42)");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //code to play a song modified from stackoverflow user jasonwaste's answer on https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
-                String song = "./songs/PrideOfTheWolverines.mp3";
-                Media media = new Media(new File(song).toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.play();
-                songtitle.setText(BestMusicPlayer.getSongName());}});
-        
-        GridPane gridPane = new GridPane();
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setVgap(10);
-        gridPane.add(button, 0, 0);
-        gridPane.add(songtitle, 0, 1);
-        primaryStage.setScene(new Scene(gridPane, 300, 250));
-        primaryStage.show();
-		
-		
-		final double BUTTONS_PER_LINE = 8;
-		final double NUM_BUTTON_LINES = 8;
-		final double BUTTON_PADDING   = 5;
-
-		GridPane grid = new GridPane();
-        //grid.setPadding(new Insets(BUTTON_PADDING));
-        //grid.setHgap(BUTTON_PADDING);
-        //grid.setVgap(BUTTON_PADDING);
-
-        for (int r = 0; r < NUM_BUTTON_LINES; r++) {
-            for (int c = 0; c < BUTTONS_PER_LINE; c++) {
-                grid.add(new Button(r + ":" + c), c, r);
-            }
-        }
-
-        ScrollPane scrollPane = new ScrollPane(grid);
-
-        primaryStage.setScene(new Scene(scrollPane));
-        primaryStage.show();
-		
-		
+            primaryStage.setTitle(this.appTitle);
+            GridPane gridPane = new GridPane();
+            gridPane.setPadding(new Insets(5));
+            gridPane.setAlignment(Pos.CENTER);
+            gridPane.setVgap(10);
+            
+            //buttons
+            Button firstSongButton = getButton();
+            gridPane.add(control.setFirstSongButton(firstSongButton), 0, 0); 
+            
+            //buttons
+            Button secondSongButton = getButton();
+            gridPane.add(control.setSecondSongButton(secondSongButton), 0, 2); 
+            
+            //buttons
+            Button thirdSongButton = getButton();
+            gridPane.add(control.setThirdSongButton(thirdSongButton), 0, 3);
+            //labels
+            
+            //buttons
+            Button fileChooserButton = getButton();
+            gridPane.add(control.setFileChooserButton(fileChooserButton), 0, 6);
+            
+            primaryStage.setScene(new Scene(gridPane, 300, 250));
+	    primaryStage.show(); 
     }
-
-} //end of BestMusicPlayer.java
+    
+    private Button getButton(){
+        return new Button();
+    }
+    
+    private Label getLabel(){
+        return new Label();
+    }
+    
+    private void getFileChooser(){
+        
+      
+    } 
+}
