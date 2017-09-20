@@ -74,7 +74,7 @@ public class BestMusicPlayer extends Application{
         return new Button();
     }
     
-	/**
+    /**
      * creates label
      * @return a label instance
      */
