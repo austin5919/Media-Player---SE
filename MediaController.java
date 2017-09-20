@@ -39,7 +39,7 @@ public class MediaController {
     public Button setFirstSongButton(Button button){
         this.firstSongButton = button;
         this.firstSongButton.setText("Pride Of The Wolverines");
-        this.firstSongButton.setOnAction(this::handleButton1Action);
+        this.firstSongButton.setOnAction(this::handleFirstSongButtonAction);
         return button;
     }
     
@@ -52,7 +52,7 @@ public class MediaController {
     public Button setSecondSongButton(Button button){
         this.secondSongButton = button;
         this.secondSongButton.setText("Prefunk Loop");
-        this.secondSongButton.setOnAction(this::handleButton2Action);
+        this.secondSongButton.setOnAction(this::handleSecondSongButtonAction);
         return button;
     }
 	
@@ -65,7 +65,7 @@ public class MediaController {
     public Button setThirdSongButton(Button button){
         this.thirdSongButton = button;
         this.thirdSongButton.setText("Here We Go");
-        this.thirdSongButton.setOnAction(this::handleButton3Action);
+        this.thirdSongButton.setOnAction(this::handleThirdSongButtonAction);
         return button;
     }
 	
@@ -79,7 +79,7 @@ public class MediaController {
         this.fileChooserButton = button;
         //System.out.println();
         this.fileChooserButton.setText("Browse a file");
-        this.fileChooserButton.setOnAction(this::handleButton4Action);
+        this.fileChooserButton.setOnAction(this::handleFileChooserButtonAction);
         return button;
     }
 	
@@ -89,7 +89,7 @@ public class MediaController {
      * this firstSongButton
      * @param event helps handle events
      */
-    private void handleButton1Action(ActionEvent event) {
+    private void handleFirstSongButtonAction(ActionEvent event) {
      
         setMediaPlayer(this.firstSong);
         playMedia();
@@ -103,7 +103,7 @@ public class MediaController {
      * this secondSongButton
      * @param event helps handle events
      */
-    private void handleButton2Action(ActionEvent event) {
+    private void handleSecondSongButtonAction(ActionEvent event) {
         
         setMediaPlayer(this.secondSong);
         playMedia();
@@ -116,7 +116,7 @@ public class MediaController {
      * this thirdSongButton
      * @param event helps handle events
      */
-    private void handleButton3Action(ActionEvent event) {
+    private void handleThirdButtonAction(ActionEvent event) {
         setMediaPlayer(this.thirdSong);
         playMedia();
         //System.out.println("bling");
@@ -128,7 +128,7 @@ public class MediaController {
      * this fileChooserButton
      * @param event helps handle events
      */
-    private void handleButton4Action(ActionEvent event) {
+    private void handleFileChooserButtonAction(ActionEvent event) {
         FileChooser getFile = new FileChooser();
         File  theFile = getFile.showOpenDialog(null);
         
