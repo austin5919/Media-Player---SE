@@ -156,7 +156,7 @@ public class MediaController {
         this.mediaPlayer = new MediaPlayer(media);
     }
     
-	/**
+    /**
      * simply plays the instance of a media created
      */
     private void playMedia(){
