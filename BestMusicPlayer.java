@@ -21,7 +21,7 @@ public class BestMusicPlayer extends Application{
     
     /**
      * This is where our project starts.
-     * @param args
+     * @param args command line arguments
      */
     public static void main(String[] args) {launch(args);}
     private static String appTitle = "The Best Music Player Ever!";
