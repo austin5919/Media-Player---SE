@@ -12,15 +12,28 @@ import javafx.geometry.*;
 import javafx.stage.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
+/**
+ * the main driver, and gui interface.
+ * @author Austin Ash
+ * @author Jose Cruz
+ */
 public class BestMusicPlayer extends Application{
     
+	/**
+	 * This is where our project starts.
+	 * @param args
+	 */
     public static void main(String[] args) {launch(args);}
     private static String appTitle = "The Best Music Player Ever!";
     
     //interact with the control class
     MediaController control = new MediaController();
-   
+	
+    /**
+     * Starts my view interface
+     * @param primaryStage the primary stage for view interface
+     * {@inheritDoc}
+     */
     @Override
     public void start(Stage primaryStage){
         
@@ -42,6 +55,7 @@ public class BestMusicPlayer extends Application{
             //buttons
             Button thirdSongButton = getButton();
             gridPane.add(control.setThirdSongButton(thirdSongButton), 0, 3);
+			
             //labels
             
             //buttons
@@ -51,11 +65,19 @@ public class BestMusicPlayer extends Application{
             primaryStage.setScene(new Scene(gridPane, 300, 250));
 	    primaryStage.show(); 
     }
-    
+	
+    /**
+     * creates button
+     * @return a button instance
+     */
     private Button getButton(){
         return new Button();
     }
     
+	/**
+     * creates label
+     * @return a label instance
+     */
     private Label getLabel(){
         return new Label();
     }
