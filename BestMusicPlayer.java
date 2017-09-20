@@ -19,10 +19,10 @@ import javafx.stage.Stage;
  */
 public class BestMusicPlayer extends Application{
     
-	/**
-	 * This is where our project starts.
-	 * @param args
-	 */
+    /**
+     * This is where our project starts.
+     * @param args
+     */
     public static void main(String[] args) {launch(args);}
     private static String appTitle = "The Best Music Player Ever!";
     
