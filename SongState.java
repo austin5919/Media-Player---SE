@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 public interface SongState {
     public void playSong();
     public void stopSong();
