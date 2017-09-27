@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 import javafx.scene.media.MediaPlayer;
 
 
