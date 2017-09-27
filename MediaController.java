@@ -1,6 +1,5 @@
 import java.io.File;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.ActionEvent;;
 import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -13,6 +12,7 @@ import javafx.stage.FileChooser;
  * @author Jose Cruz
  */
 public class MediaController {
+     MusicPlayer player = new MusicPlayer();
     MediaController(){
         
     }
@@ -90,11 +90,9 @@ public class MediaController {
      * @param event helps handle events
      */
     private void handleFirstSongButtonAction(ActionEvent event) {
-     
-        setMediaPlayer(this.firstSong);
-        playMedia();
         
-        //System.out.println("dasdada");
+        player.loadSong(this.firstSong);
+        player.playSong();
     }
 	
     /**
@@ -105,9 +103,8 @@ public class MediaController {
      */
     private void handleSecondSongButtonAction(ActionEvent event) {
         
-        setMediaPlayer(this.secondSong);
-        playMedia();
-        //System.out.println("walaa");
+       player.loadSong(this.secondSong);
+       player.playSong();
     }
     
     /**
@@ -117,9 +114,8 @@ public class MediaController {
      * @param event helps handle events
      */
     private void handleThirdSongButtonAction(ActionEvent event) {
-        setMediaPlayer(this.thirdSong);
-        playMedia();
-        //System.out.println("bling");
+        player.loadSong(this.thirdSong);
+        player.playSong();
     }
 	
     /**
@@ -133,50 +129,10 @@ public class MediaController {
         File  theFile = getFile.showOpenDialog(null);
         
         if (theFile != null){
-            //System.out.println(theFile);
-            setMediaPlayer(theFile.toString());
-            playMedia();
+            player.loadSong(theFile.toString());
+            player.playSong();
         }
         
         //System.out.println("bling");
-    }
-    
-    /**
-     * checks if there is anything playing and pauses if
-     * there is and then sets a new instance of a song
-     * @param song takes in the song you want to play
-     */
-    private void setMediaPlayer(String song){
-        
-        if(isMediaPlayerNull() == false){
-                mediaPlayer.stop();
-        } 
-        
-        Media media = new Media(new File(song).toURI().toString());
-        this.mediaPlayer = new MediaPlayer(media);
-    }
-    
-    /**
-     * simply plays the instance of a media created
-     */
-    private void playMedia(){
-        
-        if(isMediaPlayerNull() == false){
-             mediaPlayer.play();
-        }else{
-           System.out.println("call loadSong method first, there is nothing to play");
-        } 
-    }
-    
-    /**
-     * checks if the media instance is null
-     * @return false or true depending on the status of the media
-     */
-    private boolean isMediaPlayerNull(){
-        if(mediaPlayer == null){
-            return true;
-        }
-        
-        return false;
     }
 }
