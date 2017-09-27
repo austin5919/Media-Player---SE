@@ -1,6 +1,3 @@
-package bestmusicplayer;
-
-
 public class Play implements SongState{
     
     MusicPlayer player;
