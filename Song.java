@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 public class Song {
     private String songName;
     private String songLenght;
