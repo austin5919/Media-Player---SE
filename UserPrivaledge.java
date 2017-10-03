@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 /**
  * this class will hold the public methods that
  * each Media State should be able to perform. It 
