@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 import java.io.File;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
