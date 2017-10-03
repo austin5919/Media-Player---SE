@@ -1,6 +1,3 @@
-package bestmusicplayer;
-
-
 public class Playing implements UserPrivaledge{
     
     MusicPlayer player;
