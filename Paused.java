@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 public class Paused implements UserPrivaledge{
     
     MusicPlayer player;
