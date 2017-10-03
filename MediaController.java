@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 import java.io.File;
 import javafx.event.ActionEvent;;
 import javafx.scene.control.Button;
