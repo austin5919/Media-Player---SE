@@ -1,5 +1,3 @@
-package bestmusicplayer;
-
 import javafx.stage.Stage;
 
 public class Style {
