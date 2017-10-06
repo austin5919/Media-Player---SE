@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
 
 /**
  * This class handles the actual data for the
@@ -39,7 +39,7 @@ public class PlayList{
         this.songLength = new ArrayList<>();
         this.songLink = new ArrayList<>();
        
-        initialize();
+        //initialize();
     }
     
     /**
@@ -101,7 +101,7 @@ public class PlayList{
      * implement a different behavior
      */
     public void createJson(){
-        
+       /*
        JSONObject Obj = new JSONObject();
        
        Obj.put("size", this.songName.size());
@@ -127,6 +127,7 @@ public class PlayList{
             file.flush();
 
         } catch (IOException e) {}
+		*/
     }
     
     /*
@@ -137,6 +138,7 @@ public class PlayList{
      * 
      */
     private void loadJson(){
+		/*
         JSONParser parser = new JSONParser();
         
         try{
@@ -162,6 +164,7 @@ public class PlayList{
         }
         
         setObserveableList();
+		*/
     }
     
     /*

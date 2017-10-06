@@ -104,7 +104,7 @@ public class MusicPlayer {
             if(songObj.existAlready(song.getSongName()) == false){
                 this.display.getItems().add(song);
                 songObj.addSong(song);
-                songObj.createJson();
+                //songObj.createJson();
                 
             }else{
                 System.out.println("this song already exist");

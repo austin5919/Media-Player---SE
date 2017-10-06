@@ -35,7 +35,7 @@ public class MediaController {
     public void setDisplayTable(TableView<Song> display){
         
         this.musicplayer.setTableViewDisplay(display);
-        this.musicplayer.refreshPlaylist();
+        //this.musicplayer.refreshPlaylist();
         //assign a handler to the tableview
         display.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
