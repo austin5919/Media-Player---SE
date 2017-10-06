@@ -1,4 +1,12 @@
+/**
+ * this class only purpose is to temporary
+ * hold the information of each song as an
+ * individual. All there is to it is getters
+ * and setters.
+ * @author josea
+ */
 public class Song {
+    
     private String songName;
     private String songLenght;
     private String songLink;
@@ -8,6 +16,7 @@ public class Song {
         this.songLink = "";
         this.songLenght = "";
     }
+    
     public Song(String newSongName, String newSongLenght, String newSongLink){
         this.songName = newSongName;
         this.songLink = newSongLink;

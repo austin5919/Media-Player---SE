@@ -1,8 +1,0 @@
-{	
-	"playlistID":0,
-    "playlistName":["playlist01","playlist02"],
-    "playlist01SongNames":["Barroom Ballet","Comic Game Loop - Mischief"],
-	"playlist01SongLinks":["./songs/Barroom Ballet.mp3","./songs/Comic Game Loop - Mischief.mp3"],
-	"playlist01SongLenghs":["00:56","00:42"]
-
-}

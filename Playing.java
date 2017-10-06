@@ -1,41 +1,34 @@
-public class Playing implements UserPrivaledge{
+
+/**
+ * this class handles the actions when 
+ * the music player is on play state
+ * @author jose
+ * @author austin
+ */
+public class Playing implements State{
+    MusicPlayer musicplayer;
     
-    MusicPlayer player;
+    /**
+     * receive the MusicPlayer.java class
+     * @param newMusicplayer 
+     */
+    public Playing(MusicPlayer newMusicplayer){this.musicplayer = newMusicplayer;}
     
-    public Playing(MusicPlayer player){
-        this.player = player;
+    @Override
+    public void createSongObject(String songName, String songLink) {
+        this.musicplayer.setDeadMediaPlayer(this.musicplayer.loadSong(songLink));
+        this.musicplayer.theNewSongObject(songName,songLink);
     }
 
     @Override
-    public void getPlaylist() {
-        //doNothing
-    }
-
-    @Override
-    public void playSongDoubleClick() {
-        this.player.setPreviousSong();
-        this.player.showPauseButton();
-        this.player.StopMedia();
-        this.player.playMedia();
-    }
-
-    @Override
-    public void playSongSingleClick(){
-        this.player.setPreviousSong();
-        this.player.showPlayButton();
-        this.player.pauseMedia();
-        this.player.setState(this.player.getPauseState());
-    }
-
-    @Override
-    public void changeDetected() {
+    public void refreshPlaylist() {
         
-        if(this.player.isIdentical() != true){
-            this.player.showPlayButton();
-            this.player.setState(this.player.getSongChangedStateAtPlay());
-            
-        }else{
-            this.player.showPauseButton();
-        }
     }
+
+    @Override
+    public void playSong() {
+        this.musicplayer.play();
+        this.musicplayer.setState(this.musicplayer.getPlayingState());
+    }
+    
 }

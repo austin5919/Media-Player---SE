@@ -1,5 +1,12 @@
 import javafx.stage.Stage;
 
+/**
+ * this class is only meant to hold the style of
+ * the GUI components. I decided to separate the style
+ * from the actual components as much as i could to
+ * make them more re-use able
+ * @author josea
+ */
 public class Style {
     
     public String borderPaneStyle(int height, int width){
