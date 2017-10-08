@@ -1,10 +1,7 @@
-
-
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -88,7 +85,7 @@ public class BestMusicPlayer extends Application{
      * size accordingly
      */
     private Image getImage(String newImage,int size){
-        newImage = "file:images/" + newImage;
+        newImage = "./images/" + newImage;
         return new Image(newImage,size,size,false,false);
     }
     
@@ -121,11 +118,9 @@ public class BestMusicPlayer extends Application{
         
         TableView<Song> playList = new TableView();
         //experiment
-        playList.setStyle(style.playListStyle(410,470));
+        playList.getStylesheets().add(style.TableView());
         playList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
         playList.getColumns().addAll(songName,songLenght);
-        //playList.getSelectionModel().select(0);
         display.getChildren().addAll(playList);
         control.setDisplayTable(playList);
         

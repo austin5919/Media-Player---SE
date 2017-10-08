@@ -1,13 +1,7 @@
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
 
 /**
  * This class handles the actual data for the
@@ -38,17 +32,6 @@ public class PlayList{
         this.songName = new ArrayList<>();
         this.songLength = new ArrayList<>();
         this.songLink = new ArrayList<>();
-       
-        //initialize();
-    }
-    
-    /**
-     * initializes the loadJson() method
-     * i wrapped loadJson in an public method
-     * just i case i need to use it again.
-     */
-    public void initialize(){
-         loadJson();
     }
     
     /**
@@ -91,80 +74,6 @@ public class PlayList{
             System.out.println("There is nothing to clear");
         }
         
-    }
-    
-    /**
-     * creates a j-son file using the information
-     * placed in the array inside this class. Right now
-     * it overwrites the information inside the j-son
-     * file but that only requires minor changes to 
-     * implement a different behavior
-     */
-    public void createJson(){
-       /*
-       JSONObject Obj = new JSONObject();
-       
-       Obj.put("size", this.songName.size());
-       
-       JSONArray nameObj = new JSONArray();
-       JSONArray lengthObj = new JSONArray();
-       JSONArray linkObj = new JSONArray();
-       
-       for(int i = 0; i < this.songName.size();i++){
-           nameObj.add(this.songName.get(i));
-           lengthObj.add(this.songLength.get(i));
-           linkObj.add(this.songLink.get(i));
-      
-       }
-       
-       Obj.put("playlistName", nameObj);
-       Obj.put("playlistLength",lengthObj);
-       Obj.put("playlistLink", linkObj);
-       
-       try (FileWriter file = new FileWriter("playlist.json")) {
-
-            file.write(Obj.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {}
-		*/
-    }
-    
-    /*
-     * load the j-son file and place the information inside of it
-     * in the array list inside this class. Right now i throws and 
-     * exception if the file does not exist or is in the incorrect
-     * format. Also, it ignores song with links that cannot be verified
-     * 
-     */
-    private void loadJson(){
-		/*
-        JSONParser parser = new JSONParser();
-        
-        try{
-            Object obj = parser.parse(new FileReader("playlist.json"));
-            JSONObject jsonObject = (JSONObject) obj;
-            
-            long size = (Long) jsonObject.get("size");
-            
-            JSONArray nameObj = (JSONArray) jsonObject.get("playlistName");
-            JSONArray lengthObj = (JSONArray) jsonObject.get("playlistLength");
-            JSONArray linkObj = (JSONArray) jsonObject.get("playlistLink");
-            
-            for(int i = 0; i < size;i++){
-                if(isLinkValid(linkObj.get(i).toString()) == true){
-                    this.songName.add(nameObj.get(i).toString());
-                    this.songLength.add(lengthObj.get(i).toString());
-                    this.songLink.add(linkObj.get(i).toString());
-                }
-            }
-        }catch(Exception e){
-            System.out.println("the format is incorrect, or file doesnt exist.."
-                    + "please double check");
-        }
-        
-        setObserveableList();
-		*/
     }
     
     /*

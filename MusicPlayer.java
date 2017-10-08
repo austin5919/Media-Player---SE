@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
@@ -59,7 +58,7 @@ public class MusicPlayer {
     public State getIdleState(){return this.idle;}
     public State getPlayingState(){return this.playing;}
     
-    private int getPlayingRow(){return this.playingRow;}
+    public int getPlayingRow(){return this.playingRow;}
     
     public MediaPlayer getMediaPlayer(){return this.mediaplayer;}
     public MediaPlayer getDeadMediaPlayer(){return this.deadPlayer;}
@@ -103,8 +102,10 @@ public class MusicPlayer {
             System.out.println(songObj.existAlready(song.getSongName()));
             if(songObj.existAlready(song.getSongName()) == false){
                 this.display.getItems().add(song);
+                if(this.getTableViewDisplay().getItems().size() == 1){
+                    this.getTableViewDisplay().getFocusModel().focus(-1);
+                }
                 songObj.addSong(song);
-                //songObj.createJson();
                 
             }else{
                 System.out.println("this song already exist");
@@ -144,11 +145,9 @@ public class MusicPlayer {
         if(mediaplayer != null){
             stop();
         }
-        setMediaPlayer(loadSong(this.display.getSelectionModel().getSelectedItem().getSongLink()));
+        
+        setMediaPlayer(loadSong(this.getTableViewDisplay().getFocusModel().getFocusedItem().getSongLink()));
         this.mediaplayer.play();
-        setPlayingRow(this.display.getSelectionModel().getSelectedIndex());
-        //this.display.getSelectionModel().clearSelection();
-        //this.getTableViewDisplay().getFocusModel().focus(this.getPlayingRow());
         
         
     }

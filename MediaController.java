@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -35,19 +33,7 @@ public class MediaController {
     public void setDisplayTable(TableView<Song> display){
         
         this.musicplayer.setTableViewDisplay(display);
-        //this.musicplayer.refreshPlaylist();
-        //assign a handler to the tableview
-        display.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                this.musicplayer.playSong();
-                //System.out.println("new selection : " + obs.getValue().getSongName());
-            }
-            //System.out.println("new selection : " + obs.getValue().getSongName());
-        });
-        
         display.setOnMousePressed(this::handleDisplayTableEvents);
-        
-        
     }
     
     /*
@@ -79,6 +65,20 @@ public class MediaController {
      */
     private void handleDisplayTableEvents(MouseEvent event){
         
+        if(this.musicplayer.getTableViewDisplay().getSelectionModel().getSelectedItem() != null && event.getClickCount() == 2){
+            
+            this.musicplayer.setPlayingRow(this.musicplayer.getTableViewDisplay().getSelectionModel().getSelectedIndex());
+            this.musicplayer.getTableViewDisplay().getSelectionModel().clearSelection();
+        
+            this.musicplayer.getTableViewDisplay().getFocusModel().focus(this.musicplayer.getPlayingRow());
+        
+            this.musicplayer.playSong();
+            
+        }else{
+            int i = this.musicplayer.getTableViewDisplay().getSelectionModel().getSelectedIndex();
+            this.musicplayer.getTableViewDisplay().getSelectionModel().clearSelection();
+            this.musicplayer.getTableViewDisplay().getFocusModel().focus(i);
+        }
         
     }
 }

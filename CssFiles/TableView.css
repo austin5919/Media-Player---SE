@@ -1,0 +1,17 @@
+.table-row-cell:focused{
+    -fx-background-color: #00b8e6;
+}
+
+.table-view{
+	-fx-min-width: 470px;
+    -fx-min-height: 410px;
+    -fx-max-width: 470px;
+    -fx-max-height: 410px;
+}
+
+.table-view:focused{
+	-fx-background-color: #e6e6e6,-fx-box-border,-fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+    -fx-padding: 1; 
+}

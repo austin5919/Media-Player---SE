@@ -17,6 +17,10 @@ public class Style {
                 "-fx-alignment: center;";
     }
     
+    public String TableView(){
+        return "./CssFiles/TableView.css";
+    }
+    
     public Stage stageStyle(Stage newStage, String title, int height, int width){
         
         newStage.setTitle(title);
@@ -35,13 +39,6 @@ public class Style {
                 "-fx-min-height:"  + size + "px;"+
                 "-fx-max-width:" + size + "px;" +
                 "-fx-max-height:" + size + "px;";
-    }
-    
-    public String playListStyle(int height, int width){
-        return "-fx-min-width:" + width + "px;" +
-                "-fx-min-height:"  + height + "px;"+
-                "-fx-max-width:" + width + "px;" +
-                "-fx-max-height:" + height + "px;";
     }
     
     public String displayHboxStyle(){
