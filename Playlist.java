@@ -32,8 +32,44 @@ public class PlayList{
         this.songName = new ArrayList<>();
         this.songLength = new ArrayList<>();
         this.songLink = new ArrayList<>();
+        getDefaultSongName();
+        getDefaultSongLength();
+        getDefaultLink();
+        setObserveableList();
     }
     
+    private void getDefaultSongName(){
+        
+        this.songName.add("Schmetterling");
+        this.songName.add("PrideOfTheWolverines");
+        this.songName.add("Prefunk Loop");
+        this.songName.add("Mark_Ronson_Uptown_Funk_ft_Bruno_Mars");
+        this.songName.add("Lizzy");
+        this.songName.add("Here We Go");
+        this.songName.add("Forest Frolic Loop");
+    }
+    
+    private void getDefaultSongLength(){
+        
+        this.songLength.add("01:02");
+        this.songLength.add("03:42");
+        this.songLength.add("00:20");
+        this.songLength.add("04:30");
+        this.songLength.add("00:31");
+        this.songLength.add("00:57");
+        this.songLength.add("00:37");
+    }
+    
+    private void getDefaultLink(){
+        
+        this.songLink.add("./songs/Schmetterling.mp3");
+        this.songLink.add("./songs/PrideOfTheWolverines.mp3");
+        this.songLink.add("./songs/Prefunk Loop.mp3");
+        this.songLink.add("./songs/Mark_Ronson_Uptown_Funk_ft_Bruno_Mars.mp3");
+        this.songLink.add("./songs/Lizzy.mp3");
+        this.songLink.add("./songs/Here We Go.mp3");
+        this.songLink.add("./songs/Forest Frolic Loop.mp3");
+    }
     /**
      * receive a song object and place their content
      * in between three array list inside this class.

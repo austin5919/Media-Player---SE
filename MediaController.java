@@ -33,6 +33,7 @@ public class MediaController {
     public void setDisplayTable(TableView<Song> display){
         
         this.musicplayer.setTableViewDisplay(display);
+        this.musicplayer.refreshPlaylist();
         display.setOnMousePressed(this::handleDisplayTableEvents);
     }
     
@@ -75,6 +76,7 @@ public class MediaController {
             this.musicplayer.playSong();
             
         }else{
+            
             int i = this.musicplayer.getTableViewDisplay().getSelectionModel().getSelectedIndex();
             this.musicplayer.getTableViewDisplay().getSelectionModel().clearSelection();
             this.musicplayer.getTableViewDisplay().getFocusModel().focus(i);
