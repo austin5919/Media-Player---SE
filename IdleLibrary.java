@@ -1,14 +1,25 @@
 public class IdleLibrary implements State{
 
     private WriteXml xmlWrite = new WriteXml();
-    private readXml xmlRead = new readXml();
+
 
     private MusicPlayer musicplayer;
     public IdleLibrary(MusicPlayer newMusicplayer){this.musicplayer = newMusicplayer;}
 
     @Override
     public void loadLibrary() {
-        refresh();
+
+        try{
+
+            musicplayer.getLibrary().removeAll();
+
+        }catch(Exception e){
+
+            System.out.println("Library is empty there is no need to clear it");
+
+        }
+
+        new UpdateViewComponents().updateSongListToTableView(musicplayer);
     }
 
     @Override
@@ -27,13 +38,12 @@ public class IdleLibrary implements State{
     public void browseSong() {
 
         SongActions songAct = new SongActions(this.musicplayer.getBrowserPath());
-        songAct.addNewSong(musicplayer, musicplayer.getLibrary(),"./library.xml");
+        new UpdateViewComponents().addIndividualSongsToTableView(musicplayer, songAct, musicplayer.getLibrary(),"./library.xml");
         this.musicplayer.setState(this.musicplayer.getLastState());
     }
 
-    private void refresh(){
-        this.xmlRead.setTracks("./library.xml");
-        this.musicplayer.setLibrary(this.xmlRead.getTracks());
-        this.musicplayer.getDisplay().setItems(this.musicplayer.getLibrary());
+    @Override
+    public void updatePlayListSection() {
+        this.musicplayer.setState(this.musicplayer.getIdleOtherPlaylist());
     }
 }

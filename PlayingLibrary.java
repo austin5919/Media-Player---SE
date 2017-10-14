@@ -24,4 +24,9 @@ public class PlayingLibrary implements State{
         this.musicplayer.setState(this.musicplayer.getIdleLibrary());
         this.musicplayer.browseSong();
     }
+
+    @Override
+    public void updatePlayListSection() {
+        this.musicplayer.setState(this.musicplayer.getIdleOtherPlaylist());
+    }
 }

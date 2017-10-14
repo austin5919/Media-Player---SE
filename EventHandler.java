@@ -16,15 +16,15 @@ public class EventHandler {
     public void setTopComponents(ComboBox playList, Button browse) {
         this.player.setPlayListName(playList);
 
-       /*
         playList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 
             if (newSelection != null) {
-
+                this.player.updatePlayListSelection();
+                this.player.loadLibrary();
                 System.out.println("DropDown Menu");
             }
         });
-        */
+
 
        browse.setOnAction(this::browserButtonAction);
 

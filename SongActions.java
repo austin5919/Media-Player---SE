@@ -52,28 +52,6 @@ public class SongActions {
                 TimeUnit.MILLISECONDS.toSeconds((long) duration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) duration)));
     }
 
-    public void addNewSong(MusicPlayer musicPlayer, ObservableList library, String path){
-
-        getMediaPlayer().setOnReady(() -> {
-            Platform.runLater(() -> {
-                createSongObject(musicPlayer.getBrowserSongName(),musicPlayer.getBrowserPath());
-                if(new Exist().CheckList(musicPlayer.getBrowserSongName(),library)){
-                    try {
-                        musicPlayer.getDisplay().getItems().add(getSong());
-                        new WriteXml().AppendChildToXml(path,getSong());
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }else{
-
-                    System.out.println("this song is already in the library");
-                }
-            });
-        });
-    }
-
     public void play(){ this.mediaPlayer.play();}
 
     public void stop() {

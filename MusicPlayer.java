@@ -8,6 +8,7 @@ public class MusicPlayer {
 
     private TableView<Song> display;
     private ObservableList<Song> library;
+    private ObservableList<Song> currentPlaylist;
     private ComboBox playListName;
 
     private String selectedSong;
@@ -20,11 +21,14 @@ public class MusicPlayer {
 
     private State idleLibrary;
     private State playingLibrary;
+    private State idleOtherPlaylist;
+    private State playingOtherPlaylist;
 
     public MusicPlayer(){
 
         this.idleLibrary = new IdleLibrary(this);
         this.playingLibrary = new PlayingLibrary(this);
+        this.idleOtherPlaylist = new IdleOtherPlaylist(this);
         this.state = idleLibrary;
         this.lastState = idleLibrary;
     }
@@ -39,11 +43,15 @@ public class MusicPlayer {
 
     public SongActions getController() { return controller; }
 
+    public State getIdleOtherPlaylist() { return idleOtherPlaylist; }
+
     public State getLastState() { return lastState; }
 
     public void setLastState(State lastState) { this.lastState = lastState; }
 
     public String getBrowserSongName() { return browserSongName; }
+
+    public ComboBox getPlayListName() { return playListName; }
 
     public void setBrowserSongName(String browserSongName) { this.browserSongName = browserSongName; }
 
@@ -75,4 +83,5 @@ public class MusicPlayer {
     public void loadNewTrack(){this.state.loadNewTrack();}
     public void playSong(){this.state.playSong();}
     public void browseSong(){this.state.browseSong();}
+    public void updatePlayListSelection(){this.state.updatePlayListSection();}
 }
