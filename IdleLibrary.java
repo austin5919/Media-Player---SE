@@ -4,24 +4,21 @@
 public class IdleLibrary implements State{
 
     private WriteXml xmlWrite = new WriteXml();
-    private MusicPlayer musicplayer;
+    private StateChanges musicplayer;
+    String path = "./library.xml";
 
-    ViewComponentInput input;
-    ViewComponentOutput output;
     ViewComponents comp;
-    SongActions songAct;
+    MusicPlayer songAct;
+    //Library lib;
 
     /**
      * take in a musicplayer and set some variables to make
      * life easier
      * @param newMusicplayer
      */
-    public IdleLibrary(MusicPlayer newMusicplayer){
+    public IdleLibrary(StateChanges newMusicplayer){
 
         this.musicplayer = newMusicplayer;
-
-        this.input = newMusicplayer.getViewCompInClass();
-        this.output = newMusicplayer.getViewCompOutClass();
         this.comp = newMusicplayer.getViewCompClass();
         this.songAct = newMusicplayer.getSongActClass();
     }
@@ -31,8 +28,8 @@ public class IdleLibrary implements State{
      */
     @Override
     public void loadLibrary() {
-
-        new UpdateViewComponents(musicplayer).updateSongListToTableView();
+        //update tableView
+        new UpdateComponents(musicplayer).refreshTableView(path);
     }
 
     /**
@@ -41,7 +38,7 @@ public class IdleLibrary implements State{
     @Override
     public void loadNewTrack() {
         this.songAct.stop();
-        this.songAct.setMediaPlayer(output.getSelectedSong());
+        this.songAct.setMediaPlayer(comp.getSelectedSong());
     }
 
     /**
@@ -58,8 +55,7 @@ public class IdleLibrary implements State{
      */
     @Override
     public void browseSong() {
-        new UpdateViewComponents(musicplayer).addIndividualSongsToTableView(new SongActions(output.getBrowserPath()),
-                input.getPlayList(),"./library.xml");
+        new UpdateComponents(musicplayer).addSingleSong(new MusicPlayer(this.comp.getBrowserPath()), path);
     }
 
     @Override

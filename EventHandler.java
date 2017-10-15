@@ -13,9 +13,7 @@ import java.io.File;
  */
 public class EventHandler {
 
-    private MusicPlayer player = new MusicPlayer();
-
-    private ViewComponentOutput output;
+    private StateChanges player = new StateChanges();
     private ViewComponents comp;
     private MyPlayList myplay;
 
@@ -24,8 +22,6 @@ public class EventHandler {
      * debugging easier
      */
     public EventHandler(){
-
-        this.output = this.player.getViewCompOutClass();
         this.comp = this.player.getViewCompClass();
         this.myplay = this.player.getMyPlayListClass();
     }
@@ -98,11 +94,11 @@ public class EventHandler {
 
             //set the song name
             String songName = theFile.getName().replace(".mp3", "");
-            this.output.setBrowserSongName(songName);
+            this.comp.setBrowserSongName(songName);
 
             //set the song path
             String songPath = theFile.getAbsolutePath();
-            this.output.setBrowserPath(songPath);
+            this.comp.setBrowserPath(songPath);
 
             //call browser method
             this.player.browseSong();
@@ -140,10 +136,10 @@ public class EventHandler {
 
             //set the selection index. i will use this to recover the focused index when switch back to
             //a main playlist
-            this.output.setSelectedIndex(this.comp.getDisplay().getSelectionModel().getSelectedIndex());
+            this.comp.setSelectedIndex(this.comp.getDisplay().getSelectionModel().getSelectedIndex());
 
             //set the selected song to play it
-            this.output.setSelectedSong(this.myplay.getBackgroundPlayer().getItems().get(this.output.getSelectedIndex()).getSongPath());
+            this.comp.setSelectedSong(this.myplay.getBackgroundPlayer().getItems().get(this.comp.getSelectedIndex()).getSongPath());
 
             //make the selected item in the display null, this way when you click blank
             //spaces it doesnt fire the handler
@@ -151,7 +147,7 @@ public class EventHandler {
 
             //set the focus towards the selected index. this immitates the selected item
             //without actually selecting it.
-            this.comp.getDisplay().getFocusModel().focus(this.output.getSelectedIndex());
+            this.comp.getDisplay().getFocusModel().focus(this.comp.getSelectedIndex());
 
             //load the new song in to the media player
             this.player.loadNewTrack();

@@ -14,25 +14,25 @@ import javafx.collections.FXCollections;
  */
 public class readXml {
 
-    ObservableList<Song> library;
+    private ObservableList<Song> listOfSongs;
 
     /**
      * define the observable list to hold my values
      */
-    readXml(){ this.library = FXCollections.observableArrayList(); }
+    readXml(){ this.listOfSongs = FXCollections.observableArrayList(); }
 
     /**
      * gets the observable list
      * @return
      */
-    public ObservableList<Song> getTracks() { return library; }
+    public ObservableList<Song> getListOfSongs() { return listOfSongs; }
 
     /**
      * we will read the files and fill the results in to the observablelist
      * throw an exception if file cant be found
      * @param path
      */
-    public void setTracks(String path){
+    public void setListOfSongs(String path){
 
         try {
 
@@ -64,8 +64,8 @@ public class readXml {
 
                     //check if song already exist to avoid duplicates and check if the path exist to avoid
                     //errors
-                    if(new Exist().CheckList(songName,this.library) && new Exist().CheckFile(songPath)){
-                        this.library.add(new Song(songName,songDuration,songPath));
+                    if(new Exist().CheckList(songName,this.listOfSongs) && new Exist().CheckFile(songPath)){
+                        this.listOfSongs.add(new Song(songName,songDuration,songPath));
                     }else{
                         System.out.println("you have more than 1 " + songName + ".mp3 in your playlist or library " +
                                 "or the path does not exist anymore. Deleting the duplicates or broken songs");
