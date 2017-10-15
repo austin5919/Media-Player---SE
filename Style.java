@@ -1,5 +1,15 @@
+/**
+ * this class simply handles the styles
+ */
 public class Style {
 
+    /**
+     * sets dimension
+     * @param radius
+     * @param width
+     * @param heigth
+     * @return
+     */
     public String setDimensions(int radius, int width, int heigth){
 
         return  "-fx-background-radius:" + radius + "em;" +
@@ -9,6 +19,10 @@ public class Style {
                 "-fx-max-height:" + heigth + "px;";
     }
 
+    /**
+     * sets settings for tableview using css file
+     * @return
+     */
     public String tableView(){
         return "./CssFiles/TableView.css";
     }

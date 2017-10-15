@@ -1,11 +1,35 @@
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
+/**
+ * this class updates the GUI compoents
+ */
 public class UpdateViewComponents {
-
     private readXml xmlRead = new readXml();
 
-    public void updateSongListToTableView(MusicPlayer musicplayer){
+    ViewComponentInput input;
+    ViewComponentOutput output;
+    ViewComponents comp;
+
+    //MusicPlayer musicplayer;
+
+    /**
+     * takes in a a musicplayer and a few variables to make
+     * methods easier
+     * @param newMusicplayer
+     */
+    public UpdateViewComponents(MusicPlayer newMusicplayer){
+
+        this.input = newMusicplayer.getViewCompInClass();
+        this.output = newMusicplayer.getViewCompOutClass();
+        this.comp = newMusicplayer.getViewCompClass();
+
+    }
+
+    /**
+     * update the TableView with a new list of songs
+     */
+    public void updateSongListToTableView(){
 
         Platform.runLater(new Runnable() {
             @Override
@@ -13,21 +37,27 @@ public class UpdateViewComponents {
 
                 try{
 
-                    musicplayer.getPlayList().removeAll();
+                    input.getPlayList().removeAll();
 
                 }catch(Exception e){}
 
-                xmlRead.setTracks("./" + musicplayer.getPlayListName().getSelectionModel().getSelectedItem() + ".xml");
-                musicplayer.setPlayList(xmlRead.getTracks());
-                musicplayer.getDisplay().setItems(musicplayer.getPlayList());
+                xmlRead.setTracks("./" + comp.getPlayListName().getSelectionModel().getSelectedItem() + ".xml");
+                input.setPlayList(xmlRead.getTracks());
+                comp.getDisplay().setItems(input.getPlayList());
 
-                musicplayer.getDisplay().getFocusModel().focus(musicplayer.getSelectedIndex());
+                comp.getDisplay().getFocusModel().focus(output.getSelectedIndex());
 
             }
         });
     }
 
-    public void addIndividualSongsToTableView(MusicPlayer musicPlayer, SongActions songAct, ObservableList library, String path){
+    /**
+     * updates the tableview by adding a single song
+     * @param songAct
+     * @param list
+     * @param path
+     */
+    public void addIndividualSongsToTableView(SongActions songAct, ObservableList list, String path){
 
         songAct.getMediaPlayer().setOnReady(() -> {
 
@@ -35,12 +65,12 @@ public class UpdateViewComponents {
                 @Override
                 public void run() {
 
-                    songAct.createSongObject(musicPlayer.getBrowserSongName(),musicPlayer.getBrowserPath());
+                    songAct.createSongObject(output.getBrowserSongName(),output.getBrowserPath());
 
-                    if(new Exist().CheckList(musicPlayer.getBrowserSongName(),library)){
+                    if(new Exist().CheckList(output.getBrowserSongName(),list)){
 
                         try {
-                            musicPlayer.getDisplay().getItems().add(songAct.getSong());
+                            comp.getDisplay().getItems().add(songAct.getSong());
                             new WriteXml().AppendChildToXml(path,songAct.getSong());
 
                         } catch (Exception e) {

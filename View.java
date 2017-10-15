@@ -1,10 +1,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -41,7 +38,7 @@ public class View extends Application {
         border.setTop(topComponents);
         border.setCenter(centerComponents);
 
-        primaryStage.setScene(new Scene(border, 500, 500));
+        primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
     }
 
@@ -65,8 +62,11 @@ public class View extends Application {
         Button browswer = new Button("Browse");
         //browswer.setStyle(style.setDimensions(1,65,27));
 
+        //ProgressBar time = new ProgressBar();
+
         topComponents.add(listDropDown,250,0);
         topComponents.add(browswer,260,0);
+        //topComponents.add(time,0,0);
 
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHgrow(Priority.ALWAYS);

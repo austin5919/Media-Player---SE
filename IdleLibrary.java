@@ -1,33 +1,65 @@
+/**
+ * this defines my actions when the musicplayer is on idle library state
+ */
 public class IdleLibrary implements State{
 
     private WriteXml xmlWrite = new WriteXml();
-
-
     private MusicPlayer musicplayer;
-    public IdleLibrary(MusicPlayer newMusicplayer){this.musicplayer = newMusicplayer;}
 
+    ViewComponentInput input;
+    ViewComponentOutput output;
+    ViewComponents comp;
+    SongActions songAct;
+
+    /**
+     * take in a musicplayer and set some variables to make
+     * life easier
+     * @param newMusicplayer
+     */
+    public IdleLibrary(MusicPlayer newMusicplayer){
+
+        this.musicplayer = newMusicplayer;
+
+        this.input = newMusicplayer.getViewCompInClass();
+        this.output = newMusicplayer.getViewCompOutClass();
+        this.comp = newMusicplayer.getViewCompClass();
+        this.songAct = newMusicplayer.getSongActClass();
+    }
+
+    /**
+     * load he library
+     */
     @Override
     public void loadLibrary() {
 
-        new UpdateViewComponents().updateSongListToTableView(musicplayer);
+        new UpdateViewComponents(musicplayer).updateSongListToTableView();
     }
 
+    /**
+     * load a new song
+     */
     @Override
     public void loadNewTrack() {
-        this.musicplayer.getController().stop();
-        this.musicplayer.getController().setMediaPlayer(this.musicplayer.getSelectedSong());
+        this.songAct.stop();
+        this.songAct.setMediaPlayer(output.getSelectedSong());
     }
 
+    /**
+     * play a song
+     */
     @Override
     public void playSong() {
-        this.musicplayer.getController().play();
+        songAct.play();
         this.musicplayer.setState(this.musicplayer.getPlayingLibrary());
     }
 
+    /**
+     * browse file
+     */
     @Override
     public void browseSong() {
-        new UpdateViewComponents().addIndividualSongsToTableView(musicplayer,
-                new SongActions(this.musicplayer.getBrowserPath()), musicplayer.getPlayList(),"./library.xml");
+        new UpdateViewComponents(musicplayer).addIndividualSongsToTableView(new SongActions(output.getBrowserPath()),
+                input.getPlayList(),"./library.xml");
     }
 
     @Override
@@ -35,6 +67,9 @@ public class IdleLibrary implements State{
 
     }
 
+    /**
+     * change state to idleOtherPlaylist
+     */
     @Override
     public void switchToOtherPlaylist() {
         this.musicplayer.setState(this.musicplayer.getIdleOtherPlaylist());

@@ -1,21 +1,14 @@
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-
+/**
+ * this class holds all the information i will need
+ * to properly change the states of the mp3 player
+ */
 public class MusicPlayer {
 
-    private SongActions controller = new SongActions();
-
-    private TableView<Song> display;
-    private TableView<Song> backgroundPlayer;
-    private ObservableList<Song> playList;
-    private ComboBox playListName;
-
-    private String selectedSong;
-    private int selectedIndex;
-
-    private String browserSongName;
-    private String browserPath;
+    private SongActions songActClass = new SongActions();
+    private ViewComponents viewCompClass = new ViewComponents();
+    private ViewComponentOutput viewCompOutClass = new ViewComponentOutput();
+    private ViewComponentInput viewCompInClass = new ViewComponentInput();
+    private MyPlayList myPlayListClass = new MyPlayList();
 
     private State state;
 
@@ -24,6 +17,9 @@ public class MusicPlayer {
     private State idleOtherPlaylist;
     private State playingOtherPlaylist;
 
+    /**
+     * a constructor to set my starting states
+     */
     public MusicPlayer(){
 
         this.idleLibrary = new IdleLibrary(this);
@@ -32,60 +28,91 @@ public class MusicPlayer {
         this.state = idleLibrary;
     }
 
-    public TableView<Song> getDisplay() {
-        return display;
+    /**
+     * gets the viewComponentInput class
+     * @return
+     */
+    public ViewComponentInput getViewCompInClass() {
+        return viewCompInClass;
     }
 
-    public void setDisplay(TableView<Song> display) {
-        this.display = display;
+    /**
+     * gets the MyPlayList class
+     * @return
+     */
+    public MyPlayList getMyPlayListClass() { return myPlayListClass; }
+
+    /**
+     * gets the viewComponentOutput class
+     * @return
+     */
+    public ViewComponentOutput getViewCompOutClass() {
+        return viewCompOutClass;
     }
 
-    public SongActions getController() { return controller; }
+    /**
+     * get the song class
+     * @return
+     */
+    public SongActions getSongActClass() { return songActClass; }
 
+    /**
+     * gets the viewComponent Class
+     * @return
+     */
+    public ViewComponents getViewCompClass() { return viewCompClass; }
+
+    /**
+     * gets the iddleOtherPlaylist state
+     * @return
+     */
     public State getIdleOtherPlaylist() { return idleOtherPlaylist; }
 
-    public String getBrowserSongName() { return browserSongName; }
-
-    public ComboBox getPlayListName() { return playListName; }
-
-    public void setBrowserSongName(String browserSongName) { this.browserSongName = browserSongName; }
-
-    public String getBrowserPath() { return browserPath; }
-
-    public int getSelectedIndex() { return selectedIndex; }
-
-    public void setSelectedIndex(int selectedIndex) { this.selectedIndex = selectedIndex; }
-
-    public ObservableList<Song> getPlayList() { return playList; }
-
-    public void setPlayList(ObservableList<Song> playList) { this.playList = playList; }
-
-    public void setBrowserPath(String browserPath) { this.browserPath = browserPath; }
-
-    public void setPlayListName(ComboBox playListName) { this.playListName = playListName; }
-
-    public TableView<Song> getBackgroundPlayer() { return backgroundPlayer; }
-
-    public void setBackgroundPlayer(TableView<Song> backgroundPlayer) { this.backgroundPlayer = backgroundPlayer; }
-
+    /**
+     * gets the idleLibrary state
+     * @return
+     */
     public State getIdleLibrary() { return idleLibrary; }
 
+    /**
+     * gets the playingLibrary state
+     * @return
+     */
     public State getPlayingLibrary() { return playingLibrary; }
 
+    /**
+     * sets the musicplayer state
+     * @param state
+     */
     public void setState(State state) { this.state = state; }
 
-    public String getSelectedSong() {
-        return selectedSong;
-    }
-
-    public void setSelectedSong(String selectedSong) {
-        this.selectedSong = selectedSong;
-    }
-
+    /**
+     * calls the load library method based on the current state of the music player
+     */
     public void loadLibrary(){this.state.loadLibrary();}
+
+    /**
+     * calls the loadNewTrack method based on the current state of the music player
+     */
     public void loadNewTrack(){this.state.loadNewTrack();}
+
+    /**
+     * calls the playSong method based on the current state of the music player
+     */
     public void playSong(){this.state.playSong();}
+
+    /**
+     * calls the browser song method based on the current state of the music player
+     */
     public void browseSong(){this.state.browseSong();}
+
+    /**
+     * calls the switchToLibrary method based on the current state of the music player
+     */
     public void switchToLibrary(){this.state.switchToLibrary();}
+
+    /**
+     * calls the switchToOtherPlaylist method based on the current state of the music player
+     */
     public void switchToOtherPlaylist(){this.state.switchToOtherPlaylist();}
 }

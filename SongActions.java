@@ -16,16 +16,35 @@ public class SongActions {
     private MediaPlayer mediaPlayer;
     private Song song;
 
+    /**
+     * get song objer
+     * @return
+     */
     public Song getSong() { return song; }
 
+    /**
+     * empty constructor to call without passing in anything
+     */
     public SongActions(){ }
 
+    /**
+     * takes in a path and sets te mediaplayer
+     * @param path
+     */
     public SongActions(String path){ setMediaPlayer(path); }
 
+    /**
+     * gets the mediaplayer
+     * @return
+     */
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
+    /**
+     * sets the media player
+     * @param path
+     */
     public void setMediaPlayer(String path){
 
         Media media = new Media(new File(path).toURI().toString());
@@ -33,6 +52,11 @@ public class SongActions {
         this.mediaPlayer = player;
     }
 
+    /**
+     * creates the song object
+     * @param songName
+     * @param songPath
+     */
     public void createSongObject(String songName, String songPath){
 
         Song songObject = new Song();
@@ -45,6 +69,11 @@ public class SongActions {
     }
 
 
+    /**
+     * formats durations to minutes : seconds
+     * @param duration
+     * @return
+     */
     private String formatDuration(double duration){
 
         return String.format("%02d:%02d",
@@ -52,8 +81,14 @@ public class SongActions {
                 TimeUnit.MILLISECONDS.toSeconds((long) duration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) duration)));
     }
 
+    /**
+     * play media
+     */
     public void play(){ this.mediaPlayer.play();}
 
+    /**
+     * stop media
+     */
     public void stop() {
 
         if (this.mediaPlayer != null) {
