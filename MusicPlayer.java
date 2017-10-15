@@ -7,10 +7,12 @@ public class MusicPlayer {
     private SongActions controller = new SongActions();
 
     private TableView<Song> display;
+    private TableView<Song> backgroundPlayer;
     private ObservableList<Song> playList;
     private ComboBox playListName;
 
     private String selectedSong;
+    private int selectedIndex;
 
     private String browserSongName;
     private String browserPath;
@@ -50,6 +52,10 @@ public class MusicPlayer {
 
     public String getBrowserPath() { return browserPath; }
 
+    public int getSelectedIndex() { return selectedIndex; }
+
+    public void setSelectedIndex(int selectedIndex) { this.selectedIndex = selectedIndex; }
+
     public ObservableList<Song> getPlayList() { return playList; }
 
     public void setPlayList(ObservableList<Song> playList) { this.playList = playList; }
@@ -57,6 +63,10 @@ public class MusicPlayer {
     public void setBrowserPath(String browserPath) { this.browserPath = browserPath; }
 
     public void setPlayListName(ComboBox playListName) { this.playListName = playListName; }
+
+    public TableView<Song> getBackgroundPlayer() { return backgroundPlayer; }
+
+    public void setBackgroundPlayer(TableView<Song> backgroundPlayer) { this.backgroundPlayer = backgroundPlayer; }
 
     public State getIdleLibrary() { return idleLibrary; }
 

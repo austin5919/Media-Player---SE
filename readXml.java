@@ -57,8 +57,6 @@ public class readXml {
                 }
             }
 
-        } catch (Exception e) {
-            System.out.println("could not find the library or playlist file");
-        }
+        } catch (Exception e) { }
     }
 }

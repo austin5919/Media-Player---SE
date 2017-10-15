@@ -25,8 +25,6 @@ public class IdleOtherPlaylist implements State {
 
     @Override
     public void switchToLibrary() {
-        this.musicplayer.getController().stop();
-        this.musicplayer.getDisplay().getSelectionModel().select(-1);
         this.musicplayer.setState(this.musicplayer.getIdleLibrary());
     }
 

@@ -15,15 +15,13 @@ public class UpdateViewComponents {
 
                     musicplayer.getPlayList().removeAll();
 
-                }catch(Exception e){
-
-                    System.out.println("Library is empty there is no need to clear it");
-
-                }
+                }catch(Exception e){}
 
                 xmlRead.setTracks("./" + musicplayer.getPlayListName().getSelectionModel().getSelectedItem() + ".xml");
                 musicplayer.setPlayList(xmlRead.getTracks());
                 musicplayer.getDisplay().setItems(musicplayer.getPlayList());
+
+                musicplayer.getDisplay().getFocusModel().focus(musicplayer.getSelectedIndex());
 
             }
         });

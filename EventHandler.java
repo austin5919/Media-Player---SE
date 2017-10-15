@@ -23,7 +23,6 @@ public class EventHandler {
                 if(this.player.getPlayListName().getSelectionModel().getSelectedItem() == "Library"){
 
                     this.player.switchToLibrary();
-                    System.out.println("switching to library");
 
                 }else if(this.player.getPlayListName().getSelectionModel().getSelectedItem() == "Create Playlist"){
 
@@ -31,16 +30,17 @@ public class EventHandler {
 
 
                     this.player.switchToOtherPlaylist();
-                    System.out.println("Code to create playlist");
+
+                    System.out.println("code to create playlist is under construction..!!");
+                    System.out.println("the file chooser can still browse files but nothings happens...!!");
+                    System.out.println("to test the file chooser functionality please go back to the Library...!!");
 
                 }else{
 
                     this.player.switchToOtherPlaylist();
-                    System.out.println("switching to other playlist");
                 }
 
                 this.player.loadLibrary();
-                System.out.println("loaded library");
             }
         });
 
@@ -85,12 +85,15 @@ public class EventHandler {
 
         if(this.player.getDisplay().getSelectionModel().getSelectedItem() != null){
 
-            int i = this.player.getDisplay().getSelectionModel().getSelectedIndex();
-            this.player.setSelectedSong(this.player.getDisplay().getSelectionModel().getSelectedItem().getSongPath());
+            this.player.setBackgroundPlayer(this.player.getDisplay());
+            this.player.setSelectedIndex(this.player.getDisplay().getSelectionModel().getSelectedIndex());
+            this.player.setSelectedSong(this.player.getBackgroundPlayer().getItems().get(this.player.getSelectedIndex()).getSongPath());
             this.player.getDisplay().getSelectionModel().clearSelection();
-            this.player.getDisplay().getFocusModel().focus(i);
+            this.player.getDisplay().getFocusModel().focus(this.player.getSelectedIndex());
             this.player.loadNewTrack();
             this.player.playSong();
+
+            //System.out.println(this.player.getDisplay().getItems().get(this.player.getSelectedIndex()).getSongName());
 
         }
     }

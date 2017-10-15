@@ -56,7 +56,7 @@ public class WriteXml {
             write(doc,path);
 
         } catch (Exception e) {
-            System.out.println("was not able to fully complete the writting process");
+            System.out.println("was not able to add song or create playlist");
         }
     }
 
