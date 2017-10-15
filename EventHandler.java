@@ -19,9 +19,28 @@ public class EventHandler {
         playList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 
             if (newSelection != null) {
-                this.player.updatePlayListSelection();
+
+                if(this.player.getPlayListName().getSelectionModel().getSelectedItem() == "Library"){
+
+                    this.player.switchToLibrary();
+                    System.out.println("switching to library");
+
+                }else if(this.player.getPlayListName().getSelectionModel().getSelectedItem() == "Create Playlist"){
+
+                    //TODO:Create playlist
+
+
+                    this.player.switchToOtherPlaylist();
+                    System.out.println("Code to create playlist");
+
+                }else{
+
+                    this.player.switchToOtherPlaylist();
+                    System.out.println("switching to other playlist");
+                }
+
                 this.player.loadLibrary();
-                System.out.println("DropDown Menu");
+                System.out.println("loaded library");
             }
         });
 

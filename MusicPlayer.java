@@ -7,8 +7,7 @@ public class MusicPlayer {
     private SongActions controller = new SongActions();
 
     private TableView<Song> display;
-    private ObservableList<Song> library;
-    private ObservableList<Song> currentPlaylist;
+    private ObservableList<Song> playList;
     private ComboBox playListName;
 
     private String selectedSong;
@@ -17,7 +16,6 @@ public class MusicPlayer {
     private String browserPath;
 
     private State state;
-    private State lastState;
 
     private State idleLibrary;
     private State playingLibrary;
@@ -30,7 +28,6 @@ public class MusicPlayer {
         this.playingLibrary = new PlayingLibrary(this);
         this.idleOtherPlaylist = new IdleOtherPlaylist(this);
         this.state = idleLibrary;
-        this.lastState = idleLibrary;
     }
 
     public TableView<Song> getDisplay() {
@@ -45,10 +42,6 @@ public class MusicPlayer {
 
     public State getIdleOtherPlaylist() { return idleOtherPlaylist; }
 
-    public State getLastState() { return lastState; }
-
-    public void setLastState(State lastState) { this.lastState = lastState; }
-
     public String getBrowserSongName() { return browserSongName; }
 
     public ComboBox getPlayListName() { return playListName; }
@@ -57,9 +50,9 @@ public class MusicPlayer {
 
     public String getBrowserPath() { return browserPath; }
 
-    public ObservableList<Song> getLibrary() { return library; }
+    public ObservableList<Song> getPlayList() { return playList; }
 
-    public void setLibrary(ObservableList<Song> library) { this.library = library; }
+    public void setPlayList(ObservableList<Song> playList) { this.playList = playList; }
 
     public void setBrowserPath(String browserPath) { this.browserPath = browserPath; }
 
@@ -83,5 +76,6 @@ public class MusicPlayer {
     public void loadNewTrack(){this.state.loadNewTrack();}
     public void playSong(){this.state.playSong();}
     public void browseSong(){this.state.browseSong();}
-    public void updatePlayListSelection(){this.state.updatePlayListSection();}
+    public void switchToLibrary(){this.state.switchToLibrary();}
+    public void switchToOtherPlaylist(){this.state.switchToOtherPlaylist();}
 }

@@ -5,7 +5,7 @@ public class IdleOtherPlaylist implements State {
 
     @Override
     public void loadLibrary() {
-
+        new UpdateViewComponents().updateSongListToTableView(musicplayer);
     }
 
     @Override
@@ -24,7 +24,14 @@ public class IdleOtherPlaylist implements State {
     }
 
     @Override
-    public void updatePlayListSection() {
+    public void switchToLibrary() {
+        this.musicplayer.getController().stop();
+        this.musicplayer.getDisplay().getSelectionModel().select(-1);
         this.musicplayer.setState(this.musicplayer.getIdleLibrary());
+    }
+
+    @Override
+    public void switchToOtherPlaylist() {
+
     }
 }

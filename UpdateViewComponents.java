@@ -11,22 +11,36 @@ public class UpdateViewComponents {
             @Override
             public void run() {
 
+                try{
+
+                    musicplayer.getPlayList().removeAll();
+
+                }catch(Exception e){
+
+                    System.out.println("Library is empty there is no need to clear it");
+
+                }
+
                 xmlRead.setTracks("./" + musicplayer.getPlayListName().getSelectionModel().getSelectedItem() + ".xml");
-                musicplayer.setLibrary(xmlRead.getTracks());
-                musicplayer.getDisplay().setItems(musicplayer.getLibrary());
+                musicplayer.setPlayList(xmlRead.getTracks());
+                musicplayer.getDisplay().setItems(musicplayer.getPlayList());
 
             }
         });
     }
 
     public void addIndividualSongsToTableView(MusicPlayer musicPlayer, SongActions songAct, ObservableList library, String path){
+
         songAct.getMediaPlayer().setOnReady(() -> {
+
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
 
                     songAct.createSongObject(musicPlayer.getBrowserSongName(),musicPlayer.getBrowserPath());
+
                     if(new Exist().CheckList(musicPlayer.getBrowserSongName(),library)){
+
                         try {
                             musicPlayer.getDisplay().getItems().add(songAct.getSong());
                             new WriteXml().AppendChildToXml(path,songAct.getSong());
@@ -39,7 +53,6 @@ public class UpdateViewComponents {
 
                         System.out.println("this song is already in the library");
                     }
-
                 }
             });
         });

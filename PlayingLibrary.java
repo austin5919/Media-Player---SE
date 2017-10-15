@@ -20,13 +20,19 @@ public class PlayingLibrary implements State{
 
     @Override
     public void browseSong() {
-        this.musicplayer.setLastState(this.musicplayer.getPlayingLibrary());
-        this.musicplayer.setState(this.musicplayer.getIdleLibrary());
-        this.musicplayer.browseSong();
+        new UpdateViewComponents().addIndividualSongsToTableView(musicplayer,
+                new SongActions(this.musicplayer.getBrowserPath()), musicplayer.getPlayList(),"./library.xml");
     }
 
     @Override
-    public void updatePlayListSection() {
+    public void switchToLibrary() {
+
+    }
+
+    @Override
+    public void switchToOtherPlaylist() {
+        this.musicplayer.getController().stop();
+        this.musicplayer.getDisplay().getSelectionModel().select(-1);
         this.musicplayer.setState(this.musicplayer.getIdleOtherPlaylist());
     }
 }
