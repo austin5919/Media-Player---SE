@@ -87,13 +87,16 @@ public class EventHandler {
 
         //set the file chooser
         FileChooser getFile = new FileChooser();
+        getFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("filter search", "*.mp3","*.mp4"));
         File theFile = getFile.showOpenDialog(null);
 
         //check if what you pick is null
         if (theFile != null){
 
             //set the song name
-            String songName = theFile.getName().replace(".mp3", "");
+            String songName = theFile.getName();
+            songName =songName.replace("\\", "/");
+
             this.comp.setBrowserSongName(songName);
 
             //set the song path
