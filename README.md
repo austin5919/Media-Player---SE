@@ -3,7 +3,8 @@
 This project allows users to play music.
 
 ## Getting Started
-Copy the files and folders provided to a location on your computer. Open your prefered command line interpreter (I prefer Command Prompt)  change to the directory you've placed the previously mentioned files. Run the following commands to compile the source code and run the program::
+Copy the files and folders provided to a location on your computer. Open your prefered command line interpreter (I prefer Command Prompt)  change to the directory you've placed the previously mentioned files. Run the following commands to compile the source code and run the program:
+
 ```
 javac *.java
 java View
