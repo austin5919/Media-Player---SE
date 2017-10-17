@@ -12,8 +12,9 @@ public class StateChanges {
 
     private State idleLibrary;
     private State playingLibrary;
-    private State idleOtherPlaylist;
-    private State playingOtherPlaylist;
+    private State idlePlaylist;
+    private State playingPlaylist;
+
 
     /**
      * a constructor to set my starting states
@@ -22,7 +23,7 @@ public class StateChanges {
 
         this.idleLibrary = new IdleLibrary(this);
         this.playingLibrary = new PlayingLibrary(this);
-        this.idleOtherPlaylist = new IdleOtherPlaylist(this);
+        this.idlePlaylist = new IdlePlaylist(this);
         this.state = idleLibrary;
     }
 
@@ -45,12 +46,6 @@ public class StateChanges {
     public ViewComponents getViewCompClass() { return viewCompClass; }
 
     /**
-     * gets the iddleOtherPlaylist state
-     * @return
-     */
-    public State getIdleOtherPlaylist() { return idleOtherPlaylist; }
-
-    /**
      * gets the idleLibrary state
      * @return
      */
@@ -61,6 +56,18 @@ public class StateChanges {
      * @return
      */
     public State getPlayingLibrary() { return playingLibrary; }
+
+    /**
+     * get idle playlist
+     * @return
+     */
+    public State getIdlePlaylist() { return idlePlaylist; }
+
+    /**
+     * get playing playlist
+     * @return
+     */
+    public State getPlayingPlaylist() { return playingPlaylist; }
 
     /**
      * sets the musicplayer state
@@ -96,5 +103,6 @@ public class StateChanges {
     /**
      * calls the switchToOtherPlaylist method based on the current state of the music player
      */
-    public void switchToOtherPlaylist(){this.state.switchToOtherPlaylist();}
+    public void switchToPlaylist(){this.state.switchToPlaylist();}
+    public void createPlaylist(){this.state.createPlaylist();}
 }

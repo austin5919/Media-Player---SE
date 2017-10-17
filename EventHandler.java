@@ -2,6 +2,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
@@ -57,26 +58,17 @@ public class EventHandler {
 
                     //switch to library state
                     this.player.switchToLibrary();
+                    this.player.loadLibrary();
 
                 }else if(this.comp.getPlayListName().getSelectionModel().getSelectedItem() == "Create Playlist"){
 
-                    //TODO:Create playlist
-
-                    //switch to other playlist state
-                    this.player.switchToOtherPlaylist();
-
-                    System.out.println("code to create playlist is under construction..!!");
-                    System.out.println("the file chooser can still browse files but nothings happens...!!");
-                    System.out.println("to test the file chooser functionality please go back to the Library...!!");
+                    this.player.createPlaylist();
 
                 }else{
 
                     //switch to other playlist state
-                    this.player.switchToOtherPlaylist();
+                    this.player.switchToPlaylist();
                 }
-
-                //load library
-                this.player.loadLibrary();
             }
         });
 
@@ -132,17 +124,19 @@ public class EventHandler {
     private void handleDisplayTableEvents(MouseEvent e){
 
         //check if selection is null
-        if(this.player.getViewCompClass().getDisplay().getSelectionModel().getSelectedItem() != null){
-
+        if(this.player.getViewCompClass().getDisplay().getSelectionModel().getSelectedItem() != null &&
+                e.getButton() == MouseButton.PRIMARY ){
+            
             //set the background player for later on auto play uses if with have to implement it
-            this.myplay.setBackgroundPlayer(this.comp.getDisplay());
+            //this.myplay.setBackgroundPlayer(this.comp.getDisplay());
 
             //set the selection index. i will use this to recover the focused index when switch back to
             //a main playlist
             this.comp.setSelectedIndex(this.comp.getDisplay().getSelectionModel().getSelectedIndex());
 
             //set the selected song to play it
-            this.comp.setSelectedSong(this.myplay.getBackgroundPlayer().getItems().get(this.comp.getSelectedIndex()).getSongPath());
+            //this.comp.setSelectedSong(this.myplay.getBackgroundPlayer().getItems().get(this.comp.getSelectedIndex()).getSongPath());
+            this.comp.setSelectedSong(this.comp.getDisplay().getItems().get(this.comp.getSelectedIndex()).getSongPath());
 
             //make the selected item in the display null, this way when you click blank
             //spaces it doesnt fire the handler

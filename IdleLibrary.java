@@ -46,6 +46,7 @@ public class IdleLibrary implements State{
      */
     @Override
     public void playSong() {
+
         songAct.play();
         this.musicplayer.setState(this.musicplayer.getPlayingLibrary());
     }
@@ -59,6 +60,15 @@ public class IdleLibrary implements State{
     }
 
     @Override
+    public void createPlaylist() {
+
+        System.out.println("code to create playlist is under construction..!!");
+        System.out.println("the file chooser can still browse files but nothings happens...!!");
+        System.out.println("to test the file chooser functionality please go back to the Library...!!");
+        this.comp.getPlayListName().getSelectionModel().select("Library");
+    }
+
+    @Override
     public void switchToLibrary() {
 
     }
@@ -67,7 +77,7 @@ public class IdleLibrary implements State{
      * change state to idleOtherPlaylist
      */
     @Override
-    public void switchToOtherPlaylist() {
-        this.musicplayer.setState(this.musicplayer.getIdleOtherPlaylist());
+    public void switchToPlaylist() {
+        this.musicplayer.setState(this.musicplayer.getIdlePlaylist());
     }
 }

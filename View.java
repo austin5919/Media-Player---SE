@@ -89,8 +89,8 @@ public class View extends Application {
         TableColumn<Song, String> songDuration = columns("Time", "songDuration");
 
         //TODO: make duration width shorter
-        //songDuration.setMaxWidth(200);
-        //songDuration.setMinWidth(200);
+        songDuration.setMaxWidth(200);
+        songDuration.setMinWidth(200);
 
         //set a constraint so we dont see extra columns on the stage
         centerComponents.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

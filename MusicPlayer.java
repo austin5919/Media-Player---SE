@@ -49,11 +49,13 @@ public class MusicPlayer{
 
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
+
         try {
             TimeUnit.MILLISECONDS.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         this.mediaPlayer = player;
     }
 

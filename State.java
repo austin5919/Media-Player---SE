@@ -6,6 +6,7 @@ public interface State {
     public void loadNewTrack();
     public void playSong();
     public void browseSong();
+    public void createPlaylist();
     public void switchToLibrary();
-    public void switchToOtherPlaylist();
+    public void switchToPlaylist();
 }
