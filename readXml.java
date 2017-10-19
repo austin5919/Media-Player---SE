@@ -19,8 +19,9 @@ public class readXml {
     private ObservableList<Song> listOfSongs;
     //private ArrayList<String> listOfPlaylist;
     private Document doc;
+
     /**
-     * define the observable list to hold my values
+     * set the observable list to hold my values
      */
     readXml(){
         this.listOfSongs = FXCollections.observableArrayList();
@@ -29,14 +30,16 @@ public class readXml {
 
     /**
      * gets the observable list
-     * @return
+     *
+     * @return returns an observable list filled with songs
      */
     public ObservableList<Song> getListOfSongs() { return listOfSongs; }
 
     /**
      * we will read the files and fill the results in to the observablelist
      * throw an exception if file cant be found
-     * @param path
+     *
+     * @param path takes in the path that and reads it
      */
     public void setListOfSongs(String path){
 
@@ -120,6 +123,12 @@ public class readXml {
         }
     }
    */
+
+    /**
+     * this sets up the document
+     *
+     * @param path takes in a path to know what files is being read
+     */
     private void setDoc(String path){
 
         try{

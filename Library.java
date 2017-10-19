@@ -1,19 +1,24 @@
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.media.MediaPlayer;
 
+/**
+ * this class handles all the functionalities of the library
+ */
 public class Library {
 
     //library songs
     private ObservableList<Song> listOfSongs;
     private String libraryPath = "./library.xml";
-    //get library songs
+
+    /**
+     * @return returns an observablie list filled with songs
+     */
     public ObservableList<Song> getListOfSongs() {
         return listOfSongs;
     }
 
-    //reload the library
+    /**
+     * reloads the library and re sets the observable list
+     */
     public void refreshLibrary(){
 
         readXml read = new readXml();
@@ -22,6 +27,11 @@ public class Library {
         this.listOfSongs = read.getListOfSongs();
     }
 
+    /**
+     * reads the xml file and adds new song
+     *
+     * @param song takes in a song object and uses it to add new song
+     */
     public void addsongtoLibrary(Song song){
 
         try {

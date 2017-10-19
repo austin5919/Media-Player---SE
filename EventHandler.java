@@ -27,22 +27,29 @@ public class EventHandler {
 
     /**
      * sets the handlers for the ComboBox and the file chooser button
-     * @param playList
-     * @param browse
+     *
+     * @param comboBox takes in the ComboBox for the dropdown
+     * @param addSongButton takes in a button to handle the file chooser
      */
-    public void setTopComponents(ComboBox playList, Button browse) {
+    public void setTopComponents(ComboBox comboBox, Button addSongButton) {
 
         //set the playlist comboBox
-        this.components.setComboBox(playList);
+        this.components.setComboBox(comboBox);
 
         //call the comboBox handler
-        comboBoxHandler(playList);
+        comboBoxHandler(comboBox);
 
         //call the file chooser handler
-        browse.setOnAction(this::browserButtonAction);
+        addSongButton.setOnAction(this::browserButtonAction);
 
     }
 
+    /**
+     * sets up the right click menu. Still under construction
+     *
+     * @param addtoPlaylist takes in a menu
+     * @param dropMenu takes in a context menu to hold menu/menuItems
+     */
     public void setContextMenu(Menu addtoPlaylist, ContextMenu dropMenu){
 
         //TODO:set up the context menu
@@ -116,6 +123,11 @@ public class EventHandler {
 
     }
 
+    /**
+     * sets up the display
+     *
+     * @param songTableView takes in the tableView to hold all the songs
+     */
     public void setCenterComponents(TableView<Song> songTableView) {
 
         //set the display

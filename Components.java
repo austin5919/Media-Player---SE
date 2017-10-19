@@ -14,21 +14,60 @@ public class Components {
 
     private int selectedIndex;
 
+    /**
+     * @return returns the comboBox/dropdown list
+     */
     public ComboBox getComboBox() {
         return comboBox;
     }
 
-    public void setComboBox(ComboBox comboBox) { this.comboBox = comboBox; }
+    /**
+     * @param comboBox takes in a comboBox and sets it
+     */
+    public void setComboBox(ComboBox comboBox) {
+        this.comboBox = comboBox;
+    }
 
-    public int getSelectedIndex() { return selectedIndex; }
+    /**
+     * @return returns the current song selected index
+     */
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
 
-    public void setSelectedIndex(int selectedIndex) { this.selectedIndex = selectedIndex; }
+    /**
+     * @param selectedIndex takes in the current song selected index
+     */
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex; }
 
-    public Menu getMenu() { return menu; }
 
-    public void setMenu(Menu menu) { this.menu = menu; }
+    /**
+     * @return returns the right click menu
+     */
+    public Menu getMenu() {
+        return menu;
+    }
 
-    public TableView<Song> getDisplay() { return display; }
+    /**
+     * @param menu takes in the right click menu
+     */
+    public void setMenu(Menu menu) {
 
-    public void setDisplay(TableView<Song> display) { this.display = display; }
+        this.menu = menu;
+    }
+
+    /**
+     * @return returns the tableView display
+     */
+    public TableView<Song> getDisplay() {
+        return display;
+    }
+
+    /**
+     * @param display takes in the TableView display and sets it
+     */
+    public void setDisplay(TableView<Song> display) {
+        this.display = display;
+    }
 }

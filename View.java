@@ -13,7 +13,7 @@ public class View extends Application {
     /**
      * program starting point
      *
-     * @param args
+     * @param args comand line
      */
     public static void main(String[] args) {
         launch(args);
@@ -23,7 +23,7 @@ public class View extends Application {
      * sets the primary stage with all the components needed
      * to perform all functions
      *
-     * @param primaryStage
+     * @param primaryStage a primary stage to place the components in
      */
     @Override
     public void start(Stage primaryStage) {

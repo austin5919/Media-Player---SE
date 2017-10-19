@@ -1,6 +1,6 @@
 /**
- * this class holds all the information i will need
- * to properly change the states of the mp3 player
+ * this class holds the information needed to handle
+ * the states the MP3 player could be in.
  */
 public class MP3Player {
 
@@ -25,8 +25,7 @@ public class MP3Player {
     }
 
     /**
-     * get the song class
-     * @return
+     * @return returns the Player class
      */
     public Player getPlayer() {
 
@@ -34,35 +33,38 @@ public class MP3Player {
     }
 
     /**
-     * gets the viewComponent Class
-     * @return
+     * @return returns the Components class
      */
     public Components getComponents() {
 
         return components;
     }
 
+    /**
+     * @return returns the library class
+     */
     public Library getLibrary() {
 
         return library;
     }
 
     /**
-     * gets the libraryMode MP3PlayerState
-     * @return
+     * @return the libraryMode state
      */
     public MP3PlayerState getLibraryMode() {
 
         return libraryMode;
     }
 
+    /**
+     * @return returns the playlistMode state
+     */
     public MP3PlayerState getPlaylistMode() {
         return playlistMode;
     }
 
     /**
-     * sets the musicplayer MP3PlayerState
-     * @param MP3PlayerState
+     * @param MP3PlayerState sets the new state of the MP3Player
      */
     public void setMP3PlayerState(MP3PlayerState MP3PlayerState) {
 
@@ -70,7 +72,9 @@ public class MP3Player {
     }
 
     /**
-     * calls the loadNewTrack method based on the current MP3PlayerState of the music player
+     * load new song in to mediaplayer
+     *
+     * @param selectedSong takes in the new song to be played
      */
     public void loadNewTrack(String selectedSong){
 
@@ -86,7 +90,10 @@ public class MP3Player {
     }
 
     /**
-     * calls the browser song method based on the current MP3PlayerState of the music player
+     * calls the add song method based on the state of MP3Player
+     *
+     * @param songName takes in the song name
+     * @param songPath takes in the path of the new song
      */
     public void addSong(String songName, String songPath){
 
@@ -109,11 +116,17 @@ public class MP3Player {
         this.MP3PlayerState.switchToPlaylist();
     }
 
+    /**
+     * calls the createPlaylist method based on the current state of the MP3Player
+     */
     public void createPlaylist(){
 
         this.MP3PlayerState.createPlaylist();
     }
 
+    /**
+     * load list of playlist based on the current state of the MP3 Player.
+     */
     public void loadListOfPlaylist(){
 
         this.MP3PlayerState.loadListOfPlaylist();

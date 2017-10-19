@@ -5,26 +5,29 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
- * this class simply handles everything the song should be doing
+ * this class haddles playing songs
  */
 public class Player {
 
     private MediaPlayer mediaPlayer;
 
     /**
-     * empty constructor to call without passing in anything
+     * empty constructor to call
+     * without passing in anything
      */
     public Player(){ }
 
     /**
      * takes in a path and sets te mediaplayer
-     * @param path
+     *
+     * @param path takes in a path and sets up the media player
      */
     public Player(String path){ setMediaPlayer(path); }
 
     /**
      * gets the mediaplayer
-     * @return
+     *
+     * @return returns the recent media player
      */
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -32,7 +35,8 @@ public class Player {
 
     /**
      * sets the media player
-     * @param path
+     *
+     * @param path takes in a path and builds a media player
      */
     public void setMediaPlayer(String path){
 
@@ -51,7 +55,7 @@ public class Player {
 
     /**
      * gets the duration
-     * @return
+     * @return returns duration of the current song in millis
      */
     public String getDuration(MediaPlayer mediaPlayer){
         return formatDuration(mediaPlayer.getMedia().getDuration().toMillis());
@@ -60,8 +64,9 @@ public class Player {
 
     /**
      * formats durations to minutes : seconds
-     * @param duration
-     * @return
+     *
+     * @param duration takes in a duration in mullis and coverts it to minutes: seconds
+     * @return returns the new duration
      */
     private String formatDuration(double duration){
 
@@ -74,6 +79,7 @@ public class Player {
      * play media
      */
     public void play(){
+
         this.mediaPlayer.play();
     }
 

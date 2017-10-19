@@ -1,5 +1,6 @@
 /**
- * an interface to implement the state pattern
+ * this interface simply defines the public method
+ * of the playlistMode and libraryMode classes
  */
 public interface MP3PlayerState {
 

@@ -1,7 +1,7 @@
 import javafx.application.Platform;
 
 /**
- * this defines my actions when the mp3Player is on idle library state
+ * this defines my actions when the mp3Player is on libraryMode state
  */
 public class LibraryMode implements MP3PlayerState {
 
@@ -17,7 +17,8 @@ public class LibraryMode implements MP3PlayerState {
     /**
      * take in a mp3Player and set some variables to make
      * life easier
-     * @param mp3Player
+     *
+     * @param mp3Player takes the MP3Player class
      */
     public LibraryMode(MP3Player mp3Player){
 
@@ -27,13 +28,18 @@ public class LibraryMode implements MP3PlayerState {
         this.player = mp3Player.getPlayer();
     }
 
+    /**
+     * load list of playlist. Under construction
+     */
     @Override
     public void loadListOfPlaylist() {
         //TODO:check if file that contains list of playlist exist
     }
 
     /**
-     * load a new song
+     * load new song
+     *
+     * @param selectedSong takes in the new song to be played
      */
     @Override
     public void loadNewTrack(String selectedSong) {
@@ -53,7 +59,10 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * browse file
+     * adds song to library
+     *
+     * @param songName takes in the name of new song
+     * @param songPath takes in path of new song
      */
     @Override
     public void addSong(String songName, String songPath) {
@@ -70,6 +79,9 @@ public class LibraryMode implements MP3PlayerState {
          });
     }
 
+    /**
+     * create new playlist..under construction
+     */
     @Override
     public void createPlaylist() {
 
@@ -79,16 +91,21 @@ public class LibraryMode implements MP3PlayerState {
         this.components.getComboBox().getSelectionModel().select("Library");
     }
 
+    /**
+     * throw an alert message since we are already in library state
+     */
     @Override
     public void switchToLibrary() {
+
         System.out.println("we are already in library state");
     }
 
     /**
-     * change state to idleOtherPlaylist
+     * change state to playlistMode state
      */
     @Override
     public void switchToPlaylist() {
+
         this.mp3Player.setMP3PlayerState(this.mp3Player.getPlaylistMode());
     }
 }

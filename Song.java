@@ -1,5 +1,7 @@
 /**
- * this class creates song objects
+ * this class creates song objects to make it more
+ * simple to store them. It saves having to build multiple
+ * list
  */
 public class Song {
 
@@ -8,7 +10,7 @@ public class Song {
     private String songPath;
 
     /**
-     * empty constuctor to be able to call it without
+     * empty constructor to be able to call it without
      * passing in anything
      */
     public Song(){
@@ -20,9 +22,10 @@ public class Song {
 
     /**
      * takes in a few variables and sets them
-     * @param newName
-     * @param newDuration
-     * @param newPath
+     *
+     * @param newName takes in the new songs name
+     * @param newDuration takes in the new songs duration
+     * @param newPath takes in the new songs path
      */
     public Song(String newName, String newDuration, String newPath){
 
@@ -34,49 +37,59 @@ public class Song {
 
     /**
      * gets song name
-     * @return
+     *
+     * @return returns the songs name
      */
     public String getSongName() {
+
         return songName;
     }
 
     /**
      * sets songName
-     * @param songName
+     *
+     * @param songName takes in a song name and sets it
      */
     public void setSongName(String songName) {
+
         this.songName = songName;
     }
 
     /**
      * gets songDuration
-     * @return
+     *
+     * @return returns the current song duration
      */
     public String getSongDuration() {
+
         return songDuration;
     }
 
     /**
      * sets songDuration
-     * @param songDuration
+     *
+     * @param songDuration takes in current song duration and sets it
      */
     public void setSongDuration(String songDuration) {
+
         this.songDuration = songDuration;
     }
 
     /**
      * gets song path
-     * @return
+     * @return returns the current song path
      */
     public String getSongPath() {
+
         return songPath;
     }
 
     /**
      * sets song path
-     * @param songPath
+     * @param songPath takes in a songpath and sets it
      */
     public void setSongPath(String songPath) {
+
         this.songPath = songPath;
     }
 }

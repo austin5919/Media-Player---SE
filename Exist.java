@@ -10,8 +10,9 @@ public class Exist {
 
     /**
      * checks if a given path exist
-     * @param path
-     * @return
+     *
+     * @param path takes in a path to check
+     * @return returns a boolean
      */
     public boolean CheckFile(String path){
 
@@ -21,9 +22,10 @@ public class Exist {
 
     /**
      * checks if a value exist within a given list
-     * @param target
-     * @param library
-     * @return
+     *
+     * @param target takes in a target value
+     * @param library takes in a observable list to check
+     * @return retuns true if empty and false if not
      */
     public boolean CheckList(String target, ObservableList<Song> library){
 

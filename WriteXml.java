@@ -7,7 +7,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
 /**
- * this class writes xml files using given information
+ * this class writes xml files using given information.
  */
 public class WriteXml {
 
@@ -17,11 +17,12 @@ public class WriteXml {
 
     /**
      * append new child to an existing xml or create an xml with new song node
-     * @param path
-     * @param songObj
-     * @throws Exception
+     *
+     * @param path takes in the path of an xml file and adds content to it
+     * @param songObject takes in a song object and uses it to build the nodes
+     * @throws Exception throws an exception if anything goes wrong
      */
-    public void AppendChildToXml(String path, Song songObj) throws Exception{
+    public void AppendChildToXml(String path, Song songObject) throws Exception{
 
         try {
 
@@ -52,17 +53,17 @@ public class WriteXml {
 
             //set songname child
             Element songName = doc.createElement("songName");
-            songName.appendChild(doc.createTextNode(songObj.getSongName()));
+            songName.appendChild(doc.createTextNode(songObject.getSongName()));
             song.appendChild(songName);
 
             //set songDuration child
             Element songDuration = doc.createElement("songDuration");
-            songDuration.appendChild(doc.createTextNode(songObj.getSongDuration()));
+            songDuration.appendChild(doc.createTextNode(songObject.getSongDuration()));
             song.appendChild(songDuration);
 
             //set song path child
             Element songPath = doc.createElement("songPath");
-            songPath.appendChild(doc.createTextNode(songObj.getSongPath()));
+            songPath.appendChild(doc.createTextNode(songObject.getSongPath()));
             song.appendChild(songPath);
 
             //writes to a xml file
@@ -76,9 +77,10 @@ public class WriteXml {
 
     /**
      * writes a new file with the defined doc information
-     * @param doc
-     * @param path
-     * @throws Exception
+     *
+     * @param doc takes in a document with add information to be turn in to an xml file
+     * @param path takes in a path to know where to write to
+     * @throws Exception throws an exception if anything goes wrong
      */
     public void write(Document doc, String path)throws Exception{
 
