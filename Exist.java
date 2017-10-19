@@ -1,6 +1,7 @@
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * this class validates variables/paths
@@ -13,6 +14,7 @@ public class Exist {
      * @return
      */
     public boolean CheckFile(String path){
+
         File xmlFile = new File(path);
         return xmlFile.exists();
     }
@@ -40,4 +42,23 @@ public class Exist {
 
         return true;
     }
+    /*
+    public boolean CheckArray(String target, ArrayList<String> listOfPlaylist){
+
+        //check if its empty and return if so
+        if(listOfPlaylist.isEmpty()){
+            return  true;
+        }
+
+        //look through the library to check if the target is found
+        for(int i = 0; i < listOfPlaylist.size();i++){
+
+            if(listOfPlaylist.get(i).toString().equals(target)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+    */
 }

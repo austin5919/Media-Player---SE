@@ -6,6 +6,8 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 
 /**
@@ -15,11 +17,15 @@ import javafx.collections.FXCollections;
 public class readXml {
 
     private ObservableList<Song> listOfSongs;
-
+    //private ArrayList<String> listOfPlaylist;
+    private Document doc;
     /**
      * define the observable list to hold my values
      */
-    readXml(){ this.listOfSongs = FXCollections.observableArrayList(); }
+    readXml(){
+        this.listOfSongs = FXCollections.observableArrayList();
+        //this.listOfPlaylist = new ArrayList<>();
+    }
 
     /**
      * gets the observable list
@@ -36,13 +42,7 @@ public class readXml {
 
         try {
 
-            //set the file path and the doc builder
-            File xmlFile = new File(path);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
-
-            doc.getDocumentElement().normalize();
+            setDoc(path);
 
             //get the parent element
             NodeList nodeList = doc.getElementsByTagName("song");
@@ -74,8 +74,66 @@ public class readXml {
                         new WriteXml().write(doc,path);
                     }
                 }
+
+
             }
 
         } catch (Exception e) { }
+    }
+    /*
+    public void getListOfPlaylist(String path){
+
+        try{
+
+            setDoc(path);
+
+            //get the parent element
+            NodeList nodeList = doc.getElementsByTagName("playlist");
+
+            //read each parent element and return the childs
+            for (int i = 0; i < nodeList.getLength(); i++) {
+
+                Node nNode = nodeList.item(i);
+
+                //iterate through each child node
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement = (Element) nNode;
+
+                    //create a variable for each node
+                    String playlistName = eElement.getElementsByTagName("playlistName").item(0).getTextContent();
+
+                    //check if song already exist to avoid duplicates and check if the path exist to avoid
+                    //errors
+                    if(new Exist().CheckArray(playlistName, this.listOfPlaylist)){
+                        this.listOfPlaylist.add(playlistName);
+                    }else{
+                        System.out.println("this playlist does not exist anymore. Deleting it from the xml file");
+                        eElement.getParentNode().removeChild(eElement);
+                        new WriteXml().write(doc,path);
+                    }
+                }
+            }
+
+        }catch(Exception e){
+
+        }
+    }
+   */
+    private void setDoc(String path){
+
+        try{
+
+            //set the file path and the doc builder
+            File xmlFile = new File(path);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(xmlFile);
+
+            doc.getDocumentElement().normalize();
+
+            this.doc = doc;
+
+        }catch(Exception e){ }
     }
 }

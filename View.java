@@ -12,6 +12,7 @@ public class View extends Application {
 
     /**
      * program starting point
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class View extends Application {
     /**
      * sets the primary stage with all the components needed
      * to perform all functions
+     *
      * @param primaryStage
      */
     @Override
@@ -31,6 +33,7 @@ public class View extends Application {
         //five different sections
         BorderPane border = new BorderPane();
 
+        setContextMenu();
         GridPane topComponents = topComponents();
 
         TableView<Song> centerComponents = centerComponents();
@@ -42,8 +45,22 @@ public class View extends Application {
         primaryStage.show();
     }
 
+    /**
+     * the context menu part of the GUI
+     */
+    private void setContextMenu(){
+
+        //create menu to add all new playlist
+        Menu addtoPlaylist = new Menu("Add to playlist");
+
+        //create the actual dropdown menu to hold the menu
+        ContextMenu dropMedu = new ContextMenu();
+
+        control.setContextMenu(addtoPlaylist,dropMedu);
+    }
+
     //holds the components for the top sections of the border pane
-    private GridPane topComponents(){
+    private GridPane topComponents() {
 
         //a grid pane to hold by components
         GridPane topComponents = new GridPane();
@@ -59,13 +76,13 @@ public class View extends Application {
         listDropDown.getSelectionModel().select("Library");
 
         //a browser button to be able to browse songs
-        Button browswer = new Button("Browse");
+        Button browswer = new Button("Add to library");
         //browswer.setStyle(style.setDimensions(1,65,27));
 
         //ProgressBar time = new ProgressBar();
 
-        topComponents.add(listDropDown,250,0);
-        topComponents.add(browswer,260,0);
+        topComponents.add(listDropDown, 250, 0);
+        topComponents.add(browswer, 260, 0);
         //topComponents.add(time,0,0);
 
         ColumnConstraints column1 = new ColumnConstraints();
@@ -74,25 +91,25 @@ public class View extends Application {
 
         //TODO: set handlers for listDropDown
         //TODO: set handlers for browser
-        control.setTopComponents(listDropDown,browswer);
+        control.setTopComponents(listDropDown, browswer);
         return topComponents;
     }
 
     //the table view settings
-    private TableView<Song> centerComponents(){
+    private TableView<Song> centerComponents() {
 
         //a tableview to hold the songs
         TableView<Song> centerComponents = new TableView<>();
         centerComponents.getStylesheets().add(style.tableView());
-        TableColumn<Song,String> songDuration = columns("Time","songDuration");
+        TableColumn<Song, String> songDuration = columns("Time", "songDuration");
 
         //TODO: make duration width shorter
-        //songDuration.setMaxWidth(200);
-        //songDuration.setMinWidth(200);
+        songDuration.setMaxWidth(200);
+        songDuration.setMinWidth(200);
 
         //set a constraint so we dont see extra columns on the stage
         centerComponents.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        centerComponents.getColumns().addAll(columns("Name","songName"),songDuration);
+        centerComponents.getColumns().addAll(columns("Name", "songName"), songDuration);
 
         //TODO: set handlers for tableView
         control.setCenterComponents(centerComponents);
@@ -101,10 +118,10 @@ public class View extends Application {
     }
 
     //table column settings
-    private TableColumn<Song,String> columns(String columnName, String objectName){
+    private TableColumn<Song, String> columns(String columnName, String objectName) {
 
         //set the table title along with the object to ocupy it
-        TableColumn<Song,String> newColumn = new TableColumn<>(columnName);
+        TableColumn<Song, String> newColumn = new TableColumn<>(columnName);
         newColumn.setCellValueFactory(new PropertyValueFactory<>(objectName));
         newColumn.setSortable(false);
 
