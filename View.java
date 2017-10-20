@@ -11,19 +11,19 @@ public class View extends Application {
     private EventHandler control = new EventHandler();
 
     /**
-     * program starting point
+     * Program starting point.
      *
-     * @param args
+     * @param args Command line.
      */
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
-     * sets the primary stage with all the components needed
-     * to perform all functions
+     * Sets the primary stage with all the components needed
+     * to perform all functions.
      *
-     * @param primaryStage
+     * @param primaryStage  A primary stage to place the components in.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -33,6 +33,7 @@ public class View extends Application {
         //five different sections
         BorderPane border = new BorderPane();
 
+        setContextMenu();
         GridPane topComponents = topComponents();
 
         TableView<Song> centerComponents = centerComponents();
@@ -42,6 +43,18 @@ public class View extends Application {
 
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
+    }
+
+    //the context menu part of the GUI
+    private void setContextMenu(){
+
+        //create menu to add all new playlist
+        Menu addtoPlaylist = new Menu("Add to playlist");
+
+        //create the actual dropdown menu to hold the menu
+        ContextMenu dropMedu = new ContextMenu();
+
+        control.setContextMenu(addtoPlaylist,dropMedu);
     }
 
     //holds the components for the top sections of the border pane
@@ -61,7 +74,7 @@ public class View extends Application {
         listDropDown.getSelectionModel().select("Library");
 
         //a browser button to be able to browse songs
-        Button browswer = new Button("Browse");
+        Button browswer = new Button("Add to library");
         //browswer.setStyle(style.setDimensions(1,65,27));
 
         //ProgressBar time = new ProgressBar();

@@ -4,7 +4,7 @@ import javafx.scene.media.*;
 import java.lang.*;
 
 /**
- * Keeps track of a collection of songs within a directory.  Command-line usage: java PlaylistAFASF
+ * Keeps track of a collection of songs within a directory.  Command-line usage: java Playlist
  *
  * @author Austin Ash
  * @author Jose Cruz
@@ -58,7 +58,7 @@ public class Playlist {
     /**
      * Plays song.
      *
-     * @param A String representing the song within the songs directory.
+     * @param song  A String representing the song within the songs directory.
      * @throws IllegalArgumentException  If song doesn't exist within set directory.
      */
     public void play(String song) {
@@ -84,7 +84,7 @@ public class Playlist {
     /**
      * Gets the song names.
      *
-     * @return A copy ArrayList<String> of the song names.
+     * @return  A ArrayList of String of the song names.
      */
     public ArrayList<String> getSongNames() {
         return (ArrayList<String>) this.songNames.clone();
@@ -93,7 +93,7 @@ public class Playlist {
     /**
      * Gets the songs.
      *
-     * @return A copy ArrayList<File> of the songs.
+     * @return  A ArrayList of File of the songs.
      */
     public ArrayList<File> getSongs() {
         return (ArrayList<File>) this.songs.clone();

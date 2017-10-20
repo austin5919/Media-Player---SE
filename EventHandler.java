@@ -1,47 +1,64 @@
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-
 import java.io.File;
 
 /**
- * this class handles the listeners for each component
- * on the GUI
+ * This class handles the listeners for each component
+ * on the GUI.
  */
 public class EventHandler {
 
-    private StateChanges player = new StateChanges();
-    private ViewComponents comp;
-    private MyPlayList myplay;
+    private MP3Player player = new MP3Player();
+    private Components components;
+    private Library library;
+    private String selectedSong;
 
     /**
-     * setting a few variables at launch to make
-     * debugging easier
+     * Setting a few variables at launch to make
+     * debugging easier.
      */
     public EventHandler(){
-        this.comp = this.player.getViewCompClass();
-        this.myplay = this.player.getMyPlayListClass();
+        this.components = this.player.getComponents();
+        this.library = this.player.getLibrary();
     }
 
     /**
-     * sets the handlers for the ComboBox and the file chooser button
-     * @param playList
-     * @param browse
+     * Sets the handlers for the ComboBox and the file chooser button.
+     *
+     * @param comboBox  Takes in the ComboBox for the dropdown.
+     * @param addSongButton  Takes in a button to handle the file chooser.
      */
-    public void setTopComponents(ComboBox playList, Button browse) {
+    public void setTopComponents(ComboBox comboBox, Button addSongButton) {
 
         //set the playlist comboBox
-        this.comp.setPlayListName(playList);
+        this.components.setComboBox(comboBox);
 
         //call the comboBox handler
-        comboBoxHandler(playList);
+        comboBoxHandler(comboBox);
 
         //call the file chooser handler
-        browse.setOnAction(this::browserButtonAction);
+        addSongButton.setOnAction(this::browserButtonAction);
+
+    }
+
+    /**
+     * Sets up the right click menu. Still under construction.
+     *
+     * @param addToPlaylist  Takes in a menu.
+     * @param dropMenu  Takes in a context menu to hold menu/menuItems.
+     */
+    public void setContextMenu(Menu addToPlaylist, ContextMenu dropMenu){
+
+        //TODO:set up the context menu
+
+        //set the MenuItems
+        this.components.setMenu(addToPlaylist);
+
+        this.player.loadListOfPlaylist();
+
 
     }
 
@@ -54,13 +71,13 @@ public class EventHandler {
             if (newSelection != null) {
 
                 //check if selection equals library, create new or other playlist
-                if(this.comp.getPlayListName().getSelectionModel().getSelectedItem() == "Library"){
+                if(this.components.getComboBox().getSelectionModel().getSelectedItem() == "Library"){
 
                     //switch to library state
                     this.player.switchToLibrary();
-                    this.player.loadLibrary();
 
-                }else if(this.comp.getPlayListName().getSelectionModel().getSelectedItem() == "Create Playlist"){
+
+                }else if(this.components.getComboBox().getSelectionModel().getSelectedItem() == "Create Playlist"){
 
                     this.player.createPlaylist();
 
@@ -89,68 +106,80 @@ public class EventHandler {
             String songName = theFile.getName();
             songName =songName.replace("\\", "/");
 
-            this.comp.setBrowserSongName(songName);
-
             //set the song path
             String songPath = theFile.getAbsolutePath();
-            this.comp.setBrowserPath(songPath);
 
-            //call browser method
-            this.player.browseSong();
+            this.library.refreshLibrary();
 
+            if(new Exist().CheckList(songName, library.getListOfSongs())){
+                //call browser method
+                this.player.addSong(songName,songPath);
+
+
+            }else{
+                System.out.println("song is already in the library");
+            }
         }
 
     }
 
     /**
-     * this method will set my TableView to be able to view
-     * songs
-     * @param display
+     * sets up the display
+     *
+     * @param songTableView takes in the tableView to hold all the songs
      */
-    public void setCenterComponents(TableView<Song> display) {
+    public void setCenterComponents(TableView<Song> songTableView) {
 
         //set the display
-        this.comp.setDisplay(display);
+        this.components.setDisplay(songTableView);
+        this.library.refreshLibrary();
 
-        //load the library
-        this.player.loadLibrary();
+        this.components.getDisplay().setItems(library.getListOfSongs());
 
         //set display handler
-        display.setOnMouseClicked(this::handleDisplayTableEvents);
+        songTableView.setOnMouseClicked(this::handleDisplayTableEvents);
 
     }
 
     //this method simply handles the actions of the tableView
     private void handleDisplayTableEvents(MouseEvent e){
 
+
         //check if selection is null
-        if(this.player.getViewCompClass().getDisplay().getSelectionModel().getSelectedItem() != null &&
-                e.getButton() == MouseButton.PRIMARY ){
-            
-            //set the background player for later on auto play uses if with have to implement it
-            //this.myplay.setBackgroundPlayer(this.comp.getDisplay());
+        if(e.getButton() == MouseButton.PRIMARY && this.components.getDisplay().getSelectionModel().getSelectedItem() != null){
+            this.components.setSelectedIndex(this.components.getDisplay().getSelectionModel().getSelectedIndex());
+            this.selectedSong = this.components.getDisplay().getItems().get(this.components.getSelectedIndex()).getSongPath();
 
-            //set the selection index. i will use this to recover the focused index when switch back to
-            //a main playlist
-            this.comp.setSelectedIndex(this.comp.getDisplay().getSelectionModel().getSelectedIndex());
+            this.components.getDisplay().getSelectionModel().clearSelection();
 
-            //set the selected song to play it
-            //this.comp.setSelectedSong(this.myplay.getBackgroundPlayer().getItems().get(this.comp.getSelectedIndex()).getSongPath());
-            this.comp.setSelectedSong(this.comp.getDisplay().getItems().get(this.comp.getSelectedIndex()).getSongPath());
+            this.components.getDisplay().getFocusModel().focus(this.components.getSelectedIndex());
 
-            //make the selected item in the display null, this way when you click blank
-            //spaces it doesnt fire the handler
-            this.comp.getDisplay().getSelectionModel().clearSelection();
+            //check if the song actually exist
+            if(new Exist().CheckFile(this.selectedSong)){
 
-            //set the focus towards the selected index. this immitates the selected item
-            //without actually selecting it.
-            this.comp.getDisplay().getFocusModel().focus(this.comp.getSelectedIndex());
+                //load the new song in to the media player
+                this.player.loadNewTrack(this.selectedSong);
 
-            //load the new song in to the media player
-            this.player.loadNewTrack();
+                //play the song
+                this.player.playSong();
 
-            //play the song
-            this.player.playSong();
+            }else{
+                System.out.println("selected song does not exist");
+                //this.components.getDisplay().getItems().remove(this.components.getSelectedIndex());
+            }
+
+
+        }else if(e.getButton() == MouseButton.SECONDARY && this.components.getDisplay().getSelectionModel().getSelectedItem() != null){
+
+            this.components.setSelectedIndex(this.components.getDisplay().getSelectionModel().getSelectedIndex());
+            this.selectedSong = this.components.getDisplay().getItems().get(this.components.getSelectedIndex()).getSongPath();
+
+            this.components.getDisplay().getSelectionModel().clearSelection();
+
+            this.components.getDisplay().getFocusModel().focus(this.components.getSelectedIndex());
+
+            System.out.println("under construction");
+
         }
     }
 }
