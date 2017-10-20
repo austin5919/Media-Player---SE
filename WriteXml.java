@@ -7,7 +7,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
 /**
- * this class writes xml files using given information.
+ * This class writes xml files using given information.
  */
 public class WriteXml {
 
@@ -16,11 +16,11 @@ public class WriteXml {
     private Text lineBreak;
 
     /**
-     * append new child to an existing xml or create an xml with new song node
+     * Append new child to an existing xml or create an xml with new song node.
      *
-     * @param path takes in the path of an xml file and adds content to it
-     * @param songObject takes in a song object and uses it to build the nodes
-     * @throws Exception throws an exception if anything goes wrong
+     * @param path  Takes in the path of an xml file and adds content to it.
+     * @param songObject  Takes in a song object and uses it to build the nodes.
+     * @throws Exception Throws an exception if anything goes wrong.
      */
     public void AppendChildToXml(String path, Song songObject) throws Exception{
 
@@ -76,11 +76,11 @@ public class WriteXml {
     }
 
     /**
-     * writes a new file with the defined doc information
+     * Writes a new file with the defined doc information.
      *
-     * @param doc takes in a document with add information to be turn in to an xml file
-     * @param path takes in a path to know where to write to
-     * @throws Exception throws an exception if anything goes wrong
+     * @param doc  Takes in a document with add information to be turn in to an xml file.
+     * @param path  Takes in a path to know where to write to.
+     * @throws Exception  Throws an exception if anything goes wrong.
      */
     public void write(Document doc, String path)throws Exception{
 
