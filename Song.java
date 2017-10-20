@@ -1,7 +1,7 @@
 /**
- * this class creates song objects to make it more
+ * This class creates song objects to make it more
  * simple to store them. It saves having to build multiple
- * list
+ * lists.
  */
 public class Song {
 
@@ -10,8 +10,8 @@ public class Song {
     private String songPath;
 
     /**
-     * empty constructor to be able to call it without
-     * passing in anything
+     * Empty constructor to be able to call it without
+     * passing in anything.
      */
     public Song(){
 
@@ -21,11 +21,11 @@ public class Song {
     }
 
     /**
-     * takes in a few variables and sets them
+     * Constuctor requiring the name, duration, and path of the song.
      *
-     * @param newName takes in the new songs name
-     * @param newDuration takes in the new songs duration
-     * @param newPath takes in the new songs path
+     * @param newName  The song name.
+     * @param newDuration  The song duration.
+     * @param newPath  Takes in the new songs path.
      */
     public Song(String newName, String newDuration, String newPath){
 
@@ -36,9 +36,9 @@ public class Song {
     }
 
     /**
-     * gets song name
+     * Gets song name.
      *
-     * @return returns the songs name
+     * @return Song name.
      */
     public String getSongName() {
 
@@ -46,9 +46,9 @@ public class Song {
     }
 
     /**
-     * sets songName
+     * Sets the song name.
      *
-     * @param songName takes in a song name and sets it
+     * @param songName  The String to be set as the song name.
      */
     public void setSongName(String songName) {
 
@@ -56,9 +56,9 @@ public class Song {
     }
 
     /**
-     * gets songDuration
+     * Gets the song duration.
      *
-     * @return returns the current song duration
+     * @return  The current song duration.
      */
     public String getSongDuration() {
 
@@ -66,9 +66,9 @@ public class Song {
     }
 
     /**
-     * sets songDuration
+     * Sets the song Duration.
      *
-     * @param songDuration takes in current song duration and sets it
+     * @param songDuration  The String to be set as the duration for the current song.
      */
     public void setSongDuration(String songDuration) {
 
@@ -76,8 +76,8 @@ public class Song {
     }
 
     /**
-     * gets song path
-     * @return returns the current song path
+     * Gets the path of the current song.
+     * @return Path of current song.
      */
     public String getSongPath() {
 
@@ -85,8 +85,8 @@ public class Song {
     }
 
     /**
-     * sets song path
-     * @param songPath takes in a songpath and sets it
+     * Sets the song path for the current song.
+     * @param songPath The String to be set as the path for the current song.
      */
     public void setSongPath(String songPath) {
 
