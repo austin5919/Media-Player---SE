@@ -23,3 +23,6 @@ Click the *Browse* button. This will open a new window which will allow you to n
 
 ## Javadoc
 [http://turing.plymouth.edu/~ana1002/SoftwareEngineeringJavaDocs/](http://turing.plymouth.edu/~ana1002/SoftwareEngineeringJavaDocs/)
+
+## UML Diagram
+[https://goo.gl/eCGUFW](https://goo.gl/eCGUFW)
