@@ -5,38 +5,38 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
- * this class haddles playing songs
+ * This class haddles playing songs.
  */
 public class Player {
 
     private MediaPlayer mediaPlayer;
 
     /**
-     * empty constructor to call
-     * without passing in anything
+     * Empty constructor to call
+     * without passing in anything.
      */
     public Player(){ }
 
     /**
-     * takes in a path and sets te mediaplayer
+     * Takes in a path and sets te mediaplayer.
      *
-     * @param path takes in a path and sets up the media player
+     * @param path Takes in a path and sets up the media player.
      */
     public Player(String path){ setMediaPlayer(path); }
 
     /**
-     * gets the mediaplayer
+     * Gets the mediaplayer
      *
-     * @return returns the recent media player
+     * @return The recent MediaPlayer.
      */
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
     /**
-     * sets the media player
+     * Sets the media player.
      *
-     * @param path takes in a path and builds a media player
+     * @param path Takes in a path and builds a media player.
      */
     public void setMediaPlayer(String path){
 
@@ -54,8 +54,10 @@ public class Player {
     }
 
     /**
-     * gets the duration
-     * @return returns duration of the current song in millis
+     * Gets the duration
+	 *
+     * @param mediaPlayer  The MediaPlayer object to get the duration from.
+     * @return  Duration of the current song in millis.
      */
     public String getDuration(MediaPlayer mediaPlayer){
         return formatDuration(mediaPlayer.getMedia().getDuration().toMillis());
@@ -63,10 +65,10 @@ public class Player {
 
 
     /**
-     * formats durations to minutes : seconds
+     * Formats durations to minutes : seconds
      *
-     * @param duration takes in a duration in mullis and coverts it to minutes: seconds
-     * @return returns the new duration
+     * @param duration  The duration in millis.
+     * @return  The duration as a String in format mm:ss - where mm is the two digit number of minutes and ss is the two digit number of seconds.
      */
     private String formatDuration(double duration){
 
@@ -76,7 +78,7 @@ public class Player {
     }
 
     /**
-     * play media
+     * Play media
      */
     public void play(){
 
@@ -84,7 +86,7 @@ public class Player {
     }
 
     /**
-     * stop media
+     * Stop media
      */
     public void stop() {
 
