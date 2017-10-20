@@ -4,15 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * this class validates variables/paths
+ * This class validates variables/paths.
  */
 public class Exist {
 
     /**
-     * checks if a given path exist
+     * Checks if a given path exist.
      *
-     * @param path takes in a path to check
-     * @return returns a boolean
+     * @param path  A path to check if exists.
+     * @return  True if path exists; otherwise false.
      */
     public boolean CheckFile(String path){
 
@@ -21,11 +21,11 @@ public class Exist {
     }
 
     /**
-     * checks if a value exist within a given list
+     * Checks if a value exist within a given list.
      *
-     * @param target takes in a target value
-     * @param library takes in a observable list to check
-     * @return retuns true if empty and false if not
+     * @param target  Takes in a target value.
+     * @param library  Takes in a observable list to check.
+     * @return  True if empty; otherwise false.
      */
     public boolean CheckList(String target, ObservableList<Song> library){
 

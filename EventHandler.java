@@ -6,8 +6,8 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 /**
- * this class handles the listeners for each component
- * on the GUI
+ * This class handles the listeners for each component
+ * on the GUI.
  */
 public class EventHandler {
 
@@ -17,8 +17,8 @@ public class EventHandler {
     private String selectedSong;
 
     /**
-     * setting a few variables at launch to make
-     * debugging easier
+     * Setting a few variables at launch to make
+     * debugging easier.
      */
     public EventHandler(){
         this.components = this.player.getComponents();
@@ -26,10 +26,10 @@ public class EventHandler {
     }
 
     /**
-     * sets the handlers for the ComboBox and the file chooser button
+     * Sets the handlers for the ComboBox and the file chooser button.
      *
-     * @param comboBox takes in the ComboBox for the dropdown
-     * @param addSongButton takes in a button to handle the file chooser
+     * @param comboBox  Takes in the ComboBox for the dropdown.
+     * @param addSongButton  Takes in a button to handle the file chooser.
      */
     public void setTopComponents(ComboBox comboBox, Button addSongButton) {
 
@@ -45,17 +45,17 @@ public class EventHandler {
     }
 
     /**
-     * sets up the right click menu. Still under construction
+     * Sets up the right click menu. Still under construction.
      *
-     * @param addtoPlaylist takes in a menu
-     * @param dropMenu takes in a context menu to hold menu/menuItems
+     * @param addToPlaylist  Takes in a menu.
+     * @param dropMenu  Takes in a context menu to hold menu/menuItems.
      */
-    public void setContextMenu(Menu addtoPlaylist, ContextMenu dropMenu){
+    public void setContextMenu(Menu addToPlaylist, ContextMenu dropMenu){
 
         //TODO:set up the context menu
 
         //set the MenuItems
-        this.components.setMenu(addtoPlaylist);
+        this.components.setMenu(addToPlaylist);
 
         this.player.loadListOfPlaylist();
 

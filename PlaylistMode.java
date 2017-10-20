@@ -1,5 +1,5 @@
 /**
- * this class handles the music player when its not
+ * This class handles the music player when its not
  * playing from the library. We have not started coding this
  * class yet.
  */
@@ -12,7 +12,7 @@ public class PlaylistMode implements MP3PlayerState {
     private Components comp;
     private Player player;
     /**
-     * @param mp3Player takes in the MP3Player class
+     * @param mp3Player  Takes in the MP3Player class.
      */
     public PlaylistMode(MP3Player mp3Player){
         this.mp3Player = mp3Player;
@@ -52,7 +52,7 @@ public class PlaylistMode implements MP3PlayerState {
     }
 
     /**
-     * changes the state to the idleLibrary state
+     * Changes the state to the idleLibrary state
      */
     @Override
     public void switchToLibrary() {

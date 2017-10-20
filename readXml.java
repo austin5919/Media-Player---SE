@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 
 /**
- * this clas reads an xml file using given
- * information
+ * This clas reads an xml file using given
+ * information.
  */
 public class readXml {
 
@@ -21,7 +21,7 @@ public class readXml {
     private Document doc;
 
     /**
-     * set the observable list to hold my values
+     * Set the observable list to hold my values.
      */
     readXml(){
         this.listOfSongs = FXCollections.observableArrayList();
@@ -29,17 +29,17 @@ public class readXml {
     }
 
     /**
-     * gets the observable list
+     * Gets the observable list.
      *
-     * @return returns an observable list filled with songs
+     * @return An observable list filled with songs.
      */
     public ObservableList<Song> getListOfSongs() { return listOfSongs; }
 
     /**
-     * we will read the files and fill the results in to the observablelist
-     * throw an exception if file cant be found
+     * We will read the files and fill the results in to the observablelist
+     * throw an exception if file cant be found.
      *
-     * @param path takes in the path that and reads it
+     * @param path  The path to read the list of songs from.
      */
     public void setListOfSongs(String path){
 
@@ -125,9 +125,9 @@ public class readXml {
    */
 
     /**
-     * this sets up the document
+     * This sets up the document.
      *
-     * @param path takes in a path to know what files is being read
+     * @param path  Takes in a path to know what files is being read.
      */
     private void setDoc(String path){
 

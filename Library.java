@@ -1,7 +1,7 @@
 import javafx.collections.ObservableList;
 
 /**
- * this class handles all the functionalities of the library
+ * This class handles all the functionalities of the library
  */
 public class Library {
 
@@ -10,14 +10,16 @@ public class Library {
     private String libraryPath = "./library.xml";
 
     /**
-     * @return returns an observablie list filled with songs
+	 * Gets the list of songs.
+	 *
+     * @return  An ObservableList filled with songs.
      */
     public ObservableList<Song> getListOfSongs() {
         return listOfSongs;
     }
 
     /**
-     * reloads the library and re sets the observable list
+     * Reloads the library and re sets the observable list.
      */
     public void refreshLibrary(){
 
@@ -28,9 +30,9 @@ public class Library {
     }
 
     /**
-     * reads the xml file and adds new song
+     * Reads the xml file and adds new song.
      *
-     * @param song takes in a song object and uses it to add new song
+     * @param song  Takes in a song object and uses it to add new song.
      */
     public void addsongtoLibrary(Song song){
 

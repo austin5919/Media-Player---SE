@@ -1,6 +1,6 @@
 /**
- * this interface simply defines the public method
- * of the playlistMode and libraryMode classes
+ * This interface simply defines the public method
+ * of the playlistMode and libraryMode classes.
  */
 public interface MP3PlayerState {
 

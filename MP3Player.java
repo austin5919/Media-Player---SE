@@ -1,5 +1,5 @@
 /**
- * this class holds the information needed to handle
+ * This class holds the information needed to handle
  * the states the MP3 player could be in.
  */
 public class MP3Player {
@@ -15,7 +15,7 @@ public class MP3Player {
 
 
     /**
-     * a constructor to set my starting states
+     * A constructor to set my starting states.
      */
     public MP3Player(){
 
@@ -25,7 +25,9 @@ public class MP3Player {
     }
 
     /**
-     * @return returns the Player class
+	 * Gets the player.
+	 *
+     * @return The Player class.
      */
     public Player getPlayer() {
 
@@ -33,7 +35,9 @@ public class MP3Player {
     }
 
     /**
-     * @return returns the Components class
+	 * Gets the Components.
+	 *
+     * @return The Components class.
      */
     public Components getComponents() {
 
@@ -41,7 +45,9 @@ public class MP3Player {
     }
 
     /**
-     * @return returns the library class
+	 * Gets the Library.
+	 *
+     * @return The Library class
      */
     public Library getLibrary() {
 
@@ -49,7 +55,9 @@ public class MP3Player {
     }
 
     /**
-     * @return the libraryMode state
+	 * Gets the Library mode.
+	 *
+     * @return  The Library mode state.
      */
     public MP3PlayerState getLibraryMode() {
 
@@ -57,14 +65,17 @@ public class MP3Player {
     }
 
     /**
-     * @return returns the playlistMode state
+	 * Gets the Playlist mode.
+	 *
+     * @return The playlistMode state
      */
     public MP3PlayerState getPlaylistMode() {
         return playlistMode;
     }
 
     /**
-     * @param MP3PlayerState sets the new state of the MP3Player
+	 * Set the MP3PlayerState.
+     * @param MP3PlayerState Sets the new state of the MP3Player.
      */
     public void setMP3PlayerState(MP3PlayerState MP3PlayerState) {
 
@@ -72,9 +83,9 @@ public class MP3Player {
     }
 
     /**
-     * load new song in to mediaplayer
+     * Load new song in to mediaplayer.
      *
-     * @param selectedSong takes in the new song to be played
+     * @param selectedSong Takes in the new song to be played.
      */
     public void loadNewTrack(String selectedSong){
 
@@ -82,7 +93,7 @@ public class MP3Player {
     }
 
     /**
-     * calls the playSong method based on the current MP3PlayerState of the music player
+     * Runs playSong method on current MP3PlayerState of the music player.
      */
     public void playSong(){
 
@@ -90,10 +101,10 @@ public class MP3Player {
     }
 
     /**
-     * calls the add song method based on the state of MP3Player
+     * Calls the add song method based on the state of MP3Player.
      *
-     * @param songName takes in the song name
-     * @param songPath takes in the path of the new song
+     * @param songName  The song name.
+     * @param songPath  The path of the new song.
      */
     public void addSong(String songName, String songPath){
 
@@ -101,7 +112,7 @@ public class MP3Player {
     }
 
     /**
-     * calls the switchToLibrary method based on the current MP3PlayerState of the music player
+	 * Calls the switchToLibrary method based on the current MP3PlayerState of the music player.
      */
     public void switchToLibrary(){
 
@@ -109,7 +120,7 @@ public class MP3Player {
     }
 
     /**
-     * calls the switchToOtherPlaylist method based on the current MP3PlayerState of the music player
+     * Calls the switchToOtherPlaylist method based on the current MP3PlayerState of the music player.
      */
     public void switchToPlaylist(){
 
@@ -117,7 +128,7 @@ public class MP3Player {
     }
 
     /**
-     * calls the createPlaylist method based on the current state of the MP3Player
+     * Calls the createPlaylist method based on the current state of the MP3Player.
      */
     public void createPlaylist(){
 
@@ -125,7 +136,7 @@ public class MP3Player {
     }
 
     /**
-     * load list of playlist based on the current state of the MP3 Player.
+     * Load list of playlist based on the current state of the MP3 Player.
      */
     public void loadListOfPlaylist(){
 

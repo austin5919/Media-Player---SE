@@ -1,7 +1,7 @@
 import javafx.application.Platform;
 
 /**
- * this defines my actions when the mp3Player is on libraryMode state
+ * This defines my actions when the mp3Player is on libraryMode state.
  */
 public class LibraryMode implements MP3PlayerState {
 
@@ -15,10 +15,10 @@ public class LibraryMode implements MP3PlayerState {
     //Library library;
 
     /**
-     * take in a mp3Player and set some variables to make
-     * life easier
+     * Take in a mp3Player and set some variables to make
+     * life easier.
      *
-     * @param mp3Player takes the MP3Player class
+     * @param mp3Player  Takes the MP3Player class.
      */
     public LibraryMode(MP3Player mp3Player){
 
@@ -29,7 +29,7 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * load list of playlist. Under construction
+     * Load list of playlist. Under construction.
      */
     @Override
     public void loadListOfPlaylist() {
@@ -37,9 +37,9 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * load new song
+     * Load new song
      *
-     * @param selectedSong takes in the new song to be played
+     * @param selectedSong  Takes in the new song to be played.
      */
     @Override
     public void loadNewTrack(String selectedSong) {
@@ -48,7 +48,7 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * play a song
+     * Play a song.
      */
     @Override
     public void playSong() {
@@ -59,10 +59,10 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * adds song to library
+     * Adds song to library.
      *
-     * @param songName takes in the name of new song
-     * @param songPath takes in path of new song
+     * @param songName  Takes in the name of new song.
+     * @param songPath  Takes in path of new song
      */
     @Override
     public void addSong(String songName, String songPath) {
@@ -80,7 +80,7 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * create new playlist..under construction
+     * Coming soon...
      */
     @Override
     public void createPlaylist() {
@@ -92,7 +92,7 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * throw an alert message since we are already in library state
+     * Prints an alert message since we are already in library state.
      */
     @Override
     public void switchToLibrary() {
@@ -101,7 +101,7 @@ public class LibraryMode implements MP3PlayerState {
     }
 
     /**
-     * change state to playlistMode state
+     * Use to change the state to playlistMode state.
      */
     @Override
     public void switchToPlaylist() {
