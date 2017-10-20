@@ -11,19 +11,19 @@ public class View extends Application {
     private EventHandler control = new EventHandler();
 
     /**
-     * program starting point
+     * Program starting point.
      *
-     * @param args comand line
+     * @param args Command line.
      */
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
-     * sets the primary stage with all the components needed
-     * to perform all functions
+     * Sets the primary stage with all the components needed
+     * to perform all functions.
      *
-     * @param primaryStage a primary stage to place the components in
+     * @param primaryStage  A primary stage to place the components in.
      */
     @Override
     public void start(Stage primaryStage) {
@@ -45,9 +45,7 @@ public class View extends Application {
         primaryStage.show();
     }
 
-    /**
-     * the context menu part of the GUI
-     */
+    //the context menu part of the GUI
     private void setContextMenu(){
 
         //create menu to add all new playlist
