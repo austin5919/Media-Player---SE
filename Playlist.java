@@ -40,11 +40,6 @@ public class Playlist {
         this.songNames = new ArrayList<String>();
         this.setSongsDirectory(directory);
     }
-    
-	/*    = new Media(new File(song).toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.play();
-    */
 
     /**
      * Stops the current song.
