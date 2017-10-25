@@ -33,7 +33,11 @@ public class readXml {
      *
      * @return An observable list filled with songs.
      */
-    public ObservableList<Song> getListOfSongs() { return listOfSongs; }
+    public ObservableList<Song> getListOfSongs() { 
+	
+		return listOfSongs; 
+	
+	}
 
     /**
      * We will read the files and fill the results in to the observablelist
@@ -43,6 +47,12 @@ public class readXml {
      */
     public void setListOfSongs(String path){
 
+		ArrayList<Song> list = (ArrayList<Song>) Serialization.read(path);
+		if (list == null) { list = new ArrayList<Song>(); } // Create new file if one does not exist
+		this.listOfSongs = FXCollections.observableArrayList(list);
+	
+		
+		/*
         try {
 
             setDoc(path);
@@ -82,6 +92,7 @@ public class readXml {
             }
 
         } catch (Exception e) { }
+		*/
     }
     /*
     public void getListOfPlaylist(String path){

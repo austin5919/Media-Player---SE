@@ -5,6 +5,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.*;
 
 /**
  * This class writes xml files using given information.
@@ -19,11 +20,31 @@ public class WriteXml {
      * Append new child to an existing xml or create an xml with new song node.
      *
      * @param path  Takes in the path of an xml file and adds content to it.
-     * @param songObject  Takes in a song object and uses it to build the nodes.
+     * @param song  Takes in a song object and uses it to build the nodes.
      * @throws Exception Throws an exception if anything goes wrong.
      */
-    public void AppendChildToXml(String path, Song songObject) throws Exception{
+    public void AppendChildToXml(String path, Song song) throws Exception{
 
+		
+		ArrayList<Song> list;
+		//If the file does not exist yet, create it; otherwise read it
+		if (!(new File(path).exists())){
+			list = new ArrayList<Song>();
+		} else {
+			list = (ArrayList<Song>) Serialization.read(path);
+		}
+		
+		//if (!(new File(path).exists()) == null) { list = new ArrayList<Song>(); } // Create new file if one does not exist
+		for (Song checkSong : list) {
+			if (checkSong.getSongPath() == song.getSongPath()) {
+				System.out.println("Duplicate song attempted! Not allowed.");
+				return;
+			}
+		}
+		list.add(song);
+		Serialization.write(list,path);
+		
+		/*
         try {
 
             //set file path and doc builder
@@ -47,24 +68,23 @@ public class WriteXml {
 
             doc.getDocumentElement().normalize();
 
-            //get the song parent
-            Element song = doc.createElement("song");
-            root.appendChild(song);
+			Element songE = doc.createElement("song");
+            root.appendChild(songE);
 
             //set songname child
             Element songName = doc.createElement("songName");
-            songName.appendChild(doc.createTextNode(songObject.getSongName()));
-            song.appendChild(songName);
+            songName.appendChild(doc.createTextNode(song.getSongName()));
+            songE.appendChild(songName);
 
             //set songDuration child
             Element songDuration = doc.createElement("songDuration");
-            songDuration.appendChild(doc.createTextNode(songObject.getSongDuration()));
-            song.appendChild(songDuration);
+            songDuration.appendChild(doc.createTextNode(song.getSongDuration()));
+            songE.appendChild(songDuration);
 
-            //set song path child
+            //set songE path child
             Element songPath = doc.createElement("songPath");
-            songPath.appendChild(doc.createTextNode(songObject.getSongPath()));
-            song.appendChild(songPath);
+            songPath.appendChild(doc.createTextNode(song.getSongPath()));
+            songE.appendChild(songPath);
 
             //writes to a xml file
             //System.out.println(path);
@@ -73,6 +93,7 @@ public class WriteXml {
         } catch (Exception e) {
             System.out.println("was not able to add song or create playlist");
         }
+		*/
     }
 
     /**

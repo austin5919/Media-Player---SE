@@ -7,7 +7,7 @@ public class Library {
 
     //library songs
     private ObservableList<Song> listOfSongs;
-    private String libraryPath = "./library.xml";
+    private String libraryPath = "./library.data";
 
     /**
 	 * Gets the list of songs.

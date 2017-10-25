@@ -7,7 +7,7 @@ public class LibraryMode implements MP3PlayerState {
 
     //private WriteXml xmlWrite = new WriteXml();
     private MP3Player mp3Player;
-    private String libraryPath = "./library.xml";
+    private String libraryPath = "./library.data";
 
     private Library library;
     private Components components;

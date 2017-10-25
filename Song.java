@@ -1,9 +1,11 @@
+import java.io.*;
+
 /**
  * This class creates song objects to make it more
  * simple to store them. It saves having to build multiple
  * lists.
  */
-public class Song {
+public class Song implements Serializable{
 
     private String songName;
     private String songDuration;

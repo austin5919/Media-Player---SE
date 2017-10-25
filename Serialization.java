@@ -18,14 +18,14 @@ class Serialization{
 	 *
 	 * @return  True if the data was written without issues; otherwise false.
      */
-	public static boolean writeData(Object data, String fileLocation) {
+	public static boolean write(Object data, String fileLocation) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(fileLocation);  
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);  
 			out.writeObject(data);  
 			out.flush();  
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Serialization Write Error!: " + e);
 			return false;
 		}
 		return true;
@@ -38,16 +38,20 @@ class Serialization{
      *
 	 * @return  Null if any errors occur; otherwise return the Object
 	 */
-	public static Object readData(String fileLocation) {
+	public static Object read(String fileLocation) {
 		try {
 			ObjectInputStream input=new ObjectInputStream(new FileInputStream(fileLocation));  
 			Object obj = (Object)input.readObject();  
 			input.close(); 
 			return obj;
-		} catch(Exception e) {
-			System.out.println(e);
+		} catch (FileNotFoundException e) {
+			System.out.println("No file found at " + fileLocation);
 			return null;
+		} catch(Exception e) {
+			System.out.println("Serialization Read Error!: " + e);
+			
 		}
+		return null;
 	}
 	
 	/**
@@ -68,13 +72,13 @@ class Serialization{
 		System.out.println("");
 		
 		try {
-			Serialization.writeData(data,"example.txt");
+			Serialization.write(data,"example.txt");
 		} catch(Exception e) {
 			System.out.println("Couldn't read file");
 		}
 		
 		//Showing retreived from the serialized file
-		ArrayList<ArrayList> savedData= (ArrayList)Serialization.readData("example.txt");
+		ArrayList<ArrayList> savedData= (ArrayList)Serialization.read("example.txt");
 		System.out.println("The following was de-serialized from example.txt:");
 		//System.out.println(savedData);
   
