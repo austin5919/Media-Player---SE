@@ -1,21 +1,21 @@
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * This class handles all the functionalities of the library
  */
-public class Library {
+public class Library implements Serializable{
 
-    //library songs
-    private ObservableList<Song> listOfSongs;
     private String libraryPath = "./library.data";
+    ArrayList<String> library;
 
-    /**
-	 * Gets the list of songs.
-	 *
-     * @return  An ObservableList filled with songs.
-     */
-    public ObservableList<Song> getListOfSongs() {
-        return listOfSongs;
+    public ArrayList<String> getLibrary() {
+        return library;
     }
 
     /**
@@ -23,22 +23,26 @@ public class Library {
      */
     public void refreshLibrary(){
 
-        readXml read = new readXml();
-        read.setListOfSongs(this.libraryPath);
-
-        this.listOfSongs = read.getListOfSongs();
+        Read read = new Read();
+        read.setListOfPath(this.libraryPath);
+        library = read.getListOfPath();
     }
+
+    //TODO: change this method to take in a string
 
     /**
      * Reads the xml file and adds new song.
      *
-     * @param song  Takes in a song object and uses it to add new song.
+     * @param newSongs Takes in a song object and uses it to add new song.
      */
-    public void addsongtoLibrary(Song song){
+    public void addsongtoLibrary(ArrayList<String> newSongs){
 
         try {
 
-            new WriteXml().AppendChildToXml(libraryPath,song);
+            for(String readPath : newSongs){
+
+                new Write().storeData(libraryPath,readPath);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

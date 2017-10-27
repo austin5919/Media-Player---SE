@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This interface simply defines the public method
  * of the playlistMode and libraryMode classes.
@@ -13,7 +15,7 @@ public interface MP3PlayerState {
 
     public void loadNewTrack(String selectedSong);
     public void playSong();
-    public void addSong(String songName,String songPath);
+    public void addSong(ArrayList<String> newSongs);
     public void createPlaylist();
     public void switchToLibrary();
     public void switchToPlaylist();

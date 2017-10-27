@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class handles the music player when its not
  * playing from the library. We have not started coding this
@@ -38,7 +40,7 @@ public class PlaylistMode implements MP3PlayerState {
     }
 
     @Override
-    public void addSong(String songName, String songPath) {
+    public void addSong(ArrayList<String> newSongs) {
         //this.library.addSong(new Player(songPath),this.cosongName, songPath);
         //also add to playlist
     }

@@ -1,11 +1,11 @@
-import javafx.application.Platform;
+import java.util.ArrayList;
 
 /**
  * This defines my actions when the mp3Player is on libraryMode state.
  */
 public class LibraryMode implements MP3PlayerState {
 
-    //private WriteXml xmlWrite = new WriteXml();
+    //private Write xmlWrite = new Write();
     private MP3Player mp3Player;
     private String libraryPath = "./library.data";
 
@@ -61,22 +61,14 @@ public class LibraryMode implements MP3PlayerState {
     /**
      * Adds song to library.
      *
-     * @param songName  Takes in the name of new song.
-     * @param songPath  Takes in path of new song
+     * @param newSongs  Takes in path of new song
      */
     @Override
-    public void addSong(String songName, String songPath) {
-
-        Player deadPlayer = new Player(songPath);
-        deadPlayer.getMediaPlayer().setOnReady(() -> {
-            Platform.runLater(() -> {
-                //add to library
-                this.library.addsongtoLibrary(new Song(songName,deadPlayer.getDuration(deadPlayer.getMediaPlayer()),songPath));
-                this.library.refreshLibrary();
-                new Updates().updateDisplay(this.library.getListOfSongs(), this.components);
-
-            });
-         });
+    public void addSong(ArrayList<String> newSongs) {
+        //add to library
+        this.library.addsongtoLibrary(newSongs);
+        this.library.refreshLibrary();
+        new Updates(newSongs,this.components).addSongsOneByOne();
     }
 
     /**

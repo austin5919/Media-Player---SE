@@ -4,6 +4,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This class handles the listeners for each component
@@ -102,19 +103,16 @@ public class EventHandler {
         //check if what you pick is null
         if (theFile != null){
 
-            //set the song name
-            String songName = theFile.getName();
-            songName =songName.replace("\\", "/");
-
             //set the song path
             String songPath = theFile.getAbsolutePath();
 
             this.library.refreshLibrary();
+            if(new Exist().CheckList(songPath, library.getLibrary())){
 
-            if(new Exist().CheckList(songName, library.getListOfSongs())){
+                ArrayList<String> newSongs = new ArrayList<>();
+                newSongs.add(songPath);
                 //call browser method
-                this.player.addSong(songName,songPath);
-
+                this.player.addSong(newSongs);
 
             }else{
                 System.out.println("song is already in the library");
@@ -134,7 +132,7 @@ public class EventHandler {
         this.components.setDisplay(songTableView);
         this.library.refreshLibrary();
 
-        this.components.getDisplay().setItems(library.getListOfSongs());
+        new Updates(this.library.getLibrary(),components).refreshDisplay();
 
         //set display handler
         songTableView.setOnMouseClicked(this::handleDisplayTableEvents);
@@ -155,7 +153,7 @@ public class EventHandler {
             this.components.getDisplay().getFocusModel().focus(this.components.getSelectedIndex());
 
             //check if the song actually exist
-            if(new Exist().CheckFile(this.selectedSong)){
+            if(new File(this.selectedSong).exists()){
 
                 //load the new song in to the media player
                 this.player.loadNewTrack(this.selectedSong);

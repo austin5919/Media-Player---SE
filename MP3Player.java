@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class holds the information needed to handle
  * the states the MP3 player could be in.
@@ -103,12 +105,11 @@ public class MP3Player {
     /**
      * Calls the add song method based on the state of MP3Player.
      *
-     * @param songName  The song name.
-     * @param songPath  The path of the new song.
+     * @param newSongs  The path of the new song.
      */
-    public void addSong(String songName, String songPath){
+    public void addSong(ArrayList<String> newSongs){
 
-        this.MP3PlayerState.addSong(songName,songPath);
+        this.MP3PlayerState.addSong(newSongs);
     }
 
     /**

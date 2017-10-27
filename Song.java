@@ -5,7 +5,7 @@ import java.io.*;
  * simple to store them. It saves having to build multiple
  * lists.
  */
-public class Song implements Serializable{
+public class Song {
 
     private String songName;
     private String songDuration;

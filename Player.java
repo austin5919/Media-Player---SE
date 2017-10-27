@@ -1,6 +1,6 @@
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -10,19 +10,20 @@ import java.util.concurrent.TimeUnit;
 public class Player {
 
     private MediaPlayer mediaPlayer;
-
     /**
      * Empty constructor to call
      * without passing in anything.
      */
-    public Player(){ }
+    public Player(){}
 
     /**
      * Takes in a path and sets te mediaplayer.
      *
      * @param path Takes in a path and sets up the media player.
      */
-    public Player(String path){ setMediaPlayer(path); }
+    public Player(String path){
+        setMediaPlayer(path);
+    }
 
     /**
      * Gets the mediaplayer
@@ -55,12 +56,10 @@ public class Player {
 
     /**
      * Gets the duration
-	 *
-     * @param mediaPlayer  The MediaPlayer object to get the duration from.
      * @return  Duration of the current song in millis.
      */
-    public String getDuration(MediaPlayer mediaPlayer){
-        return formatDuration(mediaPlayer.getMedia().getDuration().toMillis());
+    public String getDuration(){
+        return formatDuration(getMediaPlayer().getMedia().getDuration().toMillis());
     }
 
 
