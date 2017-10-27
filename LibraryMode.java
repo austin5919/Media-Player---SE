@@ -68,7 +68,7 @@ public class LibraryMode implements MP3PlayerState {
         //add to library
         this.library.addsongtoLibrary(newSongs);
         this.library.refreshLibrary();
-        new Updates(newSongs,this.components).addSongsOneByOne();
+        new Updates(newSongs,this.components).updateDisplay("Add");
     }
 
     /**

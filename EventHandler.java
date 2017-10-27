@@ -132,7 +132,7 @@ public class EventHandler {
         this.components.setDisplay(songTableView);
 
         this.library.refreshLibrary();
-        new Updates(this.library.getLibrary(),components).refreshDisplay();
+        new Updates(this.library.getLibrary(),components).updateDisplay("Rebuild");
 
         //set display handler
         songTableView.setOnMouseClicked(this::handleDisplayTableEvents);
