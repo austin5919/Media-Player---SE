@@ -21,7 +21,6 @@ public class PlaylistMode implements MP3PlayerState {
         this.comp = mp3Player.getComponents();
         this.library = new Library();
         this.player = mp3Player.getPlayer();
-
     }
 
     @Override

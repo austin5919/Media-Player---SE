@@ -28,28 +28,26 @@ public class Updates {
 
         for (String readPath : this.listOfSongs) {
 
-            if(new File(readPath).exists()) {
+            Player player = new Player(readPath);
+            player.getMediaPlayer().setOnReady(() -> {
 
-                Player player = new Player(readPath);
-                player.getMediaPlayer().setOnReady(() -> {
-
+                if(new File(readPath).exists()) {
                     String songName = new File(readPath).getName().replace(".mp3", "");
                     String duration =  player.getDuration();
                     list.add(new Song(songName, duration, readPath));
+                }else{
+                    System.out.println("could not find file : " + readPath);
+                }
 
-                    if(readPath == this.listOfSongs.get(this.listOfSongs.size() - 1)) {
-                        Platform.runLater(() -> {
-                            components.getDisplay().getItems().removeAll();
-                            components.getDisplay().setItems(list);
-                            components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
-                        });
-                    }
+                if(readPath == this.listOfSongs.get(this.listOfSongs.size() - 1)) {
+                    Platform.runLater(() -> {
+                        components.getDisplay().getItems().removeAll();
+                        components.getDisplay().setItems(list);
+                        components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
+                    });
+                }
 
-                });
-
-            }else{
-                System.out.println("file " + readPath +" not exist anymore!!");
-            }
+            });
         }
     }
 
@@ -60,24 +58,18 @@ public class Updates {
 
         for (String readPath : this.listOfSongs) {
 
-            if(new File(readPath).exists()) {
+            Player player = new Player(readPath);
+            player.getMediaPlayer().setOnReady(() -> {
 
-                Player player = new Player(readPath);
-                player.getMediaPlayer().setOnReady(() -> {
+                String songName = new File(readPath).getName().replace(".mp3", "");
+                String duration =  player.getDuration();
 
-                    String songName = new File(readPath).getName().replace(".mp3", "");
-                    String duration =  player.getDuration();
-
-                    Platform.runLater(() -> {
-                        components.getDisplay().getItems().add(new Song(songName,duration,readPath));
-                        components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
-                    });
-
+                Platform.runLater(() -> {
+                    components.getDisplay().getItems().add(new Song(songName,duration,readPath));
+                    components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
                 });
 
-            }else{
-                System.out.println("file " + readPath +" not exist anymore!!");
-            }
+            });
         }
     }
 }

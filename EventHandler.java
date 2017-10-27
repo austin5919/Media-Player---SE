@@ -105,8 +105,8 @@ public class EventHandler {
 
             //set the song path
             String songPath = theFile.getAbsolutePath();
-
             this.library.refreshLibrary();
+
             if(new Exist().CheckList(songPath, library.getLibrary())){
 
                 ArrayList<String> newSongs = new ArrayList<>();
@@ -130,8 +130,8 @@ public class EventHandler {
 
         //set the display
         this.components.setDisplay(songTableView);
-        this.library.refreshLibrary();
 
+        this.library.refreshLibrary();
         new Updates(this.library.getLibrary(),components).refreshDisplay();
 
         //set display handler

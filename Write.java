@@ -19,26 +19,31 @@ public class Write {
      * @param contentPath  Takes in a song object and uses it to build the nodes.
      * @throws Exception Throws an exception if anything goes wrong.
      */
-    public void storeData(String dataPath, String contentPath) throws Exception{
+    public void storeData(String dataPath, String contentPath){
 
+		try {
 
-		ArrayList<String> list;
-		//If the file does not exist yet, create it; otherwise read it
-		if (!(new File(dataPath).exists())){
-			list = new ArrayList<String>();
-		} else {
-			list = (ArrayList<String>) Serialization.read(dataPath);
-		}
-		
-		//if (!(new File(path).exists()) == null) { list = new ArrayList<Song>(); } // Create new file if one does not exist
-		for (String readPath : list) {
-			if (readPath == contentPath) {
-				System.out.println("Duplicate song attempted! Not allowed.");
-				return;
+			ArrayList<String> list;
+			//If the file does not exist yet, create it; otherwise read it
+			if (!(new File(dataPath).exists())) {
+				list = new ArrayList<String>();
+			} else {
+				list = (ArrayList<String>) Serialization.read(dataPath);
 			}
-		}
 
-		list.add(contentPath);
-		Serialization.write(list,dataPath);
+			//if (!(new File(path).exists()) == null) { list = new ArrayList<Song>(); } // Create new file if one does not exist
+			for (String readPath : list) {
+				if (readPath == contentPath) {
+					System.out.println("Duplicate song attempted! Not allowed.");
+					return;
+				}
+			}
+
+			list.add(contentPath);
+			Serialization.write(list, dataPath);
+
+		}catch (Exception e){
+			System.out.println("failed to storeData");
+		}
     }
 }

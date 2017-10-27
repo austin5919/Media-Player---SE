@@ -25,7 +25,7 @@ public class Library implements Serializable{
 
         Read read = new Read();
         read.setListOfPath(this.libraryPath);
-        library = read.getListOfPath();
+        this.library = read.getListOfPath();
     }
 
     //TODO: change this method to take in a string
@@ -37,15 +37,9 @@ public class Library implements Serializable{
      */
     public void addsongtoLibrary(ArrayList<String> newSongs){
 
-        try {
+        for(String readPath : newSongs){
 
-            for(String readPath : newSongs){
-
-                new Write().storeData(libraryPath,readPath);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            new Write().storeData(libraryPath,readPath);
         }
     }
 }
