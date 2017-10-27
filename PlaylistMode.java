@@ -12,15 +12,14 @@ public class PlaylistMode implements MP3PlayerState {
 
     private Library library;
     private Components comp;
-    private Player player;
+
     /**
-     * @param mp3Player  Takes in the MP3Player class.
+     * @param mp3Player Takes in the MP3Player class.
      */
-    public PlaylistMode(MP3Player mp3Player){
+    public PlaylistMode(MP3Player mp3Player) {
         this.mp3Player = mp3Player;
         this.comp = mp3Player.getComponents();
         this.library = new Library();
-        this.player = mp3Player.getPlayer();
     }
 
     @Override
@@ -46,7 +45,6 @@ public class PlaylistMode implements MP3PlayerState {
 
     @Override
     public void createPlaylist() {
-
         System.out.println("code to create playlist is under construction..!!");
         System.out.println("the file chooser can still browse files but nothings happens...!!");
         System.out.println("to test the file chooser functionality please go back to the Library...!!");

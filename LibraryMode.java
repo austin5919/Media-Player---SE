@@ -9,23 +9,14 @@ public class LibraryMode implements MP3PlayerState {
     private MP3Player mp3Player;
     private String libraryPath = "./library.data";
 
-    private Library library;
-    private Components components;
-    private Player player;
-    //Library library;
-
     /**
      * Take in a mp3Player and set some variables to make
      * life easier.
      *
-     * @param mp3Player  Takes the MP3Player class.
+     * @param mp3Player Takes the MP3Player class.
      */
-    public LibraryMode(MP3Player mp3Player){
-
+    public LibraryMode(MP3Player mp3Player) {
         this.mp3Player = mp3Player;
-        this.components = mp3Player.getComponents();
-        this.library = new Library();
-        this.player = mp3Player.getPlayer();
     }
 
     /**
@@ -39,12 +30,12 @@ public class LibraryMode implements MP3PlayerState {
     /**
      * Load new song
      *
-     * @param selectedSong  Takes in the new song to be played.
+     * @param selectedSong Takes in the new song to be played.
      */
     @Override
     public void loadNewTrack(String selectedSong) {
-        this.player.stop();
-        this.player.setMediaPlayer(selectedSong);
+        this.mp3Player.getPlayer().stop();
+        this.mp3Player.getPlayer().setMediaPlayer(selectedSong);
     }
 
     /**
@@ -52,23 +43,21 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void playSong() {
-
-        player.play();
+        this.mp3Player.getPlayer().play();
         //this.mp3Player.setMP3PlayerState(this.mp3Player.getPlayingLibrary());
-
     }
 
     /**
      * Adds song to library.
      *
-     * @param newSongs  Takes in path of new song
+     * @param newSongs Takes in path of new song
      */
     @Override
     public void addSong(ArrayList<String> newSongs) {
         //add to library
-        this.library.addsongtoLibrary(newSongs);
-        this.library.refreshLibrary();
-        new Updates(newSongs,this.components).updateDisplay("Add");
+        this.mp3Player.getLibrary().addsongtoLibrary(newSongs);
+        this.mp3Player.getLibrary().refreshLibrary();
+        new Updates(newSongs, this.mp3Player.getComponents()).updateDisplay("Add");
     }
 
     /**
@@ -76,11 +65,10 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void createPlaylist() {
-
         System.out.println("code to create playlist is under construction..!!");
         System.out.println("the file chooser can still browse files but nothings happens...!!");
         System.out.println("to test the file chooser functionality please go back to the Library...!!");
-        this.components.getComboBox().getSelectionModel().select("Library");
+        this.mp3Player.getComponents().getComboBox().getSelectionModel().select("Library");
     }
 
     /**
@@ -88,7 +76,6 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void switchToLibrary() {
-
         System.out.println("we are already in library state");
     }
 
@@ -97,7 +84,6 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void switchToPlaylist() {
-
         this.mp3Player.setMP3PlayerState(this.mp3Player.getPlaylistMode());
     }
 }

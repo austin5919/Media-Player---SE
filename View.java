@@ -23,12 +23,11 @@ public class View extends Application {
      * Sets the primary stage with all the components needed
      * to perform all functions.
      *
-     * @param primaryStage  A primary stage to place the components in.
+     * @param primaryStage A primary stage to place the components in.
      */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Music Player");
-
         //a border pane to organize the components in to
         //five different sections
         BorderPane border = new BorderPane();
@@ -46,7 +45,7 @@ public class View extends Application {
     }
 
     //the context menu part of the GUI
-    private void setContextMenu(){
+    private void setContextMenu() {
 
         //create menu to add all new playlist
         Menu addtoPlaylist = new Menu("Add to playlist");
@@ -54,7 +53,7 @@ public class View extends Application {
         //create the actual dropdown menu to hold the menu
         ContextMenu dropMedu = new ContextMenu();
 
-        control.setContextMenu(addtoPlaylist,dropMedu);
+        control.setContextMenu(addtoPlaylist, dropMedu);
     }
 
     //holds the components for the top sections of the border pane

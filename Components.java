@@ -15,8 +15,8 @@ public class Components {
     private int selectedIndex;
 
     /**
-	 * Gets the combo box.
-	 *
+     * Gets the combo box.
+     *
      * @return The comboBox/dropdown list.
      */
     public ComboBox getComboBox() {
@@ -24,8 +24,8 @@ public class Components {
     }
 
     /**
-	 * Sets the ComboBox to be used
-	 *
+     * Sets the ComboBox to be used
+     *
      * @param comboBox Takes in a comboBox and sets it.
      */
     public void setComboBox(ComboBox comboBox) {
@@ -33,8 +33,8 @@ public class Components {
     }
 
     /**
-	 * Gets the selected index.
-	 *
+     * Gets the selected index.
+     *
      * @return The current song selected index.
      */
     public int getSelectedIndex() {
@@ -42,16 +42,18 @@ public class Components {
     }
 
     /**
-	 * Sets the selected index.
-	 *
+     * Sets the selected index.
+     *
      * @param selectedIndex The current song selected index to be set.
      */
     public void setSelectedIndex(int selectedIndex) {
-        this.selectedIndex = selectedIndex; }
+        this.selectedIndex = selectedIndex;
+    }
 
 
     /**
-	 * Gets the Menu.
+     * Gets the Menu.
+     *
      * @return The right click menu.
      */
     public Menu getMenu() {
@@ -59,18 +61,17 @@ public class Components {
     }
 
     /**
-	 * Sets the Menu.
-	 *
+     * Sets the Menu.
+     *
      * @param menu Takes in the right click menu.
      */
     public void setMenu(Menu menu) {
-
         this.menu = menu;
     }
 
     /**
-	 * Gets the display.
-	 * 
+     * Gets the display.
+     *
      * @return The TableView of Song which makes up the display.
      */
     public TableView<Song> getDisplay() {
@@ -78,8 +79,8 @@ public class Components {
     }
 
     /**
-	 * Sets the display.
-	 *
+     * Sets the display.
+     *
      * @param display Takes the TableView of Song to be set.
      */
     public void setDisplay(TableView<Song> display) {

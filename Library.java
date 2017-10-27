@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class handles all the functionalities of the library
  */
-public class Library implements Serializable{
+public class Library implements Serializable {
 
     private String libraryPath = "./library.data";
     ArrayList<String> library;
@@ -21,8 +21,7 @@ public class Library implements Serializable{
     /**
      * Reloads the library and re sets the observable list.
      */
-    public void refreshLibrary(){
-
+    public void refreshLibrary() {
         Read read = new Read();
         read.setListOfPath(this.libraryPath);
         this.library = read.getListOfPath();
@@ -35,11 +34,9 @@ public class Library implements Serializable{
      *
      * @param newSongs Takes in a song object and uses it to add new song.
      */
-    public void addsongtoLibrary(ArrayList<String> newSongs){
-
-        for(String readPath : newSongs){
-
-            new Write().storeData(libraryPath,readPath);
+    public void addsongtoLibrary(ArrayList<String> newSongs) {
+        for (String readPath : newSongs) {
+            new Write().storeData(libraryPath, readPath);
         }
     }
 }

@@ -12,14 +12,16 @@ public class Updates {
     private ArrayList<String> listOfSongs;
     private Components components;
 
-    public Updates(){}
+    public Updates() {
+    }
 
     /**
      * constructor
+     *
      * @param listOfSongs an ArrayList of songs just in case we want to add multiple songs
-     * @param components the components class
+     * @param components  the components class
      */
-    public Updates(ArrayList<String> listOfSongs,Components components){
+    public Updates(ArrayList<String> listOfSongs, Components components) {
         this.listOfSongs = listOfSongs;
         this.components = components;
     }
@@ -29,7 +31,7 @@ public class Updates {
      * in "Add" to add song to the existing Displaylist and Pass
      * in "Rebuild" to completely refresh the DisplayList
      */
-    public void updateDisplay(String updateMethod){
+    public void updateDisplay(String updateMethod) {
 
         ObservableList<Song> list = FXCollections.observableArrayList();
 
@@ -38,34 +40,38 @@ public class Updates {
             Player player = new Player(readPath);
             player.getMediaPlayer().setOnReady(() -> {
 
-                if(new File(readPath).exists()) {
+                if (new File(readPath).exists()) {
                     String songName = new File(readPath).getName().replace(".mp3", "");
-                    String duration =  player.getDuration();
+                    String duration = player.getDuration();
                     list.add(new Song(songName, duration, readPath));
 
-                    if(updateMethod == "Add") { Add(songName,duration,readPath); }
+                    if (updateMethod == "Add") {
+                        Add(songName, duration, readPath);
+                    }
 
-                }else{
+                } else {
                     System.out.println("could not find file : " + readPath);
                 }
 
                 String checkPath = this.listOfSongs.get(this.listOfSongs.size() - 1);
-                if(readPath == checkPath && updateMethod == "Rebuild") { Rebuild(list); }
+                if (readPath == checkPath && updateMethod == "Rebuild") {
+                    Rebuild(list);
+                }
 
             });
         }
     }
 
     //add song to existing display
-    private void Add(String songName,String duration,String readPath){
+    private void Add(String songName, String duration, String readPath) {
         Platform.runLater(() -> {
-            components.getDisplay().getItems().add(new Song(songName,duration,readPath));
+            components.getDisplay().getItems().add(new Song(songName, duration, readPath));
             components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
         });
     }
 
     //completely rebuild display
-    private void Rebuild(ObservableList<Song> list){
+    private void Rebuild(ObservableList<Song> list) {
         Platform.runLater(() -> {
             components.getDisplay().getItems().removeAll();
             components.getDisplay().setItems(list);

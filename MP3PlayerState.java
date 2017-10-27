@@ -14,10 +14,15 @@ public interface MP3PlayerState {
 
 
     public void loadNewTrack(String selectedSong);
+
     public void playSong();
+
     public void addSong(ArrayList<String> newSongs);
+
     public void createPlaylist();
+
     public void switchToLibrary();
+
     public void switchToPlaylist();
 
 }

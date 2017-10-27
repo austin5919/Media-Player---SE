@@ -1,10 +1,13 @@
 import javafx.collections.ObservableList;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,7 +23,7 @@ public class Read {
     /**
      * Set the observable list to hold my values.
      */
-    Read(){
+    Read() {
 
         this.listOfPath = new ArrayList<>();
     }
@@ -41,7 +44,9 @@ public class Read {
      */
     public void setListOfPath(String path) {
         ArrayList<String> list = (ArrayList<String>) Serialization.read(path);
-        if (list == null) { list = new ArrayList<String>(); } // Create new file if one does not exist
+        if (list == null) {
+            list = new ArrayList<String>();
+        } // Create new file if one does not exist
         this.listOfPath = list;
     }
 }

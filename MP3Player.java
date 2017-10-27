@@ -6,9 +6,9 @@ import java.util.ArrayList;
  */
 public class MP3Player {
 
-    private Player player = new Player();
-    private Components components = new Components();
-    private Library library = new Library();
+    private Player player;
+    private Components components;
+    private Library library;
 
     private MP3PlayerState MP3PlayerState;
 
@@ -19,56 +19,54 @@ public class MP3Player {
     /**
      * A constructor to set my starting states.
      */
-    public MP3Player(){
-
+    public MP3Player() {
         this.libraryMode = new LibraryMode(this);
         this.playlistMode = new PlaylistMode(this);
         this.MP3PlayerState = libraryMode;
+        this.components = new Components();
+        this.library = new Library();
+        this.player = new Player();
     }
 
     /**
-	 * Gets the player.
-	 *
+     * Gets the player.
+     *
      * @return The Player class.
      */
     public Player getPlayer() {
-
         return player;
     }
 
     /**
-	 * Gets the Components.
-	 *
+     * Gets the Components.
+     *
      * @return The Components class.
      */
     public Components getComponents() {
-
         return components;
     }
 
     /**
-	 * Gets the Library.
-	 *
+     * Gets the Library.
+     *
      * @return The Library class
      */
     public Library getLibrary() {
-
         return library;
     }
 
     /**
-	 * Gets the Library mode.
-	 *
-     * @return  The Library mode state.
+     * Gets the Library mode.
+     *
+     * @return The Library mode state.
      */
     public MP3PlayerState getLibraryMode() {
-
         return libraryMode;
     }
 
     /**
-	 * Gets the Playlist mode.
-	 *
+     * Gets the Playlist mode.
+     *
      * @return The playlistMode state
      */
     public MP3PlayerState getPlaylistMode() {
@@ -76,11 +74,11 @@ public class MP3Player {
     }
 
     /**
-	 * Set the MP3PlayerState.
+     * Set the MP3PlayerState.
+     *
      * @param MP3PlayerState Sets the new state of the MP3Player.
      */
     public void setMP3PlayerState(MP3PlayerState MP3PlayerState) {
-
         this.MP3PlayerState = MP3PlayerState;
     }
 
@@ -89,58 +87,51 @@ public class MP3Player {
      *
      * @param selectedSong Takes in the new song to be played.
      */
-    public void loadNewTrack(String selectedSong){
-
+    public void loadNewTrack(String selectedSong) {
         this.MP3PlayerState.loadNewTrack(selectedSong);
     }
 
     /**
      * Runs playSong method on current MP3PlayerState of the music player.
      */
-    public void playSong(){
-
+    public void playSong() {
         this.MP3PlayerState.playSong();
     }
 
     /**
      * Calls the add song method based on the state of MP3Player.
      *
-     * @param newSongs  The path of the new song.
+     * @param newSongs The path of the new song.
      */
-    public void addSong(ArrayList<String> newSongs){
-
+    public void addSong(ArrayList<String> newSongs) {
         this.MP3PlayerState.addSong(newSongs);
     }
 
     /**
-	 * Calls the switchToLibrary method based on the current MP3PlayerState of the music player.
+     * Calls the switchToLibrary method based on the current MP3PlayerState of the music player.
      */
-    public void switchToLibrary(){
-
+    public void switchToLibrary() {
         this.MP3PlayerState.switchToLibrary();
     }
 
     /**
      * Calls the switchToOtherPlaylist method based on the current MP3PlayerState of the music player.
      */
-    public void switchToPlaylist(){
-
+    public void switchToPlaylist() {
         this.MP3PlayerState.switchToPlaylist();
     }
 
     /**
      * Calls the createPlaylist method based on the current state of the MP3Player.
      */
-    public void createPlaylist(){
-
+    public void createPlaylist() {
         this.MP3PlayerState.createPlaylist();
     }
 
     /**
      * Load list of playlist based on the current state of the MP3 Player.
      */
-    public void loadListOfPlaylist(){
-
+    public void loadListOfPlaylist() {
         this.MP3PlayerState.loadListOfPlaylist();
     }
 }
