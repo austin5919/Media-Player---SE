@@ -40,11 +40,13 @@ public class Updates {
                 }
 
                 if(readPath == this.listOfSongs.get(this.listOfSongs.size() - 1)) {
+                    
                     Platform.runLater(() -> {
                         components.getDisplay().getItems().removeAll();
                         components.getDisplay().setItems(list);
                         components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
                     });
+                    
                 }
 
             });
