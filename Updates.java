@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
@@ -17,6 +18,7 @@ public class Updates {
     private Components components;
 
     public Updates() {
+
     }
 
     /**
@@ -69,17 +71,28 @@ public class Updates {
     //add song to existing display
     private void Add(String songName, String duration, String readPath) {
         Platform.runLater(() -> {
-            components.getDisplay().getItems().add(new Song(songName, duration, readPath));
-            components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
+            this.components.getDisplay().getItems().add(new Song(songName, duration, readPath));
+            this.components.getDisplay().getFocusModel().focus(this.components.getSelectedIndex());
         });
     }
 
     //completely rebuild display
     private void Rebuild(ObservableList<Song> list) {
         Platform.runLater(() -> {
-            components.getDisplay().getItems().removeAll();
-            components.getDisplay().setItems(list);
-            components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
+            this.components.getDisplay().getItems().removeAll();
+            this.components.getDisplay().setItems(list);
+            this.components.getDisplay().getFocusModel().focus(this.components.getSelectedIndex());
+        });
+    }
+
+    public void updateContextMenu(ContextMenu contextMenu, Menu menu, MenuItem play){
+        Platform.runLater(() -> {
+            if(!contextMenu.getItems().isEmpty()){
+                contextMenu.getItems().clear();
+            }
+            //contextMenu.getItems().addAll(menu,play);
+            contextMenu.getItems().addAll(menu);
+
         });
     }
 }

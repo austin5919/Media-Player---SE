@@ -15,7 +15,7 @@ public class Write {
     /**
      * Append new child to an existing xml or create an xml with new song node.
      *
-     * @param dataPath    Takes in the path of an xml file and adds content to it.
+     * @param dataPath    Takes in the path of an xml file and adds createContent to it.
      * @param contentPath Takes in a song object and uses it to build the nodes.
      * @throws Exception Throws an exception if anything goes wrong.
      */

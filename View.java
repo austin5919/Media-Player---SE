@@ -61,8 +61,9 @@ public class View extends Application {
         //a combobox to hold the playlist
         ComboBox listDropDown = new ComboBox();
         //listDropDown.setStyle(style.setDimensions(1,120, 27));
+        listDropDown.getItems().add("New Playlist");
         listDropDown.getItems().add("Library");
-        listDropDown.getItems().add("Create Playlist");
+        listDropDown.getItems().add("Default Playlist");
 
         listDropDown.getSelectionModel().select("Library");
 

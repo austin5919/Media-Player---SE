@@ -17,18 +17,18 @@ public class Components {
 
     /**
      * i will need to setTheMenu selction to get the selected
-     * content
+     * createContent
      *
-     * @param menuSelection recieves content from the update class
+     * @param menuSelection recieves createContent from the update class
      */
     public void setMenuSelection(String menuSelection) {
         this.menuSelection = menuSelection;
     }
 
     /**
-     * fetch the selected menu content
+     * fetch the selected menu createContent
      *
-     * @return returning the current selected menu content
+     * @return returning the current selected menu createContent
      */
     public String getMenuSelection() {
         return menuSelection;

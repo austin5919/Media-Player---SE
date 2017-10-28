@@ -66,8 +66,6 @@ public class LibraryMode implements MP3PlayerState {
     @Override
     public void createPlaylist() {
         System.out.println("code to create playlist is under construction..!!");
-        System.out.println("the file chooser can still browse files but nothings happens...!!");
-        System.out.println("to test the file chooser functionality please go back to the Library...!!");
         this.mp3Player.getComponents().getComboBox().getSelectionModel().select("Library");
     }
 

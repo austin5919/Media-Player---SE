@@ -4,10 +4,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class handles the listeners for each component
@@ -49,7 +47,8 @@ public class EventHandler {
      */
     public void setContextMenu(ContextMenu contextMenu) {
         this.player.getComponents().setMenu(contextMenu);
-        contextMenuState.content(this.player.getComponents().getComboBox(), this.player.getComponents().getMenu());
+        contextMenuState.createContent(this.player.getComponents().getComboBox());
+        contextMenuState.updateContextMenu(this.player.getComponents().getMenu());
         this.player.loadListOfPlaylist();
     }
 
@@ -64,13 +63,17 @@ public class EventHandler {
             if (comboBox.getSelectionModel().getSelectedItem() == "Library") {
                 //switch to library state
                 this.player.switchToLibrary();
-            } else if (comboBox.getSelectionModel().getSelectedItem() == "Create Playlist") {
+            } else if (comboBox.getSelectionModel().getSelectedItem() == "New Playlist") {
                 this.player.createPlaylist();
             } else {
                 //switch to other playlist state
-                this.player.switchToPlaylist();
+                //this.player.switchToPlaylist();
+                System.out.println("this action will put you in playlist state. Commented it out for now");
+                System.out.println("you are still able to switch to this playlist to show that the Context");
+                System.out.println("updated correctly");
             }
-            this.contextMenuState.content(this.player.getComponents().getComboBox(), this.player.getComponents().getMenu());
+            this.contextMenuState.createContent(this.player.getComponents().getComboBox());
+            contextMenuState.updateContextMenu(this.player.getComponents().getMenu());
         });
     }
 
@@ -144,11 +147,19 @@ public class EventHandler {
     }
 
     public void contextMenuHandler(String contextMenuSelection) {
-        System.out.println(contextMenuSelection);
-        if(contextMenuSelection == "Create Playlist"){
+        //System.out.println(contextMenuSelection);
+        if(contextMenuSelection == "New Playlist"){
             System.out.println("code to create playlist starts here");
             return;
         }
+
+        if(contextMenuSelection == "Play Song"){
+            //handleCLicks(this.player.getComponents().getDisplay());
+            this.player.loadNewTrack(this.selectedSong);
+            this.player.playSong();
+            return;
+        }
+
         System.out.println("code to add to playlist starts here");
 
     }
