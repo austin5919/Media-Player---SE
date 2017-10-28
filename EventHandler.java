@@ -113,8 +113,10 @@ public class EventHandler {
 
     //this method simply handles the actions of the tableView
     private void handleDisplayTableEvents(MouseEvent e) {
+        this.player.getComponents().getMenu().hide();
         TableView<Song> display = this.player.getComponents().getDisplay();
         if (display.getSelectionModel().getSelectedItem() == null) {
+
             return;
         }
 
