@@ -39,11 +39,11 @@ public class EventHandler {
     /**
      * Sets up the right click menu. Still under construction.
      *
-     * @param addToPlaylist Takes in a menu.
-     * @param dropMenu      Takes in a context menu to hold menu/menuItems.
+     * @param contextMenu Takes in a context menu to hold menu/menuItems.
      */
-    public void setContextMenu(Menu addToPlaylist, ContextMenu dropMenu) {
-        this.player.getComponents().setMenu(addToPlaylist);
+    public void setContextMenu(ContextMenu contextMenu) {
+        this.player.getComponents().setMenu(contextMenu);
+        new Updates(this.player.getLibrary().getLibrary(), this.player.getComponents()).updateContextMenu();
         this.player.loadListOfPlaylist();
     }
 
@@ -122,7 +122,10 @@ public class EventHandler {
             }
         } else if (e.getButton() == MouseButton.SECONDARY) {
             handleCLicks(display);
+            this.player.getComponents().getMenu().show(display, e.getScreenX(), e.getScreenY());
             System.out.println("under construction");
+            System.out.println("right now it just shows the create playlist option but it does nothing");
+            System.out.println("once we figure out how to deal with playlist we can add functionalities");
         }
     }
 

@@ -46,14 +46,9 @@ public class View extends Application {
 
     //the context menu part of the GUI
     private void setContextMenu() {
-
-        //create menu to add all new playlist
-        Menu addtoPlaylist = new Menu("Add to playlist");
-
         //create the actual dropdown menu to hold the menu
-        ContextMenu dropMedu = new ContextMenu();
-
-        control.setContextMenu(addtoPlaylist, dropMedu);
+        ContextMenu contextMenu = new ContextMenu();
+        control.setContextMenu(contextMenu);
     }
 
     //holds the components for the top sections of the border pane

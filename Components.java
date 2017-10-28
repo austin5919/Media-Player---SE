@@ -1,5 +1,5 @@
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Menu;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
 
 /**
@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
  */
 public class Components {
 
-    private Menu menu;
+    private ContextMenu menu;
     private ComboBox comboBox;
     private TableView<Song> display;
 
@@ -56,7 +56,7 @@ public class Components {
      *
      * @return The right click menu.
      */
-    public Menu getMenu() {
+    public ContextMenu getMenu() {
         return menu;
     }
 
@@ -65,7 +65,7 @@ public class Components {
      *
      * @param menu Takes in the right click menu.
      */
-    public void setMenu(Menu menu) {
+    public void setMenu(ContextMenu menu) {
         this.menu = menu;
     }
 
