@@ -13,6 +13,26 @@ public class Components {
     private TableView<Song> display;
 
     private int selectedIndex;
+    private String menuSelection;
+
+    /**
+     * i will need to setTheMenu selction to get the selected
+     * content
+     *
+     * @param menuSelection recieves content from the update class
+     */
+    public void setMenuSelection(String menuSelection) {
+        this.menuSelection = menuSelection;
+    }
+
+    /**
+     * fetch the selected menu content
+     *
+     * @return returning the current selected menu content
+     */
+    public String getMenuSelection() {
+        return menuSelection;
+    }
 
     /**
      * Gets the combo box.

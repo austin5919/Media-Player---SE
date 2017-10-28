@@ -32,14 +32,13 @@ public class View extends Application {
         //five different sections
         BorderPane border = new BorderPane();
 
-        setContextMenu();
         GridPane topComponents = topComponents();
 
         TableView<Song> centerComponents = centerComponents();
 
         border.setTop(topComponents);
         border.setCenter(centerComponents);
-
+        setContextMenu();
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
     }
@@ -62,9 +61,9 @@ public class View extends Application {
         //a combobox to hold the playlist
         ComboBox listDropDown = new ComboBox();
         //listDropDown.setStyle(style.setDimensions(1,120, 27));
-
         listDropDown.getItems().add("Library");
         listDropDown.getItems().add("Create Playlist");
+
         listDropDown.getSelectionModel().select("Library");
 
         //a browser button to be able to browse songs

@@ -1,6 +1,8 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
@@ -78,25 +80,6 @@ public class Updates {
             components.getDisplay().getItems().removeAll();
             components.getDisplay().setItems(list);
             components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
-        });
-    }
-
-    public void updateContextMenu() {
-        Platform.runLater(() -> {
-            Menu newMenu = new Menu("Add to playlist");
-            ObservableList<String> items = components.getComboBox().getItems();
-
-            for (String choices : items) {
-                if (items.isEmpty()) {
-                    break;
-                }
-
-                String selected = components.getComboBox().getSelectionModel().getSelectedItem().toString();
-                if (choices != "Library" && choices != selected) {
-                    newMenu.getItems().add(new MenuItem(choices.toString()));
-                }
-            }
-            components.getMenu().getItems().add(newMenu);
         });
     }
 }

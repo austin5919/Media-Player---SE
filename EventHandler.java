@@ -4,14 +4,18 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class handles the listeners for each component
  * on the GUI.
  */
 public class EventHandler {
+    ContextMenuState contextMenu;
+    ContextMenuState contextMenuState;
 
     private MP3Player player;
     private String selectedSong;
@@ -22,6 +26,8 @@ public class EventHandler {
      */
     public EventHandler() {
         this.player = new MP3Player();
+        this.contextMenu = new MenuContent(this);
+        this.contextMenuState = contextMenu;
     }
 
     /**
@@ -43,7 +49,7 @@ public class EventHandler {
      */
     public void setContextMenu(ContextMenu contextMenu) {
         this.player.getComponents().setMenu(contextMenu);
-        new Updates(this.player.getLibrary().getLibrary(), this.player.getComponents()).updateContextMenu();
+        contextMenuState.content(this.player.getComponents().getComboBox(), this.player.getComponents().getMenu());
         this.player.loadListOfPlaylist();
     }
 
@@ -64,6 +70,7 @@ public class EventHandler {
                 //switch to other playlist state
                 this.player.switchToPlaylist();
             }
+            this.contextMenuState.content(this.player.getComponents().getComboBox(), this.player.getComponents().getMenu());
         });
     }
 
@@ -123,9 +130,6 @@ public class EventHandler {
         } else if (e.getButton() == MouseButton.SECONDARY) {
             handleCLicks(display);
             this.player.getComponents().getMenu().show(display, e.getScreenX(), e.getScreenY());
-            System.out.println("under construction");
-            System.out.println("right now it just shows the create playlist option but it does nothing");
-            System.out.println("once we figure out how to deal with playlist we can add functionalities");
         }
     }
 
@@ -135,5 +139,15 @@ public class EventHandler {
         this.selectedSong = display.getItems().get(this.player.getComponents().getSelectedIndex()).getSongPath();
         display.getSelectionModel().clearSelection();
         display.getFocusModel().focus(this.player.getComponents().getSelectedIndex());
+    }
+
+    public void contextMenuHandler(String contextMenuSelection) {
+        System.out.println(contextMenuSelection);
+        if(contextMenuSelection == "Create Playlist"){
+            System.out.println("code to create playlist starts here");
+            return;
+        }
+        System.out.println("code to add to playlist starts here");
+
     }
 }
