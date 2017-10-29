@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.*;
+import javax.sound.sampled.*;
 
 /**
  * This class creates song objects to make it more
@@ -78,4 +80,12 @@ public class Song {
     public void setPath(String songPath) {
         this.songPath = songPath;
     }
+	
+	/**
+     * Unit test.
+     *
+     * @param args Command-line parameters for this test. Currently unused
+     */
+    public static void main(String[] args) {
+	}
 }
