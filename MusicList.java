@@ -41,11 +41,11 @@ public class MusicList {
      * @param path  String representing the path of the song.
      */
     public void addSong(String name, String duration, String path) {
-        ArrayList<String> song = new ArrayList<String>();
-        song.add(name);
-        song.add(duration);
-        song.add(path);
-        this.addSong(song);
+		ArrayList<String> song = new ArrayList<String>();
+		song.add(name);
+		song.add(duration);
+		song.add(path);
+		this.addSong(song);
     }
 
     /**
@@ -54,7 +54,12 @@ public class MusicList {
      * @param song  ArrayList containing the name, duration, and path of the song.
      */
     public void addSong(ArrayList<String> song) {
-        this.list.add(song);
+        if (this.getSongByPath(song.get(2)) == null) {
+			this.list.add(song);
+		} else {
+			System.out.println("Song with that path is already in MusicList: " + song.get(2));
+		}
+		
     }
     
     /**
@@ -64,12 +69,13 @@ public class MusicList {
      * @throws  IllegalArgumentException if the song to be added to the queue was not in this MusicList.
      */
     public void addToQueue(ArrayList<String> song) throws IllegalArgumentException {
-        if (this.list.contains(song)) {
-            this.queue.add(song);
+        if (this.containsSong(song)) {
+			this.queue.add(song);
         } else {
-            throw new IllegalArgumentException("You cannot remove a song that does not exist in the MusicList!: " + song);
+            throw new IllegalArgumentException("That song is not in in the list. You must add it to the MusicList before it can be added to the queue: " + song);
         }
     }
+	
     
     /**
      * Adds a new song to the data structure.
@@ -101,7 +107,7 @@ public class MusicList {
         }
         return false;
     }
-    
+	
     /**
      * Gets the next song.
      *
@@ -310,6 +316,23 @@ public class MusicList {
         apple.set(2,"./songs/best/zebra.mp3");
         System.out.println("Subset MusicList: \n" + listB);
         System.out.println("Main MusicList: \n" + listA);
+		
+		System.out.println("Attempting to add a song with the same file path as a pre-existing song:");
+		listA.addSong(new ArrayList<String>(Arrays.asList("Example","00:00","./songs/banana.mp3")));
+		
+		System.out.println("\nAttempting to add a song to the queue that isn't in the main list:");
+		try {
+            listA.addToQueue(new ArrayList<String>(Arrays.asList("Example","00:00","./songs/banana.mp3")));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+		
+		System.out.println("\nAttempting to add the same song to the queue more than once (this is allowed):");
+		listA.addToQueue(listA.getSongByName("Banana"));
+		listA.addToQueue(listA.getSongByName("Carrot"));
+		listA.addToQueue(listA.getSongByName("Banana"));
+		listA.addToQueue(listA.getSongByName("Banana"));
+		System.out.println(listA);
     }
     
 }
