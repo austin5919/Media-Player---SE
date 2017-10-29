@@ -11,15 +11,6 @@ public class Song {
     private String songDuration;
     private String songPath;
 
-    /**
-     * Empty constructor to be able to call it without
-     * passing in anything.
-     */
-    public Song() {
-        this.songName = "";
-        this.songPath = "";
-        this.songDuration = "";
-    }
 
     /**
      * Constuctor requiring the name, duration, and path of the song.
