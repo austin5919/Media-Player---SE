@@ -141,7 +141,7 @@ public class EventHandler {
     //handles the clicks settings
     private void handleCLicks(TableView<Song> display) {
         this.player.getComponents().setSelectedIndex(display.getSelectionModel().getSelectedIndex());
-        this.selectedSong = display.getItems().get(this.player.getComponents().getSelectedIndex()).getSongPath();
+        this.selectedSong = display.getItems().get(this.player.getComponents().getSelectedIndex()).getPath();
         display.getSelectionModel().clearSelection();
         display.getFocusModel().focus(this.player.getComponents().getSelectedIndex());
     }

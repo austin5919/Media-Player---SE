@@ -30,7 +30,7 @@ public class Song {
      *
      * @return Song name.
      */
-    public String getSongName() {
+    public String getName() {
         return songName;
     }
 
@@ -39,7 +39,7 @@ public class Song {
      *
      * @param songName The String to be set as the song name.
      */
-    public void setSongName(String songName) {
+    public void setName(String songName) {
         this.songName = songName;
     }
 
@@ -48,7 +48,7 @@ public class Song {
      *
      * @return The current song duration.
      */
-    public String getSongDuration() {
+    public String getDuration() {
         return songDuration;
     }
 
@@ -57,7 +57,7 @@ public class Song {
      *
      * @param songDuration The String to be set as the duration for the current song.
      */
-    public void setSongDuration(String songDuration) {
+    public void setDuration(String songDuration) {
         this.songDuration = songDuration;
     }
 
@@ -66,7 +66,7 @@ public class Song {
      *
      * @return Path of current song.
      */
-    public String getSongPath() {
+    public String getPath() {
         return songPath;
     }
 
@@ -75,7 +75,7 @@ public class Song {
      *
      * @param songPath The String to be set as the path for the current song.
      */
-    public void setSongPath(String songPath) {
+    public void setPath(String songPath) {
         this.songPath = songPath;
     }
 }
