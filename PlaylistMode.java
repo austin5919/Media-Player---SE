@@ -9,8 +9,6 @@ public class PlaylistMode implements MP3PlayerState {
 
     private String path = "./default-playlist.xml";
     private MP3Player mp3Player;
-
-    private Library library;
     private Components comp;
 
     /**
@@ -19,7 +17,6 @@ public class PlaylistMode implements MP3PlayerState {
     public PlaylistMode(MP3Player mp3Player) {
         this.mp3Player = mp3Player;
         this.comp = mp3Player.getComponents();
-        this.library = new Library();
     }
 
     @Override
