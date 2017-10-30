@@ -40,8 +40,40 @@ public class View extends Application {
         border.setTop(topComponents);
         border.setCenter(centerComponents);
         setContextMenu();
+        popWindow();
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
+    }
+
+    //popWindow
+    private void popWindow(){
+        Stage userInput = new Stage();
+        userInput.setTitle("New Playlist");
+
+        BorderPane border = new BorderPane();
+        border.setPadding(new Insets(10));
+
+        GridPane center = new GridPane();
+        center.setVgap(1);
+        TextField textInput = new TextField();
+        textInput.setMinWidth(280);
+        center.add(new Label("Enter Playlist Name"),0,0);
+        center.add(textInput,0,1);
+
+        GridPane bottom = new GridPane();
+        bottom.setHgap(1);
+        Button okButton = new Button("OK");
+        Button cancelButton = new Button("Cancel");
+        bottom.add(okButton,190,0);
+        bottom.add(cancelButton,195,0);
+
+        border.setCenter(center);
+        border.setBottom(bottom);
+
+        userInput.setScene(new Scene(border,300,100));
+        userInput.setResizable(false);
+
+        this.control.setPopWindow(userInput,okButton,cancelButton,textInput);
     }
 
     //the context menu part of the GUI
@@ -64,7 +96,6 @@ public class View extends Application {
         //listDropDown.setStyle(style.setDimensions(1,120, 27));
         listDropDown.getItems().add("New Playlist");
         listDropDown.getItems().add("Library");
-        listDropDown.getItems().add("Default Playlist");
 
         listDropDown.getSelectionModel().select("Library");
 

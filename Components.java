@@ -1,6 +1,8 @@
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * This class holds all the components i will
@@ -11,9 +13,40 @@ public class Components {
     private ContextMenu menu;
     private ComboBox comboBox;
     private TableView<Song> display;
+    private Stage stage;
+    private TextField textField;
+
 
     private int selectedIndex;
     private String menuSelection;
+
+    /**
+     * gets the stage
+     *
+     * @return a stage to be used
+     */
+    public Stage getStage() { return stage; }
+
+    /**
+     * sets the stage
+     *
+     * @param stage
+     */
+    public void setStage(Stage stage) { this.stage = stage; }
+
+    /**
+     * gets the textfield
+     *
+     * @return a textfield to be used or updated
+     */
+    public TextField getTextField() { return textField; }
+
+    /**
+     * sets the textfield
+     *
+     * @param textField
+     */
+    public void setTextField(TextField textField) { this.textField = textField; }
 
     /**
      * i will need to setTheMenu selction to get the selected

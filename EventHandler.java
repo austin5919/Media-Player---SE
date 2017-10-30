@@ -4,6 +4,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,6 +60,40 @@ public class EventHandler {
         this.player.loadListOfPlaylist();
     }
 
+    /**
+     * set the popWindow
+     *
+     * @param stage takes in a stage with the components i need
+     * @param okButton takes in an okButton to submit
+     * @param cancelButton takes in a cancel button to cancel
+     * @param input takes in the actual textBox to extract the information
+     */
+    public void setPopWindow(Stage stage,Button okButton, Button cancelButton, TextField input){
+        this.player.getComponents().setStage(stage);
+        this.player.getComponents().setTextField(input);
+
+        okButton.setOnAction(this::okButtonHandler);
+        cancelButton.setOnAction(this::cancelButtonHandler);
+        stage.setOnHidden(this::stageHandler);
+    }
+
+    //stage handler
+    private void stageHandler(WindowEvent e){
+        this.player.getComponents().getTextField().clear();
+    }
+
+    //okButton handler
+    private void okButtonHandler(ActionEvent e){
+        String input = this.player.getComponents().getTextField().getText();
+        new Updates().updateComboBox(this.player.getComponents().getComboBox(),input);
+        this.player.getComponents().getStage().close();
+    }
+
+    //cancelButton handler
+    private void cancelButtonHandler(ActionEvent e){
+        this.player.getComponents().getStage().close();
+    }
+
     //comboBox handler
     private void comboBoxHandler(ComboBox playList) {
         playList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -67,7 +103,6 @@ public class EventHandler {
 
             ComboBox comboBox = this.player.getComponents().getComboBox();
             if (comboBox.getSelectionModel().getSelectedItem() == "Library") {
-                //switch to library state
                 this.player.switchToLibrary();
             } else if (comboBox.getSelectionModel().getSelectedItem() == "New Playlist") {
                 this.player.createPlaylist();
@@ -96,9 +131,7 @@ public class EventHandler {
 
         //set the song path
         String songPath = theFile.getAbsolutePath();
-        this.reader.setListOfPath(this.libraryPath);
-
-        if (new Exist().CheckList(songPath, this.reader.getListOfPath())) {
+        if (this.player.getMusicList().containsSong(this.player.getMusicList().getSongByPath(songPath))) {
             ArrayList<String> newSongs = new ArrayList<>();
             newSongs.add(songPath);
             //call browser method
@@ -117,7 +150,7 @@ public class EventHandler {
         this.player.getComponents().setDisplay(songTableView);
         this.reader.setListOfPath(this.libraryPath);
         Updates updates = new Updates(this.player.getComponents(),this.player.getMusicList());
-        updates.addListOfSongs(reader.getListOfPath());
+        updates.updateMusicList(reader.getListOfPath());
         songTableView.setOnMouseClicked(this::handleDisplayTableEvents);
     }
 
@@ -148,8 +181,12 @@ public class EventHandler {
             handleCLicks(display);
 
             if (new File(this.selectedSong).exists()) {
-                this.player.loadNewTrack(this.selectedSong);
-                this.player.playSong();
+                if(this.player.getMusicList().containsSong(this.player.getMusicList().getSongByPath(selectedSong))){
+                    this.player.loadNewTrack(this.selectedSong);
+                    this.player.playSong();
+                }else{
+                    System.out.println("song is not in library..you should never see this");
+                }
             } else {
                 System.out.println("selected song does not exist");
             }
@@ -161,7 +198,7 @@ public class EventHandler {
 
     //handles the clicks settings
     private void handleCLicks(TableView<Song> display) {
-        System.out.println(this.player.getComponents().getDisplay().getSelectionModel().getSelectedItem().getDuration());
+        //System.out.println(this.player.getComponents().getDisplay().getSelectionModel().getSelectedItem().getDuration());
         this.player.getComponents().setSelectedIndex(display.getSelectionModel().getSelectedIndex());
         this.selectedSong = display.getItems().get(this.player.getComponents().getSelectedIndex()).getPath();
         display.getSelectionModel().clearSelection();
@@ -171,14 +208,17 @@ public class EventHandler {
     public void contextMenuHandler(String contextMenuSelection) {
         //System.out.println(contextMenuSelection);
         if(contextMenuSelection == "New Playlist"){
-            System.out.println("code to create playlist starts here");
+            this.player.getComponents().getComboBox().getSelectionModel().select("New Playlist");
             return;
         }
 
         if(contextMenuSelection == "Play Song"){
-            //handleCLicks(this.player.getComponents().getDisplay());
-            this.player.loadNewTrack(this.selectedSong);
-            this.player.playSong();
+            if(this.player.getMusicList().containsSong(this.player.getMusicList().getSongByPath(selectedSong))){
+                this.player.loadNewTrack(this.selectedSong);
+                this.player.playSong();
+            }else{
+                System.out.println("song is not in library..you should never see this");
+            }
             return;
         }
 

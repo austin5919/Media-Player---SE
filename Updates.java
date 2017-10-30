@@ -1,6 +1,7 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -26,7 +27,7 @@ public class Updates {
         this.musicList = musicList;
     }
 
-    public void addListOfSongs(ArrayList<String> listOfSongs) {
+    public void updateMusicList(ArrayList<String> listOfSongs) {
 
         for (String readPath : listOfSongs) {
             Player player = new Player(readPath);
@@ -34,15 +35,10 @@ public class Updates {
                 @Override
                 public void run() {
                     if (new File(readPath).exists()) {
-
-                        Platform.runLater(() -> {
-                            String songName = new File(readPath).getName().replace(".mp3", "");
-                            final String duration = player.getDuration();
-                            musicList.addSong(songName, duration, readPath);
-                            components.getDisplay().getItems().add(new Song(songName, duration, readPath));
-                            components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
-                        });
-
+                        String songName = new File(readPath).getName().replace(".mp3", "");
+                        final String duration = player.getDuration();
+                        musicList.addSong(songName, duration, readPath);
+                        updateDisplay(songName,duration,readPath);
                     } else {
                         System.out.println("could not find file : " + readPath);
                     }
@@ -51,8 +47,22 @@ public class Updates {
         }
     }
 
-    public void switchDisplay(ArrayList<ArrayList<String>> list) {
+    private void updateDisplay(String songName, String duration, String readPath) {
+        Platform.runLater(() -> {
+            components.getDisplay().getItems().add(new Song(songName, duration, readPath));
+            components.getDisplay().getFocusModel().focus(components.getSelectedIndex());
+        });
+    }
 
+    public void updateComboBox(ComboBox comboBox,String input){
+        Platform.runLater(() -> {
+            if(comboBox.getItems().contains(input)){
+                System.out.println("this playlist alreayd exist");
+                return;
+            }
+
+            comboBox.getItems().add(input);
+        });
     }
 
     public void updateContextMenu(ContextMenu contextMenu, Menu menu, MenuItem play) {

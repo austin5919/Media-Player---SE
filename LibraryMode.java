@@ -57,7 +57,7 @@ public class LibraryMode implements MP3PlayerState {
         //add to library
         for (String readPath : newSongs) { new Write().storeData(libraryPath, readPath); }
         Updates updates = new Updates(this.mp3Player.getComponents(),this.mp3Player.getMusicList());
-        updates.addListOfSongs(newSongs);
+        updates.updateMusicList(newSongs);
     }
 
     /**
@@ -65,7 +65,7 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void createPlaylist() {
-        System.out.println("code to create playlist is under construction..!!");
+        this.mp3Player.getComponents().getStage().showAndWait();
         this.mp3Player.getComponents().getComboBox().getSelectionModel().select("Library");
     }
 
@@ -74,7 +74,7 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void switchToLibrary() {
-        System.out.println("we are already in library state");
+        //System.out.println("LibraryMode");
     }
 
     /**
