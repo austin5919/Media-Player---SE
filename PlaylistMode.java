@@ -61,4 +61,5 @@ public class PlaylistMode implements MP3PlayerState {
     public void switchToPlaylist() {
         System.out.println("we are already in playlist state");
     }
+
 }

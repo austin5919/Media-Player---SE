@@ -55,9 +55,9 @@ public class LibraryMode implements MP3PlayerState {
     @Override
     public void addSong(ArrayList<String> newSongs) {
         //add to library
-        this.mp3Player.getLibrary().addsongtoLibrary(newSongs);
-        this.mp3Player.getLibrary().refreshLibrary();
-        new Updates(newSongs, this.mp3Player.getComponents()).updateDisplay("Add");
+        for (String readPath : newSongs) { new Write().storeData(libraryPath, readPath); }
+        Updates updates = new Updates(this.mp3Player.getComponents(),this.mp3Player.getMusicList());
+        updates.addListOfSongs(newSongs);
     }
 
     /**

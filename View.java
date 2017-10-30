@@ -4,8 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-
 public class View extends Application {
     private Style style = new Style();
     private EventHandler control = new EventHandler();
@@ -35,6 +35,7 @@ public class View extends Application {
         GridPane topComponents = topComponents();
 
         TableView<Song> centerComponents = centerComponents();
+        //MediaView mediaView = new MediaView();
 
         border.setTop(topComponents);
         border.setCenter(centerComponents);
@@ -93,7 +94,7 @@ public class View extends Application {
         //a tableview to hold the songs
         TableView<Song> centerComponents = new TableView<>();
         centerComponents.getStylesheets().add(style.tableView());
-        TableColumn<Song, String> songDuration = columns("Time", "songDuration");
+        TableColumn<Song, String> songDuration = columns("Time", "duration");
 
         //TODO: make duration width shorter
         songDuration.setMaxWidth(200);
@@ -101,7 +102,7 @@ public class View extends Application {
 
         //set a constraint so we dont see extra columns on the stage
         centerComponents.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        centerComponents.getColumns().addAll(columns("Name", "songName"), songDuration);
+        centerComponents.getColumns().addAll(columns("Name", "name"), songDuration);
 
         //TODO: set handlers for tableView
         control.setCenterComponents(centerComponents);

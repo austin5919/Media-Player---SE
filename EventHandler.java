@@ -2,6 +2,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -12,17 +13,22 @@ import java.util.ArrayList;
  * on the GUI.
  */
 public class EventHandler {
+    Read reader;
+    private String libraryPath = "./library.data";
+
     ContextMenuState contextMenu;
     ContextMenuState contextMenuState;
 
     private MP3Player player;
     private String selectedSong;
+    private boolean componentsReady;
 
     /**
      * Setting a few variables at launch to make
      * debugging easier.
      */
     public EventHandler() {
+        this.reader = new Read();
         this.player = new MP3Player();
         this.contextMenu = new MenuContent(this);
         this.contextMenuState = contextMenu;
@@ -90,9 +96,9 @@ public class EventHandler {
 
         //set the song path
         String songPath = theFile.getAbsolutePath();
-        this.player.getLibrary().refreshLibrary();
+        this.reader.setListOfPath(this.libraryPath);
 
-        if (new Exist().CheckList(songPath, this.player.getLibrary().getLibrary())) {
+        if (new Exist().CheckList(songPath, this.reader.getListOfPath())) {
             ArrayList<String> newSongs = new ArrayList<>();
             newSongs.add(songPath);
             //call browser method
@@ -109,17 +115,32 @@ public class EventHandler {
      */
     public void setCenterComponents(TableView<Song> songTableView) {
         this.player.getComponents().setDisplay(songTableView);
-        this.player.getLibrary().refreshLibrary();
-        new Updates(this.player.getLibrary().getLibrary(), this.player.getComponents()).updateDisplay("Rebuild");
+        this.reader.setListOfPath(this.libraryPath);
+        Updates updates = new Updates(this.player.getComponents(),this.player.getMusicList());
+        updates.addListOfSongs(reader.getListOfPath());
         songTableView.setOnMouseClicked(this::handleDisplayTableEvents);
     }
+
+    private void MusicPlayerHandlers(){
+
+    }
+
+    private boolean Allready(ArrayList<MediaPlayer> player){
+        for (MediaPlayer players : player){
+            if(players.getStatus() != MediaPlayer.Status.READY){
+                return false;
+            }
+        }
+        this.componentsReady =true;
+        return true;
+    }
+
 
     //this method simply handles the actions of the tableView
     private void handleDisplayTableEvents(MouseEvent e) {
         this.player.getComponents().getMenu().hide();
         TableView<Song> display = this.player.getComponents().getDisplay();
         if (display.getSelectionModel().getSelectedItem() == null) {
-
             return;
         }
 
@@ -140,6 +161,7 @@ public class EventHandler {
 
     //handles the clicks settings
     private void handleCLicks(TableView<Song> display) {
+        System.out.println(this.player.getComponents().getDisplay().getSelectionModel().getSelectedItem().getDuration());
         this.player.getComponents().setSelectedIndex(display.getSelectionModel().getSelectedIndex());
         this.selectedSong = display.getItems().get(this.player.getComponents().getSelectedIndex()).getPath();
         display.getSelectionModel().clearSelection();

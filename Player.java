@@ -2,6 +2,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -10,12 +11,14 @@ import java.util.concurrent.TimeUnit;
 public class Player {
 
     private MediaPlayer mediaPlayer;
+    private ArrayList<MediaPlayer> mediaPlayers;
 
     /**
      * Empty constructor to call
      * without passing in anything.
      */
     public Player() {
+        this.mediaPlayers = new ArrayList<>();
     }
 
     /**
@@ -26,6 +29,8 @@ public class Player {
     public Player(String path) {
         setMediaPlayer(path);
     }
+
+    public ArrayList<MediaPlayer> getMediaPlayers() { return mediaPlayers; }
 
     /**
      * Gets the mediaplayer
@@ -46,12 +51,20 @@ public class Player {
         MediaPlayer player = new MediaPlayer(media);
 
         try {
-            TimeUnit.MILLISECONDS.sleep(250);
+            TimeUnit.MILLISECONDS.sleep(200);
         } catch (InterruptedException e) {
 
         }
 
         this.mediaPlayer = player;
+    }
+
+    public void setMediaPlayerTest(ArrayList<String> path) {
+        for(String readPath : path){
+            Media media = new Media(new File(readPath).toURI().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            this.mediaPlayers.add(player);
+        }
     }
 
     /**

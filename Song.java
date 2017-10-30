@@ -1,7 +1,3 @@
-import java.io.*;
-import java.util.*;
-import javax.sound.sampled.*;
-
 /**
  * This class creates song objects to make it more
  * simple to store them. It saves having to build multiple
@@ -9,9 +5,9 @@ import javax.sound.sampled.*;
  */
 public class Song {
 
-    private String songName;
-    private String songDuration;
-    private String songPath;
+    private String name;
+    private String duration;
+    private String path;
 
 
     /**
@@ -22,9 +18,9 @@ public class Song {
      * @param newPath     Takes in the new songs path.
      */
     public Song(String newName, String newDuration, String newPath) {
-        this.songName = newName;
-        this.songPath = newPath;
-        this.songDuration = newDuration;
+        this.name = newName;
+        this.path = newPath;
+        this.duration = newDuration;
     }
 
     /**
@@ -33,7 +29,7 @@ public class Song {
      * @return Song name.
      */
     public String getName() {
-        return songName;
+        return name;
     }
 
     /**
@@ -42,7 +38,7 @@ public class Song {
      * @param songName The String to be set as the song name.
      */
     public void setName(String songName) {
-        this.songName = songName;
+        this.name = songName;
     }
 
     /**
@@ -51,7 +47,7 @@ public class Song {
      * @return The current song duration.
      */
     public String getDuration() {
-        return songDuration;
+        return duration;
     }
 
     /**
@@ -60,7 +56,7 @@ public class Song {
      * @param songDuration The String to be set as the duration for the current song.
      */
     public void setDuration(String songDuration) {
-        this.songDuration = songDuration;
+        this.duration = songDuration;
     }
 
     /**
@@ -69,7 +65,7 @@ public class Song {
      * @return Path of current song.
      */
     public String getPath() {
-        return songPath;
+        return path;
     }
 
     /**
@@ -78,7 +74,7 @@ public class Song {
      * @param songPath The String to be set as the path for the current song.
      */
     public void setPath(String songPath) {
-        this.songPath = songPath;
+        this.path = songPath;
     }
 	
 	/**

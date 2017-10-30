@@ -8,6 +8,7 @@ public class MP3Player {
 
     private Player player;
     private Components components;
+    private MusicList musicList;
     private Library library;
 
     private MP3PlayerState MP3PlayerState;
@@ -24,6 +25,7 @@ public class MP3Player {
         this.playlistMode = new PlaylistMode(this);
         this.MP3PlayerState = libraryMode;
         this.components = new Components();
+        this.musicList = new MusicList();
         this.library = new Library();
         this.player = new Player();
     }
@@ -35,6 +37,10 @@ public class MP3Player {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public MusicList getMusicList() {
+        return musicList;
     }
 
     /**
