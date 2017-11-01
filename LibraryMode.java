@@ -56,9 +56,16 @@ public class LibraryMode implements MP3PlayerState {
      * @param newSongs Takes in path of new song
      */
     @Override
-    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
+    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
         //add to library
         for (String readPath : newSongs) { new Write().storeData(libraryPath, readPath); }
         new Updates().updateMusicList(tableView, selectedIndex, mp3Player.getMusicList(),newSongs);
+    }
+
+    @Override
+    public void addSongToPlaylist(Song song, String dataPath) {
+        System.out.println(song.getPath());
+        System.out.println(dataPath);
+
     }
 }

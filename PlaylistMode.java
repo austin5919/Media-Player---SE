@@ -35,9 +35,14 @@ public class PlaylistMode implements MP3PlayerState {
     }
 
     @Override
-    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
-        //this.library.addSong(new Player(songPath),this.cosongName, songPath);
+    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
+        //this.library.addSongToLibrary(new Player(songPath),this.cosongName, songPath);
         //also add to playlist
+    }
+
+    @Override
+    public void addSongToPlaylist(Song song, String dataPath) {
+        System.out.println(song.getPath());
     }
 
 }

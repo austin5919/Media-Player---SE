@@ -17,251 +17,273 @@ import java.util.ArrayList;
 public class EventHandler {
     private String selectedSong;
     private String libraryPath;
+    private String comboBoxContent;
     private int selectedIndex;
 
 
     private GUIObjects guiObjects;
     private MP3Player player;
-    private Read reader;
-
-    SafeUpdate safeUpdate;
+    private Read read;
+    private Write write;
 
     /**
      * Setting a few variables at launch to make
      * debugging easier.
      */
-    public EventHandler() {
-        this.reader = new Read();
+    public EventHandler(
+            ComboBox listDropDown, Button browswer,
+            TableView<Song> tableView, Stage userInput,
+            TextField textInput, Button okButton,
+            Button cancelButton, ContextMenu contextMenu
+    ) {
+
+        this.read = new Read();
+        this.write = new Write();
         this.player = new MP3Player();
         this.guiObjects = new GUIObjects();
 
         this.libraryPath = "./library.data";
+        this.comboBoxContent = "./ComboBoxContent.data";
         this.selectedIndex = -1;
         this.selectedSong = null;
 
-        this.safeUpdate = new SafetyMeasures(this);
-    }
-
-    /**
-     * Sets the handlers for the ComboBox and the file chooser button.
-     *
-     * @param comboBox      Takes in the ComboBox for the dropdown.
-     * @param addSongButton Takes in a button to handle the file chooser.
-     */
-    public void setTopComponents(ComboBox comboBox, Button addSongButton) {
-        guiObjects.setComboBox(comboBox);
-        comboBox = guiObjects.getComboBox();
-
-        addSongButton.setOnAction(this::browserButtonAction);
-        comboBoxHandler(comboBox);
-    }
-
-    /**
-     * Sets up the right click menu. Still under construction.
-     *
-     * @param contextMenu Takes in a context menu to hold menu/menuItems.
-     */
-    public void setContextMenu(ContextMenu contextMenu) {
+        //components
+        guiObjects.setComboBox(listDropDown);
+        guiObjects.setBrowswer(browswer);
+        guiObjects.setDisplayTableView(tableView);
+        guiObjects.setStage(userInput);
+        guiObjects.setTextField(textInput);
+        guiObjects.setOkButton(okButton);
+        guiObjects.setCancelButton(cancelButton);
         guiObjects.setContextMenu(contextMenu);
+
+        loadInformation();
+        setHandlers();
+    }
+
+    private void loadInformation() {
+        //TODO:load library.data
+        read.setListOfPath(this.libraryPath);
+        ArrayList<String> libraryContent = read.getListOfPath();
+        //TODO:Use library.data to set up the MusicList and load display
+        /* they must be set at the same time because of the delay
+         * caused by set on ready when getting duration.
+         */
+        new Updates().updateMusicList(
+                guiObjects.getDisplayTableView(),
+                selectedIndex, player.getMusicList(),
+                libraryContent
+        );
+        //TODO:Load the ComboBoxContent.data
+        read.setListOfPath(comboBoxContent);
+        //TODO:Use the ComboBoxContent.data to update the ComboBox
+        ArrayList<String> comboBoxContent = read.getListOfPath();
+        new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
+    }
+
+    //TODO:set handlers functionality
+    private void setHandlers() {
+        //TODO:set the context menu handlers
         setHandlersContextMenu();
-        player.loadListOfPlaylist();
+        //TODO:set the main display handlers.
+        guiObjects.getDisplayTableView().setOnMouseClicked(this::handleDisplayTableEvents);
+        //TODO:set combo box handler
+        comboBoxHandler();
+        //TODO: set file chooser functionality
+        guiObjects.getBrowswer().setOnAction(this::browserButtonAction);
+        //TODO: set stage handler on hidden
+        guiObjects.getStage().setOnHidden(this::stageHandler);
+        //TODO: set ok button handler
+        guiObjects.getOkButton().setOnAction(this::okButtonHandler);
+        //TODO:set cancel button handler
+        guiObjects.getCancelButton().setOnAction(this::cancelButtonHandler);
     }
 
-    public void setHandlersContextMenu(){
-        ComboBox comboBox = guiObjects.getComboBox();
-        ContextMenu contextMenu = guiObjects.getContextMenu();
-        Menu menu = new Menu("Add To Playlist");
-        ObservableList<String> observableList = comboBox.getItems();
-
-        for (String choices : observableList) {
-            if (observableList.isEmpty()) {
-                break;
-            }
-
-            String selected = comboBox.getSelectionModel().getSelectedItem().toString();
-            if (choices != "Library" && choices != selected) {
-                MenuItem newMenuItem = new MenuItem(choices.toString());
-                newMenuItem.setOnAction(event -> {
-                    contextMenuOnclick(newMenuItem.getText());
-                });
-                menu.getItems().add(newMenuItem);
-            }
-        }
-
-        MenuItem play = new MenuItem("Play Song");
-        play.setOnAction(event -> {
-            contextMenuOnclick(play.getText());
-        });
-
-        updateContextMenu(contextMenu,menu,play);
-
-    }
-
-    private void updateContextMenu(ContextMenu contextMenu,Menu menu, MenuItem menuItem){
-        new Updates().updateContextMenu(contextMenu, menu, menuItem);
-    }
-
-    /**
-     * set the popWindow
-     *
-     * @param stage        takes in a stage with the components i need
-     * @param okButton     takes in an okButton to submit
-     * @param cancelButton takes in a cancel button to cancel
-     * @param input        takes in the actual textBox to extract the information
-     */
-    public void setPopWindow(Stage stage, Button okButton, Button cancelButton, TextField input) {
-        guiObjects.setStage(stage);
-        guiObjects.setTextField(input);
-
-        stage = guiObjects.getStage();
-
-        okButton.setOnAction(this::okButtonHandler);
-        cancelButton.setOnAction(this::cancelButtonHandler);
-        stage.setOnHidden(this::stageHandler);
-    }
-
-    //stage handler
-    private void stageHandler(WindowEvent e) {
-        TextField textField = guiObjects.getTextField();
-        textField.clear();
-    }
-
-    //okButton handler
-    private void okButtonHandler(ActionEvent e) {
-        TextField textField = guiObjects.getTextField();
-        String input = textField.getText();
-
-        ComboBox comboBox = guiObjects.getComboBox();
-        safeUpdate.updateCombobox(comboBox,input);
-        //new Updates().updateComboBox(comboBox, input);
-        Stage stage = guiObjects.getStage();
-        stage.close();
-    }
-
-    //cancelButton handler
-    private void cancelButtonHandler(ActionEvent e) {
-        Stage stage = guiObjects.getStage();
-        stage.close();
-    }
-
-    //comboBox handler
-    private void comboBoxHandler(ComboBox playList) {
-        playList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection == null) {
-                return;
-            }
-
-            ComboBox comboBox = guiObjects.getComboBox();
-            if (comboBox.getSelectionModel().getSelectedItem() == "Library") {
-                player.switchToLibrary();
-            } else if (comboBox.getSelectionModel().getSelectedItem() == "New Playlist") {
-                Stage stage = guiObjects.getStage();
-                player.createPlaylist(comboBox,(String)oldSelection,stage);
-            } else {
-                //switch to other playlist state
-                //this.player.switchToPlaylist();
-                System.out.println("this action will put you in playlist state. Commented it out for now");
-                System.out.println("you are still able to switch to this playlist to show that the Context");
-                System.out.println("updated correctly");
-            }
-            setHandlersContextMenu();
-        });
-    }
-
-    //he handler for the file chooser
-    private void browserButtonAction(ActionEvent e) {
-        FileChooser getFile = new FileChooser();
-        getFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("filter search", "*.mp3", "*.mp4"));
-        File theFile = getFile.showOpenDialog(null);
-
-        //check if what you pick is null
-        if (theFile == null) {
-            return;
-        }
-
-        //variables i need to pass in
-        String songPath = theFile.getAbsolutePath();
-        ArrayList<String> newSongs = new ArrayList<>();
-        newSongs.add(songPath);
-        TableView<Song> tableView = guiObjects.getTableView();
-
-        //add song
-        player.addSong(tableView, selectedIndex, newSongs);
-    }
-
-    /**
-     * sets up the display
-     *
-     * @param tableView takes in the tableView to hold all the songs
-     */
-    public void setCenterComponents(TableView<Song> tableView) {
-        guiObjects.setTableView(tableView);
-        reader.setListOfPath(this.libraryPath);
-
-        //variables i need to pass in
-        tableView = guiObjects.getTableView();
-        MusicList musicList = player.getMusicList();
-        ArrayList<String> newSongs = reader.getListOfPath();
-
-        //update
-        new Updates().updateMusicList(tableView, selectedIndex, musicList, newSongs);
-
-        //handler
-        tableView.setOnMouseClicked(this::handleDisplayTableEvents);
-    }
-
-    //this method simply handles the actions of the tableView
+    //TODO:main display handler functionality
     private void handleDisplayTableEvents(MouseEvent e) {
-        ContextMenu contextMenu = guiObjects.getContextMenu();
-        contextMenu.hide();
-        TableView<Song> display = guiObjects.getTableView();
-        if (display.getSelectionModel().getSelectedItem() == null) {
+        //TODO: hide the context menu with each new click
+        //it does not matter if its null or not.
+        guiObjects.getContextMenu().hide();
+        //TODO:check if the selection equals null and return if it does
+        if (guiObjects.getDisplayTableView().getSelectionModel().getSelectedItem() == null) {
             return;
         }
 
+        //TODO:check for the primary button and the secondary button
+        //the both will do different things. primary plays music on click
+        //and the secondary prompts a context menu with a list of choices
         if (e.getButton() == MouseButton.PRIMARY) {
-            handleCLicks(display);
-
+            //TODO:set the clicks functionality
+            //i modified the default functionality to behave
+            //how i want them to. just pass in the tableView
+            //and everything will take care of itself.
+            handleCLicks(guiObjects.getDisplayTableView());
+            //TODO:check if the selected song is in the library
             if (player.getMusicList().containsSong(player.getMusicList().getSongByPath(selectedSong))) {
-                //System.out.println(this.player.getMusicList().containsSong(this.player.getMusicList().getSongByPath(selectedSong)));
+                //TODO:load the music player and play a song
                 player.loadNewTrack(selectedSong);
                 player.playSong();
             } else {
-                System.out.println("song is not in library..you should never see this");
+                //we should never see this. We will only see ths if the music list breaks
+                System.out.println("song is not in library..you should never see this" + selectedSong);
             }
 
         } else if (e.getButton() == MouseButton.SECONDARY) {
-            handleCLicks(display);
-            contextMenu.show(display, e.getScreenX(), e.getScreenY());
+            //TODO:set the clicks functionality
+            //i modified the default functionality to behave
+            //how i want them to. just pass in the tableView
+            //and everything will take care of itself.
+            handleCLicks(guiObjects.getDisplayTableView());
+            //TODO:show context menu
+            guiObjects.getContextMenu().show(guiObjects.getDisplayTableView(), e.getScreenX(), e.getScreenY());
         }
     }
 
-    //handles the clicks settings
+    //TODO:define click settings
     private void handleCLicks(TableView<Song> display) {
-        //System.out.println(this.player.getComponents().getDisplay().getSelectionModel().getSelectedItem().getDuration());
         this.selectedIndex = display.getSelectionModel().getSelectedIndex();
         this.selectedSong = display.getItems().get(selectedIndex).getPath();
         display.getSelectionModel().clearSelection();
         display.getFocusModel().focus(selectedIndex);
     }
 
+    //TODO:Context menu handlers functionality
+    //the handlers are set using a loop because we do not
+    //know how many options the list will have. To generate
+    //options will use the ComboBox current options. this will
+    //make it consistent
+    private void setHandlersContextMenu() {
+        guiObjects.getContextMenu().getItems().clear();
+        //TODO:create a menu that will consist of multiple menu items
+        //i will set the title as add to play list
+        Menu menu = new Menu("Add To Playlist");
+        //TODO:get all the information in the current combo box
+        ObservableList<String> observableList = guiObjects.getComboBox().getItems();
+        //TODO:reate new menu items each with their own handler
+        for (String choices : observableList) {
+            //TODO:check if the combo box is empty
+            //this will avoid doing pointless iteration
+            if (observableList.isEmpty()) {
+                break;
+            }
+            //make sure that i do not include the library and the current selected object
+            String selected = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
+            if (choices != "Library" && choices != selected) {
+                MenuItem newMenuItem = new MenuItem(choices.toString());
+                newMenuItem.setOnAction(event -> {
+                    //TODO:call a method to perform the functionality of each option
+                    contextMenuOnclick(newMenuItem.getText());
+                });
+                menu.getItems().add(newMenuItem);
+            }
+        }
+        //TODO:create a play menu item
+        //this option will play a song when chosen
+        MenuItem play = new MenuItem("Play Song");
+        play.setOnAction(event -> {
+            //TODO:call a method to perform the functionality of each option
+            contextMenuOnclick(play.getText());
+        });
+        //TODO:update the contenxt menu
+        guiObjects.getContextMenu().getItems().addAll(menu, play);
+    }
+
+    //TODO:set the context menu clicks functionality
     private void contextMenuOnclick(String contextMenuSelection) {
         //System.out.println(contextMenuSelection);
+        //TODO:check for the value of the selected MenuItem
         if (contextMenuSelection == "New Playlist") {
-            ComboBox comboBox = guiObjects.getComboBox();
-            comboBox.getSelectionModel().select("New Playlist");
-            return;
-        }
-
-        if (contextMenuSelection == "Play Song") {
+            //TODO:selec the new play list object on the combo box
+            //this will prompt a pop up window with further choices
+            guiObjects.getComboBox().getSelectionModel().select("New Playlist");
+        } else if (contextMenuSelection == "Play Song") {
+            //TODO:check if the selected song is in the library
             if (player.getMusicList().containsSong(player.getMusicList().getSongByPath(selectedSong))) {
+                //TODO:load the music player and play a song
                 player.loadNewTrack(selectedSong);
                 player.playSong();
             } else {
+                //we should never see this. We will only see ths if the music list breaks
                 System.out.println("song is not in library..you should never see this");
             }
+        } else {
+            //TODO:create path from selected menu item value and get selected song information
+            String dataPath = "./" + contextMenuSelection + ".data";
+            Song song = guiObjects.getDisplayTableView().getItems().get(selectedIndex);
+            //TODO:add song to play list
+            player.addSongToPlaylist(song, dataPath);
+        }
+    }
+
+    //TODO: set combo box handler functionality
+    private void comboBoxHandler() {
+        guiObjects.getComboBox().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            //TODO:check if new selection is null
+            if (newSelection == null) {
+                return;
+            }
+            //TODO:switch modes according to the combo box selection
+            //if Combo box equals new playlist we want to get the pop window
+            //if it equal library just switch to library mode
+            //if it equals a play list just switch to playlist mode
+            if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "Library") {
+                //TODO:switch to library mode
+                player.switchToLibrary();
+            } else if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "New Playlist") {
+                //TODO:call pop window
+                player.createPlaylist(guiObjects.getComboBox(), (String) oldSelection, guiObjects.getStage());
+            } else {
+                //TODO:switch to playlist mode
+                System.out.println("under construction");
+            }
+            setHandlersContextMenu();
+        });
+    }
+
+    //TODO:set file chooser handler functionality
+    private void browserButtonAction(ActionEvent e) {
+        //TODO: create file chooser
+        FileChooser getFile = new FileChooser();
+        //TODO: filter the search to just .mp3 and .mp4
+        getFile.getExtensionFilters().add(new FileChooser.ExtensionFilter("filter search", "*.mp3", "*.mp4"));
+        File theFile = getFile.showOpenDialog(null);
+        //TODO:check if file is null
+        //this should never happen because of the filter
+        if (theFile == null) {
             return;
         }
-        System.out.println("code to add to playlist starts here");
+        //TODO: get the song path and add it to an array list
+        String songPath = theFile.getAbsolutePath();
+        ArrayList<String> newSongs = new ArrayList<>();
+        newSongs.add(songPath);
+        //TODO: add song
+        player.addSongToLibrary(guiObjects.getDisplayTableView(), selectedIndex, newSongs);
+    }
+
+    //TODO: set stage handler functionality
+    //stage handler
+    private void stageHandler(WindowEvent e) {
+        //TODO:simply clear the text field
+        guiObjects.getTextField().clear();
+    }
+
+    //TODO:ok button handler functionality
+    private void okButtonHandler(ActionEvent e) {
+        //TODO:place text content in comboBox content
+        ArrayList<String> comboBoxContent = new ArrayList<>();
+        comboBoxContent.add(guiObjects.getTextField().getText());
+        //TODO:update combo box
+        new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
+        setHandlersContextMenu();
+        //TODO:serialize the text field value
+        write.storeData("./ComboBoxContent.data", guiObjects.getTextField().getText());
+        //TODO:close stage
+        guiObjects.getStage().close();
+    }
+
+    //TODO:cancel button handler functionality
+    private void cancelButtonHandler(ActionEvent e) {
+        //TODO:close stage
+        guiObjects.getStage().close();
     }
 }

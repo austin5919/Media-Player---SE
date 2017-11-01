@@ -18,6 +18,7 @@ public interface MP3PlayerState {
 
     public void playSong();
 
-    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
+    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
+    public void addSongToPlaylist(Song song,String dataPath);
 
 }

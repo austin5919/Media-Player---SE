@@ -91,8 +91,8 @@ public class MP3Player {
      *
      * @param newSongs The path of the new song.
      */
-    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
-        MP3PlayerState.addSong(tableView, selectedIndex, newSongs);
+    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
+        MP3PlayerState.addSongToLibrary(tableView, selectedIndex, newSongs);
     }
 
     /**
@@ -122,5 +122,9 @@ public class MP3Player {
      */
     public void loadListOfPlaylist() {
         MP3PlayerState.loadListOfPlaylist();
+    }
+
+    public void addSongToPlaylist(Song song, String dataPath){
+        MP3PlayerState.addSongToPlaylist(song,dataPath);
     }
 }
