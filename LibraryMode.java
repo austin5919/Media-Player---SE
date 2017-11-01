@@ -4,30 +4,22 @@ import javafx.scene.control.TableView;
 import java.util.ArrayList;
 
 /**
- * This defines my actions when the mp3Player is on libraryMode state.
+ * This defines my actions when the manageMp3PlayerState is on libraryMode state.
  */
-public class LibraryMode implements MP3PlayerState {
+public class LibraryMode implements MP3Player {
 
     //private Write xmlWrite = new Write();
-    private MP3Player mp3Player;
+    private ManageMP3PlayerState manageMp3PlayerState;
     private String libraryPath = "./library.data";
 
     /**
-     * Take in a mp3Player and set some variables to make
+     * Take in a manageMp3PlayerState and set some variables to make
      * life easier.
      *
-     * @param mp3Player Takes the MP3Player class.
+     * @param manageMp3PlayerState Takes the ManageMP3PlayerState class.
      */
-    public LibraryMode(MP3Player mp3Player) {
-        this.mp3Player = mp3Player;
-    }
-
-    /**
-     * Load list of playlist. Under construction.
-     */
-    @Override
-    public void loadListOfPlaylist() {
-        //TODO:check if file that contains list of playlist exist
+    public LibraryMode(ManageMP3PlayerState manageMp3PlayerState) {
+        this.manageMp3PlayerState = manageMp3PlayerState;
     }
 
     /**
@@ -37,8 +29,8 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void loadNewTrack(String selectedSong) {
-        mp3Player.getPlayer().stop();
-        mp3Player.getPlayer().setMediaPlayer(selectedSong);
+        manageMp3PlayerState.getPlayer().stop();
+        manageMp3PlayerState.getPlayer().setMediaPlayer(selectedSong);
     }
 
     /**
@@ -46,8 +38,8 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void playSong() {
-        mp3Player.getPlayer().play();
-        //this.mp3Player.setMP3PlayerState(this.mp3Player.getPlayingLibrary());
+        manageMp3PlayerState.getPlayer().play();
+        //this.manageMp3PlayerState.setMP3Player(this.manageMp3PlayerState.getPlayingLibrary());
     }
 
     /**
@@ -59,7 +51,7 @@ public class LibraryMode implements MP3PlayerState {
     public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
         //add to library
         for (String readPath : newSongs) { new Write().storeData(libraryPath, readPath); }
-        new Updates().updateMusicList(tableView, selectedIndex, mp3Player.getMusicList(),newSongs);
+        new Updates().updateMusicList(tableView, selectedIndex, manageMp3PlayerState.getMusicList(),newSongs);
     }
 
     @Override

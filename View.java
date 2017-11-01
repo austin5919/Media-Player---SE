@@ -6,6 +6,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * this class will create the GUI components
+ */
 public class View extends Application {
     private Style style;
     private EventHandler eventHandler;
@@ -19,6 +22,7 @@ public class View extends Application {
     private TableView<Song> tableView;
 
     public View() {
+        //local variables
         this.style = new Style();
         this.eventHandler = null;
         this.userInput = null;
@@ -55,7 +59,6 @@ public class View extends Application {
         //bottomComponents();
         setContextMenu();
         popWindow();
-
 
         border.setTop(topComponents);
         border.setCenter(tableView);

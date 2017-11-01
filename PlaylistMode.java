@@ -7,21 +7,16 @@ import java.util.ArrayList;
  * playing from the library. We have not started coding this
  * class yet.
  */
-public class PlaylistMode implements MP3PlayerState {
+public class PlaylistMode implements MP3Player {
 
     private String path = "./default-playlist.xml";
-    private MP3Player mp3Player;
+    private ManageMP3PlayerState manageMp3PlayerState;
 
     /**
-     * @param mp3Player Takes in the MP3Player class.
+     * @param manageMp3PlayerState Takes in the ManageMP3PlayerState class.
      */
-    public PlaylistMode(MP3Player mp3Player) {
-        this.mp3Player = mp3Player;
-    }
-
-    @Override
-    public void loadListOfPlaylist() {
-
+    public PlaylistMode(ManageMP3PlayerState manageMp3PlayerState) {
+        this.manageMp3PlayerState = manageMp3PlayerState;
     }
 
     @Override

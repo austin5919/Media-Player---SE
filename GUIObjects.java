@@ -1,8 +1,9 @@
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
+/**
+ * this class simply gets and sets GUI components
+ */
 public class GUIObjects {
     private TableView<Song> displayTableView;
     //private ArrayList<ArrayList<Song>> playlistCollection;
@@ -11,7 +12,7 @@ public class GUIObjects {
     private ContextMenu contextMenu;
     private Stage stage;
     private TextField textField;
-    private Button browswer;
+    private Button browser;
     private Button okButton;
     private Button cancelButton;
 
@@ -55,12 +56,12 @@ public class GUIObjects {
         this.textField = textField;
     }
 
-    public Button getBrowswer() {
-        return browswer;
+    public Button getBrowser() {
+        return browser;
     }
 
-    public void setBrowswer(Button browswer) {
-        this.browswer = browswer;
+    public void setBrowser(Button browser) {
+        this.browser = browser;
     }
 
     public Button getOkButton() {

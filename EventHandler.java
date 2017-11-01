@@ -19,10 +19,8 @@ public class EventHandler {
     private String libraryPath;
     private String comboBoxContent;
     private int selectedIndex;
-
-
     private GUIObjects guiObjects;
-    private MP3Player player;
+    private ManageMP3PlayerState player;
     private Read read;
     private Write write;
 
@@ -36,10 +34,10 @@ public class EventHandler {
             TextField textInput, Button okButton,
             Button cancelButton, ContextMenu contextMenu
     ) {
-
+        //set local variables
         this.read = new Read();
         this.write = new Write();
-        this.player = new MP3Player();
+        this.player = new ManageMP3PlayerState();
         this.guiObjects = new GUIObjects();
 
         this.libraryPath = "./library.data";
@@ -49,7 +47,7 @@ public class EventHandler {
 
         //components
         guiObjects.setComboBox(listDropDown);
-        guiObjects.setBrowswer(browswer);
+        guiObjects.setBrowser(browswer);
         guiObjects.setDisplayTableView(tableView);
         guiObjects.setStage(userInput);
         guiObjects.setTextField(textInput);
@@ -57,6 +55,7 @@ public class EventHandler {
         guiObjects.setCancelButton(cancelButton);
         guiObjects.setContextMenu(contextMenu);
 
+        //set handlers and load information
         loadInformation();
         setHandlers();
     }
@@ -90,7 +89,7 @@ public class EventHandler {
         //TODO:set combo box handler
         comboBoxHandler();
         //TODO: set file chooser functionality
-        guiObjects.getBrowswer().setOnAction(this::browserButtonAction);
+        guiObjects.getBrowser().setOnAction(this::browserButtonAction);
         //TODO: set stage handler on hidden
         guiObjects.getStage().setOnHidden(this::stageHandler);
         //TODO: set ok button handler
