@@ -11,32 +11,23 @@ import java.util.concurrent.TimeUnit;
 public class Player {
 
     private MediaPlayer mediaPlayer;
-    private ArrayList<MediaPlayer> mediaPlayers;
 
     /**
-     * Empty constructor to call
-     * without passing in anything.
+     * Empty constructor to call without passing in anything.
      */
     public Player() {
-        this.mediaPlayers = new ArrayList<>();
     }
 
     /**
-     * Takes in a path and sets te mediaplayer.
+     * This constructor will simply set the media player so that i can get it when desired
      *
-     * @param path Takes in a path and sets up the media player.
+     * @param path takes in a path and sets up the media player using the path.
      */
     public Player(String path) {
         setMediaPlayer(path);
     }
 
-    public ArrayList<MediaPlayer> getMediaPlayers() { return mediaPlayers; }
-
-    /**
-     * Gets the mediaplayer
-     *
-     * @return The recent MediaPlayer.
-     */
+    //getter
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -44,7 +35,7 @@ public class Player {
     /**
      * Sets the media player.
      *
-     * @param path Takes in a path and builds a media player.
+     * @param path takes in a path and builds a media player.
      */
     public void setMediaPlayer(String path) {
         Media media = new Media(new File(path).toURI().toString());
@@ -59,29 +50,18 @@ public class Player {
         this.mediaPlayer = player;
     }
 
-    public void setMediaPlayerTest(ArrayList<String> path) {
-        for(String readPath : path){
-            Media media = new Media(new File(readPath).toURI().toString());
-            MediaPlayer player = new MediaPlayer(media);
-            this.mediaPlayers.add(player);
-        }
-    }
-
     /**
-     * Gets the duration
-     *
-     * @return Duration of the current song in millis.
+     * @return duration of the current song.
      */
     public String getDuration() {
         return formatDuration(getMediaPlayer().getMedia().getDuration().toMillis());
     }
 
-
     /**
-     * Formats durations to minutes : seconds
+     * formats durations to minutes : seconds
      *
-     * @param duration The duration in millis.
-     * @return The duration as a String in format mm:ss - where mm is the two digit number of minutes and ss is the two digit number of seconds.
+     * @param duration takes in the duration in millis to be used in calculations.
+     * @return The duration as a String in format mm:ss.
      */
     private String formatDuration(double duration) {
         return String.format("%02d:%02d",
@@ -90,14 +70,14 @@ public class Player {
     }
 
     /**
-     * Play media
+     * set the media player on play to produce sounds
      */
     public void play() {
         mediaPlayer.play();
     }
 
     /**
-     * Stop media
+     * sets the media player on stop to stop producing sounds
      */
     public void stop() {
         if (this.mediaPlayer == null) {

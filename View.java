@@ -36,8 +36,6 @@ public class View extends Application {
     }
 
     /**
-     * Program starting point.
-     *
      * @param args Command line.
      */
     public static void main(String[] args) {
@@ -45,10 +43,11 @@ public class View extends Application {
     }
 
     /**
-     * Sets the primary stage with all the components needed
-     * to perform all functions.
+     * This method creates the primary stage and passes all the components
+     * created to the event handler class.
      *
-     * @param primaryStage A primary stage to place the components in.
+     * @param primaryStage A primary stage to place the components that we
+     *                     create.
      */
     @Override
     public void start(Stage primaryStage) {
