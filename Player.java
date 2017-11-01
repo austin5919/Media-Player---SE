@@ -93,7 +93,7 @@ public class Player {
      * Play media
      */
     public void play() {
-        this.mediaPlayer.play();
+        mediaPlayer.play();
     }
 
     /**
@@ -103,7 +103,6 @@ public class Player {
         if (this.mediaPlayer == null) {
             return;
         }
-
-        this.mediaPlayer.stop();
+        mediaPlayer.stop();
     }
 }

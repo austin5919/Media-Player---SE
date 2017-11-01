@@ -4,11 +4,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 public class View extends Application {
-    private Style style = new Style();
-    private EventHandler control = new EventHandler();
+    private Style style;
+    private EventHandler eventHandler;
+    public View(){
+        this.style = new Style();
+        this.eventHandler = new EventHandler();
+    }
 
     /**
      * Program starting point.
@@ -39,7 +42,7 @@ public class View extends Application {
 
         border.setTop(topComponents);
         border.setCenter(centerComponents);
-        setContextMenu();
+
         popWindow();
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
@@ -73,14 +76,14 @@ public class View extends Application {
         userInput.setScene(new Scene(border,300,100));
         userInput.setResizable(false);
 
-        this.control.setPopWindow(userInput,okButton,cancelButton,textInput);
+        this.eventHandler.setPopWindow(userInput,okButton,cancelButton,textInput);
     }
 
     //the context menu part of the GUI
     private void setContextMenu() {
         //create the actual dropdown menu to hold the menu
         ContextMenu contextMenu = new ContextMenu();
-        control.setContextMenu(contextMenu);
+        eventHandler.setContextMenu(contextMenu);
     }
 
     //holds the components for the top sections of the border pane
@@ -115,7 +118,8 @@ public class View extends Application {
 
         //TODO: set handlers for listDropDown
         //TODO: set handlers for browser
-        control.setTopComponents(listDropDown, browswer);
+        eventHandler.setTopComponents(listDropDown, browswer);
+        setContextMenu();
         return topComponents;
     }
 
@@ -136,7 +140,7 @@ public class View extends Application {
         centerComponents.getColumns().addAll(columns("Name", "name"), songDuration);
 
         //TODO: set handlers for tableView
-        control.setCenterComponents(centerComponents);
+        eventHandler.setCenterComponents(centerComponents);
 
         return centerComponents;
     }

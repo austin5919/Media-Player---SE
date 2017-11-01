@@ -1,3 +1,5 @@
+import javafx.scene.control.TableView;
+
 import java.util.ArrayList;
 
 /**
@@ -12,17 +14,10 @@ public interface MP3PlayerState {
     //TODO:load playlist
     //TODO: add to playlist
 
-
     public void loadNewTrack(String selectedSong);
 
     public void playSong();
 
-    public void addSong(ArrayList<String> newSongs);
-
-    public void createPlaylist();
-
-    public void switchToLibrary();
-
-    public void switchToPlaylist();
+    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
 
 }

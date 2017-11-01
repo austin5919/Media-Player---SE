@@ -1,3 +1,7 @@
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +11,6 @@ import java.util.ArrayList;
 public class MP3Player {
 
     private Player player;
-    private Components components;
     private MusicList musicList;
 
     private MP3PlayerState MP3PlayerState;
@@ -23,7 +26,6 @@ public class MP3Player {
         this.libraryMode = new LibraryMode(this);
         this.playlistMode = new PlaylistMode(this);
         this.MP3PlayerState = libraryMode;
-        this.components = new Components();
         this.musicList = new MusicList();
         this.player = new Player();
     }
@@ -39,15 +41,6 @@ public class MP3Player {
 
     public MusicList getMusicList() {
         return musicList;
-    }
-
-    /**
-     * Gets the Components.
-     *
-     * @return The Components class.
-     */
-    public Components getComponents() {
-        return components;
     }
 
     /**
@@ -83,14 +76,14 @@ public class MP3Player {
      * @param selectedSong Takes in the new song to be played.
      */
     public void loadNewTrack(String selectedSong) {
-        this.MP3PlayerState.loadNewTrack(selectedSong);
+        MP3PlayerState.loadNewTrack(selectedSong);
     }
 
     /**
      * Runs playSong method on current MP3PlayerState of the music player.
      */
     public void playSong() {
-        this.MP3PlayerState.playSong();
+        MP3PlayerState.playSong();
     }
 
     /**
@@ -98,35 +91,36 @@ public class MP3Player {
      *
      * @param newSongs The path of the new song.
      */
-    public void addSong(ArrayList<String> newSongs) {
-        this.MP3PlayerState.addSong(newSongs);
+    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
+        MP3PlayerState.addSong(tableView, selectedIndex, newSongs);
     }
 
     /**
      * Calls the switchToLibrary method based on the current MP3PlayerState of the music player.
      */
     public void switchToLibrary() {
-        this.MP3PlayerState.switchToLibrary();
+        setMP3PlayerState(getLibraryMode());
     }
 
     /**
      * Calls the switchToOtherPlaylist method based on the current MP3PlayerState of the music player.
      */
     public void switchToPlaylist() {
-        this.MP3PlayerState.switchToPlaylist();
+        setMP3PlayerState(getPlaylistMode());
     }
 
     /**
      * Calls the createPlaylist method based on the current state of the MP3Player.
      */
-    public void createPlaylist() {
-        this.MP3PlayerState.createPlaylist();
+    public void createPlaylist(ComboBox comboBox, String oldSelection, Stage stage) {
+        stage.showAndWait();
+        comboBox.getSelectionModel().select(oldSelection);
     }
 
     /**
      * Load list of playlist based on the current state of the MP3 Player.
      */
     public void loadListOfPlaylist() {
-        this.MP3PlayerState.loadListOfPlaylist();
+        MP3PlayerState.loadListOfPlaylist();
     }
 }

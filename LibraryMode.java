@@ -1,3 +1,6 @@
+
+import javafx.scene.control.TableView;
+
 import java.util.ArrayList;
 
 /**
@@ -34,8 +37,8 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void loadNewTrack(String selectedSong) {
-        this.mp3Player.getPlayer().stop();
-        this.mp3Player.getPlayer().setMediaPlayer(selectedSong);
+        mp3Player.getPlayer().stop();
+        mp3Player.getPlayer().setMediaPlayer(selectedSong);
     }
 
     /**
@@ -43,7 +46,7 @@ public class LibraryMode implements MP3PlayerState {
      */
     @Override
     public void playSong() {
-        this.mp3Player.getPlayer().play();
+        mp3Player.getPlayer().play();
         //this.mp3Player.setMP3PlayerState(this.mp3Player.getPlayingLibrary());
     }
 
@@ -53,35 +56,9 @@ public class LibraryMode implements MP3PlayerState {
      * @param newSongs Takes in path of new song
      */
     @Override
-    public void addSong(ArrayList<String> newSongs) {
+    public void addSong(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
         //add to library
         for (String readPath : newSongs) { new Write().storeData(libraryPath, readPath); }
-        Updates updates = new Updates(this.mp3Player.getComponents(),this.mp3Player.getMusicList());
-        updates.updateMusicList(newSongs);
-    }
-
-    /**
-     * Coming soon...
-     */
-    @Override
-    public void createPlaylist() {
-        this.mp3Player.getComponents().getStage().showAndWait();
-        this.mp3Player.getComponents().getComboBox().getSelectionModel().select("Library");
-    }
-
-    /**
-     * Prints an alert message since we are already in library state.
-     */
-    @Override
-    public void switchToLibrary() {
-        //System.out.println("LibraryMode");
-    }
-
-    /**
-     * Use to change the state to playlistMode state.
-     */
-    @Override
-    public void switchToPlaylist() {
-        this.mp3Player.setMP3PlayerState(this.mp3Player.getPlaylistMode());
+        new Updates().updateMusicList(tableView, selectedIndex, mp3Player.getMusicList(),newSongs);
     }
 }
