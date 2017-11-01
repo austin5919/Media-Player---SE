@@ -40,6 +40,8 @@ public class Updates {
                     } else {
                         System.out.println("could not find file : " + readPath);
                     }
+
+                    player.getMediaPlayer().dispose();
                 }
             });
         }
