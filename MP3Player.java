@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public interface MP3Player {
 
-
     //TODO:load playlist
     //TODO: add to playlist
     public void loadNewTrack(String selectedSong);

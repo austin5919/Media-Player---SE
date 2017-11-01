@@ -16,6 +16,7 @@ public class GUIObjects {
     private Button okButton;
     private Button cancelButton;
 
+    //getters and setters
     public TableView<Song> getDisplayTableView() {
         return displayTableView;
     }
