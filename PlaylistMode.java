@@ -15,7 +15,7 @@ public class PlaylistMode implements MP3Player {
     /**
      * @param manageMp3PlayerState Takes in the ManageMP3PlayerState class.
      */
-    public PlaylistMode(ManageMP3PlayerState manageMp3PlayerState) {
+    public PlaylistMode(ManageMP3PlayerState manageMp3PlayerState, Player player) {
         this.manageMp3PlayerState = manageMp3PlayerState;
     }
 

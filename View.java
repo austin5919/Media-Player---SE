@@ -10,6 +10,7 @@ import javafx.stage.Stage;
  * this class will create the GUI components
  */
 public class View extends Application {
+    //local variables
     private Style style;
     private EventHandler eventHandler;
     private Stage userInput;
@@ -22,7 +23,7 @@ public class View extends Application {
     private TableView<Song> tableView;
 
     public View() {
-        //local variables
+        //set local variables
         this.style = new Style();
         this.eventHandler = null;
         this.userInput = null;
@@ -44,138 +45,156 @@ public class View extends Application {
 
     /**
      * This method creates the primary stage and passes all the components
-     * created to the event handler class.
+     * created to the event handler class. i will consist of a border pane
+     * to hold the top,center and bottom layer.
      *
      * @param primaryStage A primary stage to place the components that we
      *                     create.
      */
     @Override
     public void start(Stage primaryStage) {
+        //set the title
         primaryStage.setTitle("Music Player");
+
+        //create a border to hold layers of the GUI
         BorderPane border = new BorderPane();
+
+        //create a grid pane to hold the top layer of border
         GridPane topComponents = topComponents();
+
+        //create a table view to occupy center layer of border
         centerComponents();
         //bottomComponents();
+
+        //create a simple context menu
         setContextMenu();
+
+        //build the stage for the pop window
         popWindow();
 
+        //set the top and center layer of the border
         border.setTop(topComponents);
         border.setCenter(tableView);
 
+        //create an event handler instance and pass in all components
+        //passing them in to the constructor allows us to make all
+        //handlers private.
         this.eventHandler = new EventHandler(
                 listDropDown, browswer,
                 tableView, userInput,
                 textInput, okButton,
                 cancelButton, contextMenu
         );
-
+        //set the scene and show the main stage
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
     }
 
-    //popWindow
+    //build a method for the pop window stage
+    //this is the stage that will pop up every time
+    //we want to create a playlist
     private void popWindow() {
+        //create a stage
         this.userInput = new Stage();
         userInput.setTitle("New Playlist");
 
+        //create a border pane to hold the layers of the stage
         BorderPane border = new BorderPane();
         border.setPadding(new Insets(10));
 
+        //create center layer grid pane
+        //this layer will be just the tex field
         GridPane center = new GridPane();
         center.setVgap(1);
+
+        //create text input
         this.textInput = new TextField();
         textInput.setMinWidth(280);
+
+        //set center layer
         center.add(new Label("Enter Playlist Name"), 0, 0);
         center.add(textInput, 0, 1);
 
+        //create bottom layer Grid pane
+        //this layer will hold two buttons
         GridPane bottom = new GridPane();
         bottom.setHgap(1);
+
+        //create the ok button
         this.okButton = new Button("OK");
+
+        //create the cancel button
         this.cancelButton = new Button("Cancel");
+
+        //add both buttons to the grid pane
         bottom.add(okButton, 190, 0);
         bottom.add(cancelButton, 195, 0);
 
+        //set the center and bottom layer
         border.setCenter(center);
         border.setBottom(bottom);
 
+        //set the scene and set the resizeable option to false.
         userInput.setScene(new Scene(border, 300, 100));
         userInput.setResizable(false);
-
-        //this.eventHandler.setPopWindow(userInput,okButton,cancelButton,textInput);
     }
 
-    //the context menu part of the GUI
+    //create context menu method for the right click event
+    //placed it in a method just in case we want to add stuff
+    //at start up in the future.
     private void setContextMenu() {
-        //create the actual dropdown menu to hold the menu
+        //create context menu
         this.contextMenu = new ContextMenu();
-        //eventHandler.setContextMenu(contextMenu);
     }
 
-    //holds the components for the top sections of the border pane
+    //create a method to handle creating the top layer components
     private GridPane topComponents() {
-
-        //a grid pane to hold by components
+        //create a grid pane to hold top components
         GridPane topComponents = new GridPane();
         topComponents.setPadding(new Insets(3));
         topComponents.setHgap(1);
 
-        //a combobox to hold the playlist
+        //create a combo box to hold the playlist options
         this.listDropDown = new ComboBox();
-        //listDropDown.setStyle(style.setDimensions(1,120, 27));
         listDropDown.getItems().add("New Playlist");
         listDropDown.getItems().add("Library");
-
         listDropDown.getSelectionModel().select("Library");
 
-        //a browser button to be able to browse songs
+        //create a browser button to be add songs
         this.browswer = new Button("Add to library");
-        //browswer.setStyle(style.setDimensions(1,65,27));
-
-        //ProgressBar time = new ProgressBar();
-
         topComponents.add(listDropDown, 250, 0);
         topComponents.add(browswer, 260, 0);
-        //topComponents.add(time,0,0);
 
+        //set constraints to the grid pane for resizing purposes
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHgrow(Priority.ALWAYS);
         topComponents.getColumnConstraints().add(column1);
-
-        //TODO: set handlers for listDropDown
-        //TODO: set handlers for browser
-        //eventHandler.setTopComponents(listDropDown, browswer);
-        //setContextMenu();
         return topComponents;
     }
 
-    //the table view settings
+    //create a method to handle the center objects of the GUI
+    //it will consist of a table view
     private void centerComponents() {
-
-        //a tableview to hold the songs
+        //create a table view to hold the songs
         this.tableView = new TableView<>();
         tableView.getStylesheets().add(style.tableView());
         TableColumn<Song, String> songDuration = columns("Time", "duration");
 
-        //TODO: make duration width shorter
+        //make duration width shorter
         songDuration.setMaxWidth(200);
         songDuration.setMinWidth(200);
 
-        //set a constraint so we dont see extra columns on the stage
+        //set a constraint so we do not see extra columns on the stage
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getColumns().addAll(columns("Name", "name"), songDuration);
-
-        //TODO: set handlers for tableView
-        //eventHandler.setCenterComponents(tableView);
     }
 
-    //table column settings
+    //create a columns method for utility purpose
     private TableColumn<Song, String> columns(String columnName, String objectName) {
-
-        //set the table title along with the object to ocupy it
+        //set the table title along with the object to occupy it
         TableColumn<Song, String> newColumn = new TableColumn<>(columnName);
         newColumn.setCellValueFactory(new PropertyValueFactory<>(objectName));
         newColumn.setSortable(false);
-
         return newColumn;
     }
 }

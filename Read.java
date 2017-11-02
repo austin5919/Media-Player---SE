@@ -1,38 +1,20 @@
-import javafx.collections.ObservableList;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-
-import java.io.File;
 import java.util.ArrayList;
 
-import javafx.collections.FXCollections;
-
 /**
- * This clas reads an xml file using given
- * information.
+ * this class reads the information in a serialized path
  */
 public class Read {
+
     private ArrayList<String> listOfPath;
 
     /**
-     * Set the observable list to hold my values.
+     * a constructor to set local variables
      */
-    Read() {
-
+    public Read() {
         this.listOfPath = new ArrayList<>();
     }
 
-    /**
-     * gets a list of paths
-     *
-     * @return returns a collection of paths
-     */
+    //getter
     public ArrayList<String> getListOfPath() {
         return listOfPath;
     }

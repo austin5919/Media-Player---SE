@@ -7,12 +7,8 @@ import java.util.ArrayList;
  * of the playlistMode and libraryMode classes.
  */
 public interface MP3Player {
-
-    //TODO:load playlist
-    //TODO: add to playlist
-    public void loadNewTrack(String selectedSong);
-    public void playSong();
-    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
-    public void addSongToPlaylist(Song song,String dataPath);
-
+    void loadNewTrack(String selectedSong);
+    void playSong();
+    void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
+    void addSongToPlaylist(Song song,String dataPath);
 }

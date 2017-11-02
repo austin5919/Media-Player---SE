@@ -1,5 +1,3 @@
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 
 import java.io.File;
@@ -22,25 +20,39 @@ public class Updates {
      */
     public void updateMusicList(
             TableView<Song> tableView, int selectedIndex,
-            MusicList musicList, ArrayList<String> listOfSongs) {
-
+            MusicList musicList, ArrayList<String> listOfSongs
+    ) {
+        //read the content of the array list one by one
         for (String readPath : listOfSongs) {
-            Player player = new Player(readPath);
+            //create an instance of the media player to
+            //calculate duration
+            Player player = new Player();
+            player.setMediaPlayer(readPath);
             player.getMediaPlayer().setOnReady(new Runnable() {
                 @Override
                 public void run() {
+                    //check if the file still exist
                     if (new File(readPath).exists()) {
+                        //create a song name variable from the path read
                         String songName = new File(readPath).getName().replace(".mp3", "");
+
+                        //get the duration and put it in a variable
                         final String duration = player.getDuration();
 
+                        //add the song name, duration and path itself to music list
                         musicList.addSong(songName, duration, readPath);
 
+                        //create a song object and pass it in to the update
+                        //table view method along with the selected index and
+                        //the display table view
                         Song song = new Song(songName, duration, readPath);
                         updateTableView(tableView, selectedIndex, song);
                     } else {
+                        //you should never see this
                         System.out.println("could not find file : " + readPath);
                     }
 
+                    //dispose of the media player once done using it.
                     player.getMediaPlayer().dispose();
                 }
             });
@@ -49,6 +61,7 @@ public class Updates {
 
     //update display
     private void updateTableView(TableView<Song> tableView, int selectedIndex, Song song) {
+        //add song to the display and update the focus index
         tableView.getItems().add(song);
         tableView.getFocusModel().focus(selectedIndex);
     }
@@ -61,11 +74,14 @@ public class Updates {
      */
     public void updateComboBox(ComboBox comboBox, ArrayList<String> arrayList) {
 
+        //read content in array list one by one
         for (String readContent : arrayList) {
-
+            //check if the string already exist in the combo box
+            //options.
             if (comboBox.getItems().contains(readContent)) {
                 System.out.println("this playlist alreayd exist");
             } else {
+                //add to combo box
                 comboBox.getItems().add(readContent);
             }
         }

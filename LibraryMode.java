@@ -1,4 +1,3 @@
-
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
@@ -9,41 +8,54 @@ import java.util.ArrayList;
  */
 public class LibraryMode implements MP3Player {
 
+    //local variables
     private ManageMP3PlayerState manageMp3PlayerState;
-    private String libraryPath = "./library.data";
+    private Player player;
+    private String libraryPath;
 
     /**
-     * the constructor to set important values
-     *
-     * @param manageMp3PlayerState takes in the ManageMP3PlayerState class to be used.
+     * @param manageMp3PlayerState the ManageMP3Player class
+     * @param player               the Player class
      */
-    public LibraryMode(ManageMP3PlayerState manageMp3PlayerState) {
+    public LibraryMode(ManageMP3PlayerState manageMp3PlayerState, Player player) {
         this.manageMp3PlayerState = manageMp3PlayerState;
+        this.player = player;
+        this.libraryPath = "./library.data";
     }
 
     /**
-     * loads the media player with a new song that i can play
+     * This method takes the path of a song and feeds it to the
+     * Player class to create a MediaPlayer i can use to play
+     * the song.
      *
-     * @param selectedSong takes in the new song i want to play and sets it.
+     * @param selectedSong the path to the song i want to play.
      */
     @Override
     public void loadNewTrack(String selectedSong) {
-        manageMp3PlayerState.getPlayer().stop();
-        manageMp3PlayerState.getPlayer().setMediaPlayer(selectedSong);
+        //trash the old media player
+        player.Dispose();
+
+        //create a new media player
+        player.setMediaPlayer(selectedSong);
     }
 
     /**
-     * plays the current song on the media player.
+     * play the song loaded in to the media player
      */
     @Override
     public void playSong() {
-        manageMp3PlayerState.getPlayer().play();
+        player.play();
     }
 
     /**
-     * this methods adds songs to the library.data and updates the display and music list
+     * this methods adds songs to the library.data and updates the display
+     * and music list they must be updated at the same time because the
+     * set on ready might not trigger right away and we need the music list
+     * up to date before updating the display
      *
-     * @param newSongs takes in an array list of new songs i want to add
+     * @param tableView     the table view i want to update
+     * @param selectedIndex the selected index to preserve the focus
+     * @param newSongs      the new song i want to add
      */
     @Override
     public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
@@ -51,14 +63,16 @@ public class LibraryMode implements MP3Player {
         for (String readPath : newSongs) {
             new Write().storeData(libraryPath, readPath);
         }
+
+        //update display and music list
         new Updates().updateMusicList(tableView, selectedIndex, manageMp3PlayerState.getMusicList(), newSongs);
     }
 
     /**
-     * this method adds songs to a chosen playlist
+     * This method takes in a song and adds it to a playlist.
      *
-     * @param song     takes in the song object i want to add to playlist
-     * @param dataPath takes in the path of the playlist i am adding songs to
+     * @param song     the song object i want to add to playlist
+     * @param dataPath the path of the playlist i want add songs to
      */
     @Override
     public void addSongToPlaylist(Song song, String dataPath) {

@@ -1,25 +1,20 @@
-import org.w3c.dom.*;
-
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.*;
 
 /**
- * This class writes xml files using given information.
+ * this class serializes information passed in to
+ * a given path in the form of an array list.
  */
 public class Write {
 
     /**
-     * Append new child to an existing xml or create an xml with new song node.
+     * this methods stores a string in a given path
      *
-     * @param dataPath    Takes in the path of an xml file and adds createContent to it.
-     * @param contentPath Takes in a song object and uses it to build the nodes.
-     * @throws Exception Throws an exception if anything goes wrong.
+     * @param dataPath Takes in the path to hold the data
+     * @param content  Takes in the string we want to store
+     * @throws Exception throws an exception if anything goes wrong.
      */
-    public void storeData(String dataPath, String contentPath) {
+    public void storeData(String dataPath, String content) {
         try {
             ArrayList<String> list;
             //If the file does not exist yet, create it; otherwise read it
@@ -29,15 +24,14 @@ public class Write {
                 list = (ArrayList<String>) Serialization.read(dataPath);
             }
 
-            //if (!(new File(path).exists()) == null) { list = new ArrayList<Song>(); } // Create new file if one does not exist
             for (String readPath : list) {
-                if (readPath == contentPath) {
+                if (readPath == content) {
                     System.out.println("Duplicate song attempted! Not allowed.");
                     return;
                 }
             }
 
-            list.add(contentPath);
+            list.add(content);
             Serialization.write(list, dataPath);
         } catch (Exception e) {
             System.out.println("failed to storeData");

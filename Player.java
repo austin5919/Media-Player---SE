@@ -2,67 +2,65 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This class haddles playing songs.
+ * This class handles the media player.
  */
 public class Player {
-
+    //local variable
     private MediaPlayer mediaPlayer;
 
     /**
-     * Empty constructor to call without passing in anything.
+     * a constructor to set local variables.
      */
     public Player() {
+        this.mediaPlayer = null;
     }
 
     /**
-     * This constructor will simply set the media player so that i can get it when desired
+     * gets the media player. The media player will
+     * be used to manipulate the current loaded song
+     * to the users will.
      *
-     * @param path takes in a path and sets up the media player using the path.
+     * @return the media player
      */
-    public Player(String path) {
-        setMediaPlayer(path);
-    }
-
-    //getter
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
     /**
-     * Sets the media player.
+     * creates a media and then attaches to the media player
      *
-     * @param path takes in a path and builds a media player.
+     * @param path takes in a path to set the media.
      */
     public void setMediaPlayer(String path) {
+        //set the media use it to create the media player
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
 
+        //wait 200 milliseconds to give the player time to initialize
         try {
             TimeUnit.MILLISECONDS.sleep(200);
         } catch (InterruptedException e) {
 
         }
 
+        //set the player
         this.mediaPlayer = player;
     }
 
     /**
-     * @return duration of the current song.
+     * this method gets the duration of the current song in millis
+     * and then reformats it to mm:ss
+     *
+     * @return duration of the current song in mm:ss.
      */
     public String getDuration() {
         return formatDuration(getMediaPlayer().getMedia().getDuration().toMillis());
     }
 
-    /**
-     * formats durations to minutes : seconds
-     *
-     * @param duration takes in the duration in millis to be used in calculations.
-     * @return The duration as a String in format mm:ss.
-     */
+    //formats duration to mm:ss
     private String formatDuration(double duration) {
         return String.format("%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes((long) duration) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours((long) duration)),
@@ -70,19 +68,35 @@ public class Player {
     }
 
     /**
-     * set the media player on play to produce sounds
+     * plays the song
      */
     public void play() {
         mediaPlayer.play();
     }
 
     /**
-     * sets the media player on stop to stop producing sounds
+     * stops the song
      */
     public void stop() {
-        if (this.mediaPlayer == null) {
+        //checks if the media player is null
+        if (mediaPlayer == null) {
             return;
         }
+
+        //stops media player if not null
         mediaPlayer.stop();
+    }
+
+    /**
+     * deletes the media player
+     */
+    public void Dispose() {
+        //check if media player is null
+        if (mediaPlayer == null) {
+            return;
+        }
+
+        //trash the media player
+        mediaPlayer.dispose();
     }
 }
