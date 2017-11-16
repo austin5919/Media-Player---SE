@@ -46,6 +46,7 @@ public class PlaylistMode implements MP3Player {
 
     @Override
     public void addSongToPlaylist(Song song, String dataPath) {
-
+        //store the song link in the appropriate path
+        new Write().storeData(dataPath,song.getPath());
     }
 }
