@@ -1,3 +1,4 @@
+import javafx.animation.Timeline;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -14,6 +15,18 @@ public class GUIObjects {
     private Button browser;
     private Button okButton;
     private Button cancelButton;
+    private Button playButton;
+    private Label songName;
+    private Label timer;
+    private Timeline timeline;
+
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
+    }
 
     /**
      * gets the most recent table view used by
@@ -188,5 +201,66 @@ public class GUIObjects {
      */
     public void setCancelButton(Button cancelButton) {
         this.cancelButton = cancelButton;
+    }
+
+    /**
+     * gets the most recent play button used by the GUI
+     * stage. this button simply plays a selected song and
+     * continues on auto play from there
+     *
+     * @return the playButton used by the GUI
+     */
+    public Button getPlayButton() {
+        return playButton;
+    }
+
+    /**
+     * takes the play button passed in and sets it
+     * as the new play button
+     *
+     * @param playButton an updated playButton
+     */
+    public void setPlayButton(Button playButton) {
+        this.playButton = playButton;
+    }
+
+    /**
+     * gets the most recent song
+     * name used by the GUI stage.
+     *
+     * @return the song name to be used by the GUI
+     */
+    public Label getSongName() {
+        return songName;
+    }
+
+    /**
+     * takes the song name passed in and sets it
+     * as the new song name
+     *
+     * @param songName an updated song name
+     */
+    public void setSongName(Label songName) {
+        this.songName = songName;
+    }
+
+    /**
+     * gets the most recent song
+     * timer used by the GUI stage.
+     *
+     * @return the timer to be used by the GUI
+     */
+    public Label getTimer() {
+        return timer;
+    }
+
+    /**
+     * takes the song timer passed in and sets it
+     * as the new song timer
+     *
+     * @param timer an updated song timer
+     */
+    public void setTimer(Label timer) {
+        this.timer = timer;
     }
 }

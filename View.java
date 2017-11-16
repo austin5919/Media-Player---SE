@@ -1,5 +1,7 @@
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,7 +14,7 @@ import javafx.stage.Stage;
 public class View extends Application {
     //local variables
     private Style style;
-    private EventHandler eventHandler;
+    private EventHandle eventHandle;
     private Stage userInput;
     private TextField textInput;
     private Button okButton;
@@ -21,11 +23,15 @@ public class View extends Application {
     private ComboBox listDropDown;
     private Button browswer;
     private TableView<Song> tableView;
+    private Button playButton;
+    private Label nameOfSong;
+    private Label timerLabel;
+    private Label endTimerLabel;
 
     public View() {
         //set local variables
         this.style = new Style();
-        this.eventHandler = null;
+        this.eventHandle = null;
         this.userInput = null;
         this.textInput = null;
         this.okButton = null;
@@ -75,15 +81,18 @@ public class View extends Application {
         //set the top and center layer of the border
         border.setTop(topComponents);
         border.setCenter(tableView);
+        border.setBottom(bottomComponents());
 
         //create an event handler instance and pass in all components
         //passing them in to the constructor allows us to make all
         //handlers private.
-        this.eventHandler = new EventHandler(
+        this.eventHandle = new EventHandle(
                 listDropDown, browswer,
                 tableView, userInput,
                 textInput, okButton,
-                cancelButton, contextMenu
+                cancelButton, contextMenu,
+                playButton, nameOfSong,
+                timerLabel
         );
         //set the scene and show the main stage
         primaryStage.setScene(new Scene(border, 700, 700));
@@ -196,5 +205,34 @@ public class View extends Application {
         newColumn.setCellValueFactory(new PropertyValueFactory<>(objectName));
         newColumn.setSortable(false);
         return newColumn;
+    }
+
+    //create method for bottom components of the GUI
+    private VBox bottomComponents(){
+        //create grid pane to hold components
+        VBox bottomComponent = new VBox(1);
+        bottomComponent.setAlignment(Pos.CENTER);
+        bottomComponent.setPadding(new Insets(3));
+
+        HBox text = new HBox(3);
+        text.setAlignment(Pos.CENTER);
+        //build two timer labels to display current song
+        this.nameOfSong = new Label("No song playing");
+        this.timerLabel = new Label("(00:00/00:00)");
+
+        text.getChildren().addAll(nameOfSong,timerLabel);
+
+
+        HBox buttons = new HBox(5);
+        buttons.setAlignment(Pos.CENTER);
+        //a button to play song
+        this.playButton = new Button("PLAY");
+        playButton.setStyle(style.setDimensions(50,50,50));
+
+        buttons.getChildren().addAll(playButton);
+
+        bottomComponent.getChildren().addAll(text);
+        bottomComponent.getChildren().addAll(buttons);
+        return bottomComponent;
     }
 }

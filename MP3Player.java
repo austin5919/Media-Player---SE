@@ -1,3 +1,4 @@
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
@@ -7,8 +8,8 @@ import java.util.ArrayList;
  * of the playlistMode and libraryMode classes.
  */
 public interface MP3Player {
-    void loadNewTrack(String selectedSong);
-    void playSong();
+    void loadNewTrack(String selectedSong, TableView<Song> songs);
+    void playSong(Label timer, String duration, int startTimer, Label songName);
     void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
     void addSongToPlaylist(Song song,String dataPath);
 }

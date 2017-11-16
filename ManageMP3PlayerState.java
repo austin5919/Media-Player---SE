@@ -1,3 +1,4 @@
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class ManageMP3PlayerState {
     /**
      * gets the MusicList class and this
      * class is the main library and used
-     * by the EventHandler, the PlaylistMode
+     * by the EventHandle, the PlaylistMode
      * and the LibraryMode.This method
      * makes the MusicList accessible to
      * them without having to create a
@@ -58,6 +59,17 @@ public class ManageMP3PlayerState {
     }
 
     /**
+     * gets the playlistMode state. This state
+     * tells MP3Player interface that i want
+     * to use the PlayListMode class
+     *
+     * @return the playlistMode state
+     */
+    public MP3Player getPlaylistMode() {
+        return playlistMode;
+    }
+
+    /**
      * sets the state of the MP3Player.
      * Currently there is only two which are
      * the libraryMode and the playlistMode
@@ -70,22 +82,26 @@ public class ManageMP3PlayerState {
         this.MP3Player = MP3Player;
     }
 
+    public MP3Player getMP3Player() {
+        return MP3Player;
+    }
+
     /**
      * this method passes the path of a song to the loadNewTrack
      * method in the MP3Player interface.
      *
      * @param selectedSong the path of the song i want to load
      */
-    public void loadNewTrack(String selectedSong) {
-        MP3Player.loadNewTrack(selectedSong);
+    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
+        MP3Player.loadNewTrack(selectedSong, songs);
     }
 
     /**
      * this method calls the playSong method in the
      * MP3Player interface.
      */
-    public void playSong() {
-        MP3Player.playSong();
+    public void playSong(Label timer, String duration,int startTimer,Label songName) {
+        MP3Player.playSong(timer, duration,startTimer,songName);
     }
 
     /**
@@ -93,7 +109,9 @@ public class ManageMP3PlayerState {
      * to the addSongToLibrary method in the MP3Player
      * interface.
      *
-     * @param newSongs the songs i want to add.
+     * @param tableView     the table view i want to add to
+     * @param selectedIndex the selected focus to preserve it
+     * @param newSongs      the songs i want to add
      */
     public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
         MP3Player.addSongToLibrary(tableView, selectedIndex, newSongs);

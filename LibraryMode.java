@@ -1,3 +1,4 @@
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class LibraryMode implements MP3Player {
      * @param selectedSong the path to the song i want to play.
      */
     @Override
-    public void loadNewTrack(String selectedSong) {
+    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
         //trash the old media player
         player.Dispose();
 
@@ -43,8 +44,8 @@ public class LibraryMode implements MP3Player {
      * play the song loaded in to the media player
      */
     @Override
-    public void playSong() {
-        player.play();
+    public void playSong(Label timer, String duration,int startTimer,Label songName) {
+        player.play(timer, duration);
     }
 
     /**
@@ -76,8 +77,7 @@ public class LibraryMode implements MP3Player {
      */
     @Override
     public void addSongToPlaylist(Song song, String dataPath) {
-        System.out.println(song.getPath());
-        System.out.println(dataPath);
-
+        //store the song link in the appropriate path
+        new Write().storeData(dataPath,song.getPath());
     }
 }

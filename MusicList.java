@@ -6,6 +6,49 @@ import java.util.*;
  * whether the MusicList has enabled/disabled shuffle.
  */
 public class MusicList {
+
+    //mock up section--->>
+
+    private ArrayList<Song> mockupSong;
+
+    private ArrayList<Song> subset;
+
+    public Song getSongByLink(String link){
+        for(Song song : mockupSong){
+            if(song.getPath().equals(link)){
+                return song;
+            }
+        }
+
+        //could not fid
+        System.out.println("could not find song..returning null");
+        return null;
+    }
+
+    public ArrayList<Song> getMockupSong() {
+        return mockupSong;
+    }
+    public ArrayList<Song> getSubset() { return subset; }
+
+    public boolean exist(String link){
+        for(Song song : mockupSong){
+            if(song.getPath().equals(link)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void subSet(ArrayList<String> subset){
+        this.subset.clear();
+        for(String path : subset){
+            if(exist(path)){
+                this.subset.add(getSongByLink(path));
+            }
+        }
+    }
+
+    //------>>>
     
     //Fields
     private ArrayList<ArrayList<String>> list;
@@ -21,6 +64,10 @@ public class MusicList {
         this.queue = new ArrayList<ArrayList<String>>();
         this.shuffle = false;
         this.currentSong = null;
+
+        //mock up
+        this.mockupSong = new ArrayList<>();
+        this.subset = new ArrayList<>();
     }
     
     /**
@@ -46,6 +93,9 @@ public class MusicList {
 		song.add(duration);
 		song.add(path);
 		this.addSong(song);
+
+		//mockup
+        this.mockupSong.add(new Song(name,duration,path));
     }
 
     /**

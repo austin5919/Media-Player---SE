@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.control.*;
 
 import java.io.File;
@@ -7,6 +8,15 @@ import java.util.ArrayList;
  * This class will update components when called.
  */
 public class Updates {
+
+    private String mode;
+    public Updates(String mode){
+        this.mode = mode;
+    }
+
+    public Updates(){
+        this.mode = "default";
+    }
 
     /**
      * This method updates the music list and display. They are done together because the
@@ -41,12 +51,17 @@ public class Updates {
 
                         //add the song name, duration and path itself to music list
                         musicList.addSong(songName, duration, readPath);
+                        //System.out.println(musicList.getSongByPath(readPath));
 
                         //create a song object and pass it in to the update
                         //table view method along with the selected index and
                         //the display table view
                         Song song = new Song(songName, duration, readPath);
-                        updateTableView(tableView, selectedIndex, song);
+                        if(mode.equals("default")){
+                            updateTableView(tableView, selectedIndex, song);
+                        }else{
+                            //nothing
+                        }
                     } else {
                         //you should never see this
                         System.out.println("could not find file : " + readPath);
@@ -66,6 +81,25 @@ public class Updates {
         tableView.getFocusModel().focus(selectedIndex);
     }
 
+    public void updateTableViewAll(TableView<Song> tableView, String selectedSong, ArrayList<Song> list) {
+        tableView.getItems().clear();
+        if(list.isEmpty()){
+            return;
+        }
+
+        tableView.getItems().addAll(list);
+
+        int selectedIndex = 0;
+        for(Song song : tableView.getItems()){
+            if(song.getPath().equals(selectedSong)){
+                break;
+            }
+            selectedIndex = selectedIndex + 1;
+        }
+        tableView.getFocusModel().focus(selectedIndex);
+    }
+
+
     /**
      * This method properly adds objects to the choices of a combo box.
      *
@@ -73,13 +107,12 @@ public class Updates {
      * @param arrayList takes in the list of string we want to add to the combo box
      */
     public void updateComboBox(ComboBox comboBox, ArrayList<String> arrayList) {
-
         //read content in array list one by one
         for (String readContent : arrayList) {
             //check if the string already exist in the combo box
             //options.
             if (comboBox.getItems().contains(readContent)) {
-                System.out.println("this playlist alreayd exist");
+                System.out.println("this playlist already exist");
             } else {
                 //add to combo box
                 comboBox.getItems().add(readContent);
