@@ -91,11 +91,17 @@ public class EventHandle {
         //Use library.data to set up the MusicList and load display
         //they must be set at the same time because of the delay
         //caused by set on ready when getting duration.
-        new Updates().updateMusicList(
-                guiObjects.getDisplayTableView(),
-                selectedIndex, player.getMusicList(),
-                libraryContent
-        );
+        try{
+            new Updates().updateMusicList(
+                    guiObjects.getDisplayTableView(),
+                    selectedIndex, player.getMusicList(),
+                    libraryContent
+            );
+        }catch (Exception e){
+            new File("./library.data").delete();
+            new File("./ComboBoxContent.data").delete();
+        }
+
 
         //Load the ComboBoxContent.data
         read.setListOfPath(comboBoxContent);
