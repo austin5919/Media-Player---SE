@@ -1,66 +1,52 @@
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+
+import java.util.ArrayList;
+
 /**
  * This class handles the music player when its not
  * playing from the library. We have not started coding this
  * class yet.
  */
-public class PlaylistMode implements MP3PlayerState {
-
-    private String path = "./default-playlist.xml";
-    private MP3Player mp3Player;
-
-    private Library library;
-    private Components comp;
+public class PlaylistMode implements MP3Player {
+    private ManageMP3PlayerState manageMp3PlayerState;
     private Player player;
-    /**
-     * @param mp3Player  Takes in the MP3Player class.
-     */
-    public PlaylistMode(MP3Player mp3Player){
-        this.mp3Player = mp3Player;
-        this.comp = mp3Player.getComponents();
-        this.library = new Library();
-        this.player = mp3Player.getPlayer();
+    private String libraryPath;
 
-    }
-
-    @Override
-    public void loadListOfPlaylist() {
-
-    }
-
-    @Override
-    public void loadNewTrack(String selectedSong) {
-
-    }
-
-    @Override
-    public void playSong() {
-
-    }
-
-    @Override
-    public void addSong(String songName, String songPath) {
-        //this.library.addSong(new Player(songPath),this.cosongName, songPath);
-        //also add to playlist
-    }
-
-    @Override
-    public void createPlaylist() {
-
-        System.out.println("code to create playlist is under construction..!!");
-        System.out.println("the file chooser can still browse files but nothings happens...!!");
-        System.out.println("to test the file chooser functionality please go back to the Library...!!");
-    }
 
     /**
-     * Changes the state to the idleLibrary state
+     * @param manageMp3PlayerState Takes in the ManageMP3PlayerState class.
      */
-    @Override
-    public void switchToLibrary() {
-        this.mp3Player.setMP3PlayerState(this.mp3Player.getLibraryMode());
+    public PlaylistMode(ManageMP3PlayerState manageMp3PlayerState, Player player) {
+        this.manageMp3PlayerState = manageMp3PlayerState;
+        this.player = player;
+        this.libraryPath = "./library.data";
     }
 
     @Override
-    public void switchToPlaylist() {
-        System.out.println("we are already in playlist state");
+    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
+        player.Dispose();
+        player.setSongs(songs);
+    }
+
+    @Override
+    public void playSong(Label timer, String duration, int startTimer, Label songName) {
+        this.player.setAutoPlay(timer,duration,startTimer, songName);
+    }
+
+    @Override
+    public void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs) {
+        //add to library
+        for (String readPath : newSongs) {
+            new Write().storeData(libraryPath, readPath);
+        }
+        //update display and music list
+        new Updates("BYPASS").updateMusicList(tableView, selectedIndex, manageMp3PlayerState.getMusicList(), newSongs);
+    }
+
+    @Override
+    public void addSongToPlaylist(Song song, String dataPath) {
+        //store the song link in the appropriate path
+        new Write().storeData(dataPath,song.getPath());
     }
 }

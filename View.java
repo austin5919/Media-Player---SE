@@ -1,18 +1,48 @@
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+/**
+ * this class will create the GUI components
+ */
 public class View extends Application {
-    private Style style = new Style();
-    private EventHandler control = new EventHandler();
+    //local variables
+    private Style style;
+    private EventHandle eventHandle;
+    private Stage userInput;
+    private TextField textInput;
+    private Button okButton;
+    private Button cancelButton;
+    private ContextMenu contextMenu;
+    private ComboBox listDropDown;
+    private Button browswer;
+    private TableView<Song> tableView;
+    private Button playButton;
+    private Label nameOfSong;
+    private Label timerLabel;
+    private Label endTimerLabel;
+
+    public View() {
+        //set local variables
+        this.style = new Style();
+        this.eventHandle = null;
+        this.userInput = null;
+        this.textInput = null;
+        this.okButton = null;
+        this.cancelButton = null;
+        this.contextMenu = null;
+        this.listDropDown = null;
+        this.browswer = null;
+        this.tableView = null;
+    }
 
     /**
-     * Program starting point.
-     *
      * @param args Command line.
      */
     public static void main(String[] args) {
@@ -20,109 +50,189 @@ public class View extends Application {
     }
 
     /**
-     * Sets the primary stage with all the components needed
-     * to perform all functions.
+     * This method creates the primary stage and passes all the components
+     * created to the event handler class. i will consist of a border pane
+     * to hold the top,center and bottom layer.
      *
-     * @param primaryStage  A primary stage to place the components in.
+     * @param primaryStage A primary stage to place the components that we
+     *                     create.
      */
     @Override
     public void start(Stage primaryStage) {
+        //set the title
         primaryStage.setTitle("Music Player");
 
-        //a border pane to organize the components in to
-        //five different sections
+        //create a border to hold layers of the GUI
         BorderPane border = new BorderPane();
 
-        setContextMenu();
+        //create a grid pane to hold the top layer of border
         GridPane topComponents = topComponents();
 
-        TableView<Song> centerComponents = centerComponents();
+        //create a table view to occupy center layer of border
+        centerComponents();
+        //bottomComponents();
 
+        //create a simple context menu
+        setContextMenu();
+
+        //build the stage for the pop window
+        popWindow();
+
+        //set the top and center layer of the border
         border.setTop(topComponents);
-        border.setCenter(centerComponents);
+        border.setCenter(tableView);
+        border.setBottom(bottomComponents());
 
+        //create an event handler instance and pass in all components
+        //passing them in to the constructor allows us to make all
+        //handlers private.
+        this.eventHandle = new EventHandle(
+                listDropDown, browswer,
+                tableView, userInput,
+                textInput, okButton,
+                cancelButton, contextMenu,
+                playButton, nameOfSong,
+                timerLabel
+        );
+        //set the scene and show the main stage
         primaryStage.setScene(new Scene(border, 700, 700));
         primaryStage.show();
     }
 
-    //the context menu part of the GUI
-    private void setContextMenu(){
+    //build a method for the pop window stage
+    //this is the stage that will pop up every time
+    //we want to create a playlist
+    private void popWindow() {
+        //create a stage
+        this.userInput = new Stage();
+        userInput.setTitle("New Playlist");
 
-        //create menu to add all new playlist
-        Menu addtoPlaylist = new Menu("Add to playlist");
+        //create a border pane to hold the layers of the stage
+        BorderPane border = new BorderPane();
+        border.setPadding(new Insets(10));
 
-        //create the actual dropdown menu to hold the menu
-        ContextMenu dropMedu = new ContextMenu();
+        //create center layer grid pane
+        //this layer will be just the tex field
+        GridPane center = new GridPane();
+        center.setVgap(1);
 
-        control.setContextMenu(addtoPlaylist,dropMedu);
+        //create text input
+        this.textInput = new TextField();
+        textInput.setMinWidth(280);
+
+        //set center layer
+        center.add(new Label("Enter Playlist Name"), 0, 0);
+        center.add(textInput, 0, 1);
+
+        //create bottom layer Grid pane
+        //this layer will hold two buttons
+        GridPane bottom = new GridPane();
+        bottom.setHgap(1);
+
+        //create the ok button
+        this.okButton = new Button("OK");
+
+        //create the cancel button
+        this.cancelButton = new Button("Cancel");
+
+        //add both buttons to the grid pane
+        bottom.add(okButton, 190, 0);
+        bottom.add(cancelButton, 195, 0);
+
+        //set the center and bottom layer
+        border.setCenter(center);
+        border.setBottom(bottom);
+
+        //set the scene and set the resizeable option to false.
+        userInput.setScene(new Scene(border, 300, 100));
+        userInput.setResizable(false);
     }
 
-    //holds the components for the top sections of the border pane
-    private GridPane topComponents() {
+    //create context menu method for the right click event
+    //placed it in a method just in case we want to add stuff
+    //at start up in the future.
+    private void setContextMenu() {
+        //create context menu
+        this.contextMenu = new ContextMenu();
+    }
 
-        //a grid pane to hold by components
+    //create a method to handle creating the top layer components
+    private GridPane topComponents() {
+        //create a grid pane to hold top components
         GridPane topComponents = new GridPane();
         topComponents.setPadding(new Insets(3));
         topComponents.setHgap(1);
 
-        //a combobox to hold the playlist
-        ComboBox listDropDown = new ComboBox();
-        //listDropDown.setStyle(style.setDimensions(1,120, 27));
-
+        //create a combo box to hold the playlist options
+        this.listDropDown = new ComboBox();
+        listDropDown.getItems().add("New Playlist");
         listDropDown.getItems().add("Library");
-        listDropDown.getItems().add("Create Playlist");
         listDropDown.getSelectionModel().select("Library");
 
-        //a browser button to be able to browse songs
-        Button browswer = new Button("Add to library");
-        //browswer.setStyle(style.setDimensions(1,65,27));
-
-        //ProgressBar time = new ProgressBar();
-
+        //create a browser button to be add songs
+        this.browswer = new Button("Add to library");
         topComponents.add(listDropDown, 250, 0);
         topComponents.add(browswer, 260, 0);
-        //topComponents.add(time,0,0);
 
+        //set constraints to the grid pane for resizing purposes
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHgrow(Priority.ALWAYS);
         topComponents.getColumnConstraints().add(column1);
-
-        //TODO: set handlers for listDropDown
-        //TODO: set handlers for browser
-        control.setTopComponents(listDropDown, browswer);
         return topComponents;
     }
 
-    //the table view settings
-    private TableView<Song> centerComponents() {
+    //create a method to handle the center objects of the GUI
+    //it will consist of a table view
+    private void centerComponents() {
+        //create a table view to hold the songs
+        this.tableView = new TableView<>();
+        tableView.getStylesheets().add(style.tableView());
+        TableColumn<Song, String> songDuration = columns("Time", "duration");
 
-        //a tableview to hold the songs
-        TableView<Song> centerComponents = new TableView<>();
-        centerComponents.getStylesheets().add(style.tableView());
-        TableColumn<Song, String> songDuration = columns("Time", "songDuration");
-
-        //TODO: make duration width shorter
+        //make duration width shorter
         songDuration.setMaxWidth(200);
         songDuration.setMinWidth(200);
 
-        //set a constraint so we dont see extra columns on the stage
-        centerComponents.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        centerComponents.getColumns().addAll(columns("Name", "songName"), songDuration);
-
-        //TODO: set handlers for tableView
-        control.setCenterComponents(centerComponents);
-
-        return centerComponents;
+        //set a constraint so we do not see extra columns on the stage
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.getColumns().addAll(columns("Name", "name"), songDuration);
     }
 
-    //table column settings
+    //create a columns method for utility purpose
     private TableColumn<Song, String> columns(String columnName, String objectName) {
-
-        //set the table title along with the object to ocupy it
+        //set the table title along with the object to occupy it
         TableColumn<Song, String> newColumn = new TableColumn<>(columnName);
         newColumn.setCellValueFactory(new PropertyValueFactory<>(objectName));
         newColumn.setSortable(false);
-
         return newColumn;
+    }
+
+    //create method for bottom components of the GUI
+    private VBox bottomComponents(){
+        //create grid pane to hold components
+        VBox bottomComponent = new VBox(1);
+        bottomComponent.setAlignment(Pos.CENTER);
+        bottomComponent.setPadding(new Insets(3));
+
+        HBox text = new HBox(3);
+        text.setAlignment(Pos.CENTER);
+        //build two timer labels to display current song
+        this.nameOfSong = new Label("No song playing");
+        this.timerLabel = new Label("(00:00/00:00)");
+
+        text.getChildren().addAll(nameOfSong,timerLabel);
+
+
+        HBox buttons = new HBox(5);
+        buttons.setAlignment(Pos.CENTER);
+        //a button to play song
+        this.playButton = new Button("PLAY");
+        playButton.setStyle(style.setDimensions(50,50,50));
+
+        buttons.getChildren().addAll(playButton);
+
+        bottomComponent.getChildren().addAll(text);
+        bottomComponent.getChildren().addAll(buttons);
+        return bottomComponent;
     }
 }
