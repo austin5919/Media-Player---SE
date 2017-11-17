@@ -232,7 +232,7 @@ public class View extends Application {
         buttons.getChildren().addAll(playButton);
 
         bottomComponent.getChildren().addAll(text);
-        bottomComponent.getChildren().addAll(buttons);
+        //bottomComponent.getChildren().addAll(buttons);
         return bottomComponent;
     }
 }

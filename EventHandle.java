@@ -105,30 +105,30 @@ public class EventHandle {
         new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
     }
 
-    private void cleanDirectory(){
+    private void cleanDirectory() {
 
         File filePath = new File("./");
         File[] fileCollections = filePath.listFiles();
         ArrayList<String> newFileCollections = new ArrayList<>();
 
-        for(File file : fileCollections){
-            if(file.getName().contains(".data")) {
+        for (File file : fileCollections) {
+            if (file.getName().contains(".data")) {
                 newFileCollections.add(file.getName().toString());
                 //System.out.println(file.getName().toString());
             }
         }
 
-        if(!newFileCollections.contains("library.data")){
-            for(String file : newFileCollections){
-                if(!file.equals("ComboBoxContent.data")){
+        if (!newFileCollections.contains("library.data")) {
+            for (String file : newFileCollections) {
+                if (!file.equals("ComboBoxContent.data")) {
                     new File("./" + file).delete();
                 }
             }
         }
 
-        if(!newFileCollections.contains("ComboBoxContent.data")){
-            for (String file : newFileCollections){
-                if(!file.equals("library.data")){
+        if (!newFileCollections.contains("ComboBoxContent.data")) {
+            for (String file : newFileCollections) {
+                if (!file.equals("library.data")) {
                     new File("./" + file).delete();
                 }
             }
@@ -190,14 +190,14 @@ public class EventHandle {
                 //this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
                 //System.out.println(currentComboBoxSelection);
                 //load the music player and play a song
-                player.loadNewTrack(selectedSong,guiObjects.getDisplayTableView());
+                player.loadNewTrack(selectedSong, guiObjects.getDisplayTableView());
                 this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
-                if(this.player.getMP3Player().equals(this.player.getLibraryMode())){
+                if (this.player.getMP3Player().equals(this.player.getLibraryMode())) {
                     songPlaying();
-                    player.playSong(guiObjects.getTimer(),guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(),startTimer, guiObjects.getSongName());
-                }else{
+                    player.playSong(guiObjects.getTimer(), guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(), startTimer, guiObjects.getSongName());
+                } else {
                     songAutoPlaying();
-                    player.playSong(guiObjects.getTimer(),newDuration,startTimer,guiObjects.getSongName());
+                    player.playSong(guiObjects.getTimer(), newDuration, startTimer, guiObjects.getSongName());
                 }
 
             } else {
@@ -225,22 +225,22 @@ public class EventHandle {
         display.getFocusModel().focus(selectedIndex);
     }
 
-    private void songPlaying(){
+    private void songPlaying() {
         guiObjects.getSongName().setText(guiObjects.getDisplayTableView().getItems().get(selectedIndex).getName());
         guiObjects.getTimer().setText("(00:00" + "/" + guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration() + ")");
         this.startTimer = 0;
     }
 
-    private void songAutoPlaying(){
+    private void songAutoPlaying() {
         int duration = 0;
-        for(int i =0;i < guiObjects.getDisplayTableView().getItems().size();i++) {
-            if(guiObjects.getDisplayTableView().getItems().get(i).getPath().equals(selectedSong)){
+        for (int i = 0; i < guiObjects.getDisplayTableView().getItems().size(); i++) {
+            if (guiObjects.getDisplayTableView().getItems().get(i).getPath().equals(selectedSong)) {
                 this.startTimer = duration;
             }
             String parse = guiObjects.getDisplayTableView().getItems().get(i).getDuration();
             String minutes = parse.substring(0, parse.indexOf(":"));
             String seconds = parse.substring(parse.indexOf(":") + 1, parse.length());
-            duration = duration + ((Integer.valueOf(minutes)*60) + (Integer.valueOf(seconds)));
+            duration = duration + ((Integer.valueOf(minutes) * 60) + (Integer.valueOf(seconds)));
         }
 
         this.newDuration = new Player().formatDuration(duration * 1000);
@@ -257,13 +257,26 @@ public class EventHandle {
     private void setHandlersContextMenu() {
         //clear it on call
         guiObjects.getContextMenu().getItems().clear();
+        //make sure that i do not include the library and the current selected object
+        String selected = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
 
         //create a menu that will consist of multiple menu items
         //i will set the title as add to play list
-        Menu menu = new Menu("Select A Playlist");
+        Menu menu = new Menu("Select Other Playlist");
+        Menu cMenu = new Menu("Current Playlist");
 
         //get all the information in the current combo box
         ObservableList<String> observableList = guiObjects.getComboBox().getItems();
+
+        //create a play menu item
+        //this option will play a song when chosen
+        MenuItem play = new MenuItem("Play Selected Song");
+        play.setOnAction(event -> {
+            //call a method to perform the functionality of each option
+            contextMenuOnclick(play.getText(), "NONE", "NONE");
+        });
+
+        cMenu.getItems().add(play);
 
         //create new menu items each with their own handler
         for (String choices : observableList) {
@@ -273,28 +286,55 @@ public class EventHandle {
                 break;
             }
 
-            //make sure that i do not include the library and the current selected object
-            String selected = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
-            if (!choices.equals("Library") && !choices.equals("New Playlist")) {
+            if (!choices.equals("Library") && !choices.equals("New Playlist") && !choices.equals(selected)) {
                 Menu subMenu = new Menu(choices.toString());
 
-                if(!choices.equals(selected)){
-                    MenuItem addSong = new MenuItem("Add Selected Song");
-                    addSong.setOnAction(event -> {
+                MenuItem addSong = new MenuItem("Add Selected Song");
+                addSong.setOnAction(event -> {
+                    //call a method to perform the functionality of each option
+                    contextMenuOnclick(addSong.getText(), addSong.getParentMenu().getText(), "NONE");
+                });
+
+                subMenu.getItems().add(addSong);
+
+                subMenu.getItems().add(addPlaylistMenu(subMenu,observableList));
+                menu.getItems().add(subMenu);
+
+            } else if (choices.equals("New Playlist")) {
+                MenuItem menuItem = new MenuItem(choices.toString());
+                menuItem.setOnAction(event -> {
+                    //call a method to perform the functionality of each option
+                    contextMenuOnclick(menuItem.getText(), "NONE", "NONE");
+                });
+                menu.getItems().add(menuItem);
+            }else if(choices.equals(selected)){
+                if(!choices.equals("Library")){
+                    //create a play menu item
+                    //this option will play a song when chosen
+                    MenuItem playFromStart = new MenuItem("Play Playlist From Beginning");
+                    playFromStart.setOnAction(event -> {
                         //call a method to perform the functionality of each option
-                        contextMenuOnclick(addSong.getText(), addSong.getParentMenu().getText(),"NONE");
+                        contextMenuOnclick(playFromStart.getText(), "NONE", "NONE");
                     });
 
-                    subMenu.getItems().add(addSong);
+                    cMenu.getItems().add(playFromStart);
+                    cMenu.getItems().add(addPlaylistMenu(cMenu,observableList));
                 }
+            }
+        }
 
-                Menu innerSubMenu = new Menu("Add a Playlist (under construction)");
+        //update the context menu
+        guiObjects.getContextMenu().getItems().addAll(menu,cMenu);
+    }
 
-                for (String innerChoices : observableList) {
-                    if (!innerChoices.equals(subMenu.getText()) && !innerChoices.equals("Library") && !innerChoices.equals("New Playlist")) {
-                        MenuItem innerMenuItem = new MenuItem(innerChoices.toString());
-                        innerMenuItem.setOnAction(event -> {
-                            //call a method to perform the functionality of each option
+    private Menu addPlaylistMenu(Menu subMenu, ObservableList<String> observableList){
+        Menu menu = new Menu("Add a Playlist (under construction)");
+
+        for (String innerChoices : observableList) {
+            if (!innerChoices.equals(subMenu.getText()) && !innerChoices.equals("Library") && !innerChoices.equals("New Playlist")) {
+                MenuItem innerMenuItem = new MenuItem(innerChoices.toString());
+                innerMenuItem.setOnAction(event -> {
+                    //call a method to perform the functionality of each option
                             /*
                             contextMenuOnclick(
                                     innerMenuItem.getParentMenu().getText(),
@@ -302,34 +342,12 @@ public class EventHandle {
                                     innerMenuItem.getText()
                             );
                             */
-                        });
-                        //innerSubMenu.getItems().add(innerMenuItem);
-                    }
-                }
-
-                subMenu.getItems().add(innerSubMenu);
-                menu.getItems().add(subMenu);
-
-            } else if (choices.equals("New Playlist")) {
-                MenuItem menuItem = new MenuItem(choices.toString());
-                menuItem.setOnAction(event -> {
-                    //call a method to perform the functionality of each option
-                    contextMenuOnclick(menuItem.getText(),"NONE","NONE");
                 });
-                menu.getItems().add(menuItem);
+                //innerSubMenu.getItems().add(innerMenuItem);
             }
         }
 
-        //create a play menu item
-        //this option will play a song when chosen
-        MenuItem play = new MenuItem("Play Song");
-        play.setOnAction(event -> {
-            //call a method to perform the functionality of each option
-            contextMenuOnclick(play.getText(),"NONE", "NONE");
-        });
-
-        //update the context menu
-        guiObjects.getContextMenu().getItems().addAll(menu, play);
+        return menu;
     }
 
     //set the context menu clicks functionality
@@ -339,24 +357,51 @@ public class EventHandle {
             //selec the new play list object on the combo box
             //this will prompt a pop up window with further choices
             guiObjects.getComboBox().getSelectionModel().select("New Playlist");
-        } else if (contextMenuSelection.equals("Play Song")) {
+        } else if (contextMenuSelection.equals("Play Selected Song")) {
             //check if the selected song is in the library
             if (player.getMusicList().exist(selectedSong) && new File(selectedSong).exists()) {
                 //load the music player and play a song
-                player.loadNewTrack(selectedSong,guiObjects.getDisplayTableView());
+                player.loadNewTrack(selectedSong, guiObjects.getDisplayTableView());
                 this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
-                if(this.player.getMP3Player().equals(this.player.getLibraryMode())){
+                if (this.player.getMP3Player().equals(this.player.getLibraryMode())) {
                     songPlaying();
-                    player.playSong(guiObjects.getTimer(),guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(),startTimer, guiObjects.getSongName());
-                }else{
+                    player.playSong(guiObjects.getTimer(), guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(), startTimer, guiObjects.getSongName());
+                } else {
                     songAutoPlaying();
-                    player.playSong(guiObjects.getTimer(),newDuration,startTimer,guiObjects.getSongName());
+                    player.playSong(guiObjects.getTimer(), newDuration, startTimer, guiObjects.getSongName());
                 }
             } else {
                 //we should never see this. We will only see ths if the music list breaks
                 System.out.println("song is not in library..you should never see this");
             }
-        } else if(contextMenuSelection.equals("Add Selected Song")){
+        } else if(contextMenuSelection.equals("Play Playlist From Beginning")){
+            //check if the selected item from the display is null
+            if (guiObjects.getDisplayTableView().getFocusModel().getFocusedItem() == null) {
+                guiObjects.getDisplayTableView().getSelectionModel().select(0);
+                handleCLicks(guiObjects.getDisplayTableView());
+            }
+
+            //check if the selected song is in the library
+            if (player.getMusicList().exist(selectedSong) && new File(selectedSong).exists()) {
+                this.selectedSong = guiObjects.getDisplayTableView().getItems().get(0).getPath();
+                guiObjects.getDisplayTableView().getFocusModel().focus(0);
+                //load the music player and play a song
+                player.loadNewTrack(selectedSong, guiObjects.getDisplayTableView());
+                this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
+                if (this.player.getMP3Player().equals(this.player.getLibraryMode())) {
+                    songPlaying();
+                    player.playSong(guiObjects.getTimer(), guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(), startTimer, guiObjects.getSongName());
+                } else {
+                    songAutoPlaying();
+                    player.playSong(guiObjects.getTimer(), newDuration, startTimer, guiObjects.getSongName());
+                }
+
+            } else {
+                //we should never see this. We will only see ths if the music list breaks
+                System.out.println("song is not in library..you should never see this");
+            }
+
+        }else if (contextMenuSelection.equals("Add Selected Song")) {
             //create path from selected menu item value and get selected song information
             String dataPath = "./" + selectedPlaylist + ".data";
             Song song = guiObjects.getDisplayTableView().getItems().get(selectedIndex);
@@ -374,10 +419,11 @@ public class EventHandle {
 
             //add song to play list
             player.addSongToPlaylist(song, dataPath);
-        }else if(contextMenuSelection.equals("Add a Playlist")){
+        } else if (contextMenuSelection.equals("Add a Playlist")) {
             System.out.println("under construction");
         }
     }
+
     //set combo box handler functionality
     private void comboBoxHandler() {
         guiObjects.getComboBox().getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -393,7 +439,7 @@ public class EventHandle {
             if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "Library") {
                 //switch to library mode
                 player.setMP3Player(player.getLibraryMode());
-                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(),selectedSong,player.getMusicList().getMockupSong());
+                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), selectedSong, player.getMusicList().getMockupSong());
 
             } else if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "New Playlist") {
                 //show the create playlist stage and wait for user input
@@ -407,12 +453,12 @@ public class EventHandle {
                 reader.setListOfPath("./" + guiObjects.getComboBox().getSelectionModel().getSelectedItem() + ".data");
                 player.getMusicList().subSet(reader.getListOfPath());
                 String newSelected = null;
-                if(currentComboBoxSelection == guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString()){
+                if (currentComboBoxSelection == guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString()) {
                     newSelected = selectedSong;
-                }else{
+                } else {
                     newSelected = null;
                 }
-                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(),newSelected, player.getMusicList().getSubset());
+                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), newSelected, player.getMusicList().getSubset());
             }
             setHandlersContextMenu();
         });
@@ -475,28 +521,6 @@ public class EventHandle {
     }
 
     private void playButtonHandler(ActionEvent e) {
-        //check if the selected item from the display is null
-        if (guiObjects.getDisplayTableView().getFocusModel().getFocusedItem() == null) {
-            guiObjects.getDisplayTableView().getSelectionModel().select(0);
-            handleCLicks(guiObjects.getDisplayTableView());
-        }
 
-        //check if the selected song is in the library
-        if (player.getMusicList().exist(selectedSong) && new File(selectedSong).exists()) {
-            //load the music player and play a song
-            player.loadNewTrack(selectedSong,guiObjects.getDisplayTableView());
-            this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
-            if(this.player.getMP3Player().equals(this.player.getLibraryMode())){
-                songPlaying();
-                player.playSong(guiObjects.getTimer(),guiObjects.getDisplayTableView().getItems().get(selectedIndex).getDuration(),startTimer,guiObjects.getSongName());
-            }else{
-                songAutoPlaying();
-                player.playSong(guiObjects.getTimer(),newDuration,startTimer,guiObjects.getSongName());
-            }
-
-        } else {
-            //we should never see this. We will only see ths if the music list breaks
-            System.out.println("song is not in library..you should never see this");
-        }
     }
 }
