@@ -15,8 +15,12 @@ java View
 ```
 
 ## Guide
+#### choose a Playlist/Library
+Click the dropdown menu to select and option. Its on the top right.
 #### Play A Song
 Click once on the desired song found in the list.
+Or right click the song you want to play to prompt a pop up menu that shows all available options.
+in that menu you will be able to add songs to playlist. 
 #### Add A Song
 Click the *Browse* button. This will open a new window which will allow you to navigate to the song. Once you've navigated to your song you may click the *Open* button which will close the window and add the song to the list.
 
