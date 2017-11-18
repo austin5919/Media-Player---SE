@@ -1,3 +1,4 @@
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
@@ -90,18 +91,18 @@ public class ManageMP3PlayerState {
      * this method passes the path of a song to the loadNewTrack
      * method in the MP3Player interface.
      *
-     * @param selectedSong the path of the song i want to load
+     * @param path the path of the song i want to load
      */
-    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
-        MP3Player.loadNewTrack(selectedSong, songs);
+    public void loadNewTrack(String path, Label songName, Label timer, TableView<Song> tableView) {
+        MP3Player.loadNewTrack(path, songName, timer,tableView);
     }
 
     /**
-     * this method calls the playSong method in the
+     * this method calls the focusValue method in the
      * MP3Player interface.
      */
-    public void playSong(Label timer, String duration,int startTimer,Label songName) {
-        MP3Player.playSong(timer, duration,startTimer,songName);
+    public void focusValue(String current, ComboBox<String> comboBox) {
+        MP3Player.focusValue(current,comboBox);
     }
 
     /**

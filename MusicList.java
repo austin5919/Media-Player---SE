@@ -12,6 +12,7 @@ public class MusicList {
     private ArrayList<Song> mockupSong;
 
     private ArrayList<Song> subset;
+    private ArrayList<Song> idleSet;
 
     public Song getSongByLink(String link){
         for(Song song : mockupSong){

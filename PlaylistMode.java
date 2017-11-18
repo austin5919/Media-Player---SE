@@ -1,6 +1,9 @@
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +15,11 @@ public class PlaylistMode implements MP3Player {
     private ManageMP3PlayerState manageMp3PlayerState;
     private Player player;
     private String libraryPath;
+    private Label songName;
+    private Label timer;
+    private String current;
+    private ComboBox<String> comboBox;
+    private TableView<Song> tableView;
 
 
     /**
@@ -24,14 +32,88 @@ public class PlaylistMode implements MP3Player {
     }
 
     @Override
-    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
+    public void loadNewTrack(String path, Label songName, Label timer,
+                             TableView<Song> tableView) {
         player.Dispose();
-        player.setSongs(songs);
+        this.songName = songName;
+        this.timer = timer;
+        this.tableView = tableView;
+        player.timer(timer,tableView, path);
+
+        autoPlay(path);
+    }
+
+    private void autoPlay(String path) {
+        player.setMediaPlayer(path);
+        player.getMediaPlayer().setOnReady(() -> {
+            player.getMediaPlayer().stop();
+            player.getMediaPlayer().play();
+
+            if(new File("./focus.data").exists()){
+                new File("./focus.data").delete();
+            }
+            new Write().storeData("./focus.data",path);
+
+            if(current.equals(comboBox.getSelectionModel().getSelectedItem().toString())){
+                changes(path);
+            }else if(comboBox.getSelectionModel().getSelectedItem().toString().equals("Library")){
+                changes(path);
+            }
+
+            String name = new File(path).getName();
+            songName.setText(name.replace(".mp3", ""));
+
+            player.getMediaPlayer().setOnEndOfMedia(() -> {
+
+
+                if (!getNext(path).equals(null)) {
+                    autoPlay(getNext(path));
+                } else {
+                    return;
+                }
+            });
+
+        });
+    }
+
+    private void changes(String path){
+
+        int selectedIndex = 0;
+        for (Song song : tableView.getItems()) {
+            if (song.getPath().equals(path)) {
+                break;
+            }
+            selectedIndex = selectedIndex + 1;
+        }
+
+        tableView.getFocusModel().focus(selectedIndex);
+    }
+
+    private String getNext(String target) {
+
+        Read reader = new Read();
+        reader.setListOfPath("./tList.data");
+        ArrayList<String> songs = reader.getListOfPath();
+
+        if (target.equals(songs.get(songs.size() - 1))) {
+            return null;
+        }
+
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs.get(i).equals(target)) {
+                return songs.get(i + 1);
+            }
+        }
+
+        System.out.println("you should never see this..");
+
+        return null;
     }
 
     @Override
-    public void playSong(Label timer, String duration, int startTimer, Label songName) {
-        this.player.setAutoPlay(timer,duration,startTimer, songName);
+    public void focusValue(String current, ComboBox<String> comboBox) {
+        this.current = current;
+        this.comboBox = comboBox;
     }
 
     @Override
@@ -47,6 +129,6 @@ public class PlaylistMode implements MP3Player {
     @Override
     public void addSongToPlaylist(Song song, String dataPath) {
         //store the song link in the appropriate path
-        new Write().storeData(dataPath,song.getPath());
+        new Write().storeData(dataPath, song.getPath());
     }
 }

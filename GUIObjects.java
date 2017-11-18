@@ -2,12 +2,15 @@ import javafx.animation.Timeline;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 /**
  * this class gets and sets GUI components
  */
 public class GUIObjects {
     //local variables
     private TableView<Song> displayTableView;
+    private ArrayList<Song> playingSong;
     private ComboBox comboBox;
     private ContextMenu contextMenu;
     private Stage stage;

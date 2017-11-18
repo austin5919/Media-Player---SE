@@ -10,11 +10,12 @@ import java.util.ArrayList;
 public class Updates {
 
     private String mode;
-    public Updates(String mode){
+
+    public Updates(String mode) {
         this.mode = mode;
     }
 
-    public Updates(){
+    public Updates() {
         this.mode = "default";
     }
 
@@ -37,12 +38,13 @@ public class Updates {
             //create an instance of the media player to
             //calculate duration
             Player player = new Player();
-            player.setMediaPlayer(readPath);
-            player.getMediaPlayer().setOnReady(new Runnable() {
-                @Override
-                public void run() {
-                    //check if the file still exist
-                    if (new File(readPath).exists()) {
+            if (new File(readPath).exists()) {
+                player.setMediaPlayer(readPath);
+                player.getMediaPlayer().setOnReady(new Runnable() {
+                    @Override
+                    public void run() {
+                        //check if the file still exist
+
                         //create a song name variable from the path read
                         String songName = new File(readPath).getName().replace(".mp3", "");
 
@@ -57,24 +59,24 @@ public class Updates {
                         //table view method along with the selected index and
                         //the display table view
                         Song song = new Song(songName, duration, readPath);
-                        if(mode.equals("default")){
+                        if (mode.equals("default")) {
                             updateTableView(tableView, selectedIndex, song);
-                        }else{
+                        } else {
                             //nothing
                         }
-                    } else {
-                        //you should never see this
-                        System.out.println("could not find file : " + readPath);
-                    }
 
-                    //dispose of the media player once done using it.
-                    player.getMediaPlayer().dispose();
-                }
-            });
+                        //dispose of the media player once done using it.
+                        //player.getMediaPlayer().dispose();
+                    }
+                });
+            }else{
+                System.out.println(readPath + " : does not exist");
+            }
         }
     }
 
     //update display
+
     private void updateTableView(TableView<Song> tableView, int selectedIndex, Song song) {
         //add song to the display and update the focus index
         tableView.getItems().add(song);
@@ -83,15 +85,15 @@ public class Updates {
 
     public void updateTableViewAll(TableView<Song> tableView, String selectedSong, ArrayList<Song> list) {
         tableView.getItems().clear();
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return;
         }
 
         tableView.getItems().addAll(list);
 
         int selectedIndex = 0;
-        for(Song song : tableView.getItems()){
-            if(song.getPath().equals(selectedSong)){
+        for (Song song : tableView.getItems()) {
+            if (song.getPath().equals(selectedSong)) {
                 break;
             }
             selectedIndex = selectedIndex + 1;

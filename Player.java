@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -18,28 +19,16 @@ import java.util.concurrent.TimeUnit;
 public class Player {
     //local variable
     private MediaPlayer mediaPlayer;
-    private int counter;
     private Timeline timeLine;
-    private int startTimer;
-    private Label songName;
-    private TableView<Song> songs;
-    Iterator<Song> search;
-    private String selectedSong;
-    private int focusedIndex;
+    int counter;
 
     /**
      * a constructor to set local variables.
      */
     public Player() {
         this.mediaPlayer = null;
-        this.startTimer = 0;
-        this.counter = startTimer;
-        this.songs = new TableView<>();
     }
 
-    public void setSongs(TableView<Song> songs) {
-        this.songs = songs;
-    }
 
     /**
      * gets the media player. The media player will
@@ -90,12 +79,12 @@ public class Player {
                 TimeUnit.MILLISECONDS.toSeconds((long) duration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) duration)));
     }
 
-    private void timer(Label timer, String duration){
+    public void timer(Label timer, TableView<Song> tableView, String path){
         if(timeLine != null){
             timeLine.stop();
         }
 
-        counter = startTimer;
+        String totalDuration = totalDuration(tableView, path);
 
         this.timeLine = new Timeline();
         timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -103,10 +92,8 @@ public class Player {
             @Override
             public void handle(ActionEvent event) {
                 counter++;
-                timer.setText(String.valueOf("(" + formatDuration( counter * 1000) + "/" + duration + ")"));
-                if(counter == startTimer){
-                    timeLine.stop();
-                }else if(formatDuration(counter * 1000).equals(duration)){
+                timer.setText(String.valueOf("(" + formatDuration( counter * 1000) + "/" + totalDuration + ")"));
+                if(formatDuration(counter * 1000).equals(totalDuration)){
                     timeLine.stop();
                 }
             }
@@ -115,39 +102,33 @@ public class Player {
         timeLine.playFromStart();
     }
 
+    private String totalDuration(TableView<Song> tableView, String path){
+        int duration = 0;
+        for (int i = 0; i < tableView.getItems().size(); i++) {
+
+            if (tableView.getItems().get(i).getPath().equals(path)) {
+                this.counter = duration;
+            }
+
+            String parse = tableView.getItems().get(i).getDuration();
+            String minutes = parse.substring(0, parse.indexOf(":"));
+            String seconds = parse.substring(parse.indexOf(":") + 1, parse.length());
+            duration = duration + ((Integer.valueOf(minutes) * 60) + (Integer.valueOf(seconds)));
+        }
+
+
+        return formatDuration(duration * 1000);
+    }
+
     /**
      * plays the song
      */
     public void play(Label timer, String duration) {
-        timer(timer,duration);
         mediaPlayer.play();
-    }
-
-    public void setAutoPlay(Label timer, String duration, int startTimer,Label songName){
-        this.startTimer = startTimer;
-        this.songName = songName;
-        timer(timer,duration);
-        this.focusedIndex = songs.getFocusModel().getFocusedIndex();
-        autoPlayer(songs.getItems().get(focusedIndex).getPath());
-
-
     }
 
     private void autoPlayer(String path){
-        //set the media use it to create the media player
-        setMediaPlayer(path);
-        mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(() -> {
-            stop();
-            focusedIndex = focusedIndex + 1;
-            if(focusedIndex < songs.getItems().size()){
-                songs.getFocusModel().focusNext();
-                songName.setText(songs.getItems().get(focusedIndex).getName());
-                autoPlayer(songs.getItems().get(focusedIndex).getPath());
-            }
 
-            return;
-        });
     }
 
     /**

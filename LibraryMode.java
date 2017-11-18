@@ -1,6 +1,8 @@
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +15,11 @@ public class LibraryMode implements MP3Player {
     private ManageMP3PlayerState manageMp3PlayerState;
     private Player player;
     private String libraryPath;
+    private Label songName;
+    private Label timer;
+    private String current;
+    private ComboBox<String> comboBox;
+    private TableView<Song> tableView;
 
     /**
      * @param manageMp3PlayerState the ManageMP3Player class
@@ -29,23 +36,47 @@ public class LibraryMode implements MP3Player {
      * Player class to create a MediaPlayer i can use to play
      * the song.
      *
-     * @param selectedSong the path to the song i want to play.
+     * @param path the path to the song i want to play.
      */
     @Override
-    public void loadNewTrack(String selectedSong, TableView<Song> songs) {
-        //trash the old media player
+    public void loadNewTrack(String path, Label songName, Label timer, TableView<Song> tableView) {
         player.Dispose();
+        this.songName = songName;
+        this.timer = timer;
+        this.tableView = tableView;
+        TableView<Song> oneSong = new TableView<>();
 
-        //create a new media player
-        player.setMediaPlayer(selectedSong);
+        for(Song song : tableView.getItems()){
+            if(path.equals(song.getPath())){
+                oneSong.getItems().add(song);
+                break;
+            }
+        }
+
+        player.timer(timer,oneSong, path);
+
+        singleplay(path);
+    }
+
+    private void singleplay(String path){
+        player.setMediaPlayer(path);
+        player.getMediaPlayer().setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                player.getMediaPlayer().play();
+                String name = new File(path).getName();
+                songName.setText(name.replace(".mp3", ""));
+            }
+        });
     }
 
     /**
      * play the song loaded in to the media player
      */
     @Override
-    public void playSong(Label timer, String duration,int startTimer,Label songName) {
-        player.play(timer, duration);
+    public void focusValue(String current, ComboBox<String> comboBox){
+        this.current = current;
+        this.comboBox = comboBox;
     }
 
     /**
