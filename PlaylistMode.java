@@ -66,7 +66,7 @@ public class PlaylistMode implements MP3Player {
             player.getMediaPlayer().setOnEndOfMedia(() -> {
 
 
-                if (!getNext(path).equals(null)) {
+                if (!getNext(path).equals("Null")) {
                     autoPlay(getNext(path));
                 } else {
                     return;
@@ -96,7 +96,7 @@ public class PlaylistMode implements MP3Player {
         ArrayList<String> songs = reader.getListOfPath();
 
         if (target.equals(songs.get(songs.size() - 1))) {
-            return null;
+            return "Null";
         }
 
         for (int i = 0; i < songs.size(); i++) {
@@ -107,7 +107,7 @@ public class PlaylistMode implements MP3Player {
 
         System.out.println("you should never see this..");
 
-        return null;
+        return "Null";
     }
 
     @Override
