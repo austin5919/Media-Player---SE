@@ -29,7 +29,7 @@ Click the dropdown menu to select and option. Its on the top right and will allo
 1)Click the *Browse* button. This will open a new window which will allow you to navigate to the song. Once you've navigated to your song you may click the *Open* button which will close the window and add the song to the library.
 
 #### Add A Song To Playlist
-1) Right click on the song you want to add to a playlist. This will prompt a menu that will allow you to "Select Other Playlist." Hover over the playlist you want to add the song to and then click on "Add Selected Song."
+1)Right click on the song you want to add to a playlist. This will prompt a menu that will allow you to "Select Other Playlist." Hover over the playlist you want to add the song to and then click on "Add Selected Song."
 
 
 
