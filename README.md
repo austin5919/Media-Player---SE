@@ -16,13 +16,16 @@ java View
 
 ## Guide
 #### choose a Playlist/Library
-Click the dropdown menu to select and option. Its on the top right.
+Click the dropdown menu to select and option. Its on the top right and will allow you to pick a playlist/library you want to view. The default display will be the library.
 #### Play A Song
-Click once on the desired song found in the list.
-Or right click the song you want to play to prompt a pop up menu that shows all available options.
-in that menu you will be able to add songs to playlist. 
-#### Add A Song
-Click the *Browse* button. This will open a new window which will allow you to navigate to the song. Once you've navigated to your song you may click the *Open* button which will close the window and add the song to the list.
+1)Click once on the desired song found in the list. If you are in the library the song will play and stop once it finishes and if you are in a playlist the mp3 player will commence autoplay starting from the song you selected.
+2)right click the song you want to play to prompt a pop up menu and then hover over "Current Playlist." The click on "Play Selected Song." Has the same effect as option number 1
+3)This option is only available when in the library. Right click the song you want to play to prompt a pop up menu and then hover over "Current Playlist." Then click on "Play Playlist From Beginning" to play playlist from start.
+#### Add A Song To Library
+1)Click the *Browse* button. This will open a new window which will allow you to navigate to the song. Once you've navigated to your song you may click the *Open* button which will close the window and add the song to the library.
+#### Add A Song To Playlist
+1) Right click on the song you want to add to a playlist. This will prompt a menu that will allow you to "Select Other Playlist." Hover over the playlist you want to add the song to and then click on "Add Selected Song."
+
 
 
 ## Javadoc
