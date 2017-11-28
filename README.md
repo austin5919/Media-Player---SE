@@ -15,8 +15,13 @@ java View
 ```
 
 ## Guide
-#### choose a Playlist/Library
+#### Choose A Playlist/Library
 Click the dropdown menu to select and option. Its on the top right and will allow you to pick a playlist/library you want to view. The default display will be the library.
+
+#### Create A Playlist
+1)Click the dropdown menu on the top right and then click on "New Playlist"
+
+2)Right click on any song to prompt a pop up menu. Then hover over "Select Other Playlist" and click on "New Playlist"
 
 #### Play A Song
 1)Click once on the desired song found in the list. If you are in the library the song will play and stop once it finishes and if you are in a playlist the mp3 player will commence autoplay starting from the song you selected.
@@ -30,6 +35,9 @@ Click the dropdown menu to select and option. Its on the top right and will allo
 
 #### Add A Song To Playlist
 1)Right click on the song you want to add to a playlist.Then hover over "Select Other Playlist." Next, Hover over the playlist you want to add the song to, and then click on "Add Selected Song."
+
+#### Current Song Playing
+Can be found on the bottom along with a timer that shows the current progress of the song/playlist and the total duration of that song/playlist
 
 
 
