@@ -23,7 +23,7 @@ Click the dropdown menu to select and option. Its on the top right and will allo
 
 2)right click the song you want to play to prompt a pop up menu and then hover over "Current Playlist." The click on "Play Selected Song." Has the same effect as option number one
 
-3)This option is only available when in a playlist. Right click the song you want to play to prompt a pop up menu and then hover over "Current Playlist." Then click on "Play Playlist From Beginning".
+3)This option is only available when in a playlist. Right click on any song to prompt a pop up menu and then hover over "Current Playlist." Then click on "Play Playlist From Beginning".
 
 #### Add A Song To Library
 1)Click the *Browse* button. This will open a new window which will allow you to navigate to the song. Once you've navigated to your song you may click the *Open* button which will close the window and add the song to the library.
