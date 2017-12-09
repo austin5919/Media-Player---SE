@@ -22,6 +22,11 @@ public class GUIObjects {
     private Label songName;
     private Label timer;
     private Timeline timeline;
+    private CheckBox checkBox;
+    private Stage primaryStage;
+    private ArrayList<ArrayList<String>> collection;
+
+
 
     public Timeline getTimeline() {
         return timeline;
@@ -29,6 +34,14 @@ public class GUIObjects {
 
     public void setTimeline(Timeline timeline) {
         this.timeline = timeline;
+    }
+
+    public ArrayList<ArrayList<String>> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(ArrayList<ArrayList<String>> collection) {
+        this.collection = collection;
     }
 
     /**
@@ -41,6 +54,22 @@ public class GUIObjects {
      */
     public TableView<Song> getDisplayTableView() {
         return displayTableView;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     /**

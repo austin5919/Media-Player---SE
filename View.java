@@ -27,6 +27,7 @@ public class View extends Application {
     private Label nameOfSong;
     private Label timerLabel;
     private Label endTimerLabel;
+    private CheckBox checkBox;
 
     public View() {
         //set local variables
@@ -40,6 +41,7 @@ public class View extends Application {
         this.listDropDown = null;
         this.browswer = null;
         this.tableView = null;
+        this.checkBox = null;
     }
 
     /**
@@ -92,7 +94,8 @@ public class View extends Application {
                 textInput, okButton,
                 cancelButton, contextMenu,
                 playButton, nameOfSong,
-                timerLabel
+                timerLabel, checkBox,
+                primaryStage
         );
         //set the scene and show the main stage
         primaryStage.setScene(new Scene(border, 700, 700));
@@ -174,6 +177,9 @@ public class View extends Application {
         topComponents.add(listDropDown, 250, 0);
         topComponents.add(browswer, 260, 0);
 
+        checkBox = new CheckBox("Shuffle");
+        topComponents.add(checkBox,240,0);
+
         //set constraints to the grid pane for resizing purposes
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHgrow(Priority.ALWAYS);
@@ -232,6 +238,7 @@ public class View extends Application {
         buttons.getChildren().addAll(playButton);
 
         bottomComponent.getChildren().addAll(text);
+
         //bottomComponent.getChildren().addAll(buttons);
         return bottomComponent;
     }

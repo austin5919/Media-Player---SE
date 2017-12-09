@@ -1,15 +1,16 @@
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This class sets the handlers and their functionality
@@ -29,6 +30,8 @@ public class EventHandle {
     private Read read;
     private Write write;
     private ArrayList<Song> listOfSong;
+    private ArrayList<String> states;
+    private ArrayList<ArrayList<ArrayList<String>>> collection;
 
     /**
      * this constructor will set important GUI components and local variables
@@ -48,7 +51,7 @@ public class EventHandle {
     public EventHandle(
             ComboBox comboBox, Button browserButton, TableView<Song> tableView, Stage popupStage,
             TextField textField, Button okButton, Button cancelButton, ContextMenu contextMenu,
-            Button playButton, Label nameOfSong, Label timeLabel
+            Button playButton, Label nameOfSong, Label timeLabel, CheckBox checkBox, Stage primaryStage
     ) {
         //set local variables
         this.read = new Read();
@@ -61,6 +64,8 @@ public class EventHandle {
         this.selectedSong = null;
         this.currentComboBoxSelection = null;
         this.listOfSong = new ArrayList<>();
+        this.states = new ArrayList<>();
+        this.collection = new ArrayList<>();
 
         //components
         guiObjects.setComboBox(comboBox);
@@ -75,6 +80,9 @@ public class EventHandle {
         guiObjects.setSongName(nameOfSong);
         guiObjects.setTimer(timeLabel);
         guiObjects.setTimeline(new Timeline());
+        guiObjects.setCheckBox(checkBox);
+        guiObjects.setPrimaryStage(primaryStage);
+        guiObjects.setCollection(new ArrayList<>());
 
         //set handlers and load information
         loadInformation();
@@ -83,6 +91,8 @@ public class EventHandle {
 
     private void loadInformation() {
 
+        guiObjects.getCheckBox().setVisible(false);
+
         cleanDirectory();
         ArrayList<String> libraryContent = new ArrayList<>();
         if (new File(libraryPath).exists()) {
@@ -90,6 +100,7 @@ public class EventHandle {
             read.setListOfPath(this.libraryPath);
             libraryContent = read.getListOfPath();
         } else {
+            new File("./collections.data").delete();
             libraryContent = fetchResourceFile();
         }
 
@@ -110,6 +121,46 @@ public class EventHandle {
         //Use the ComboBoxContent.data to update the ComboBox
         ArrayList<String> comboBoxContent = read.getListOfPath();
         new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
+
+        //load the shuffle data
+        read.setListOfPath("./shuffle.data");
+        if(read.getListOfPath().isEmpty()){
+            ObservableList<String> observableList = guiObjects.getComboBox().getItems();
+            for(String str : observableList){
+                if(!str.equals("Library") && !str.equals("New Playlist")){
+                    states.add(str + "-O");
+                }
+            }
+        }else{
+            for(String str : read.getListOfPath()){
+                String check = str.substring(str.indexOf(0)+ 1,str.indexOf("-"));
+                //System.out.println(check);
+                if(guiObjects.getComboBox().getItems().contains(check)){
+                    states.add(str);
+                }
+
+            }
+        }
+
+        new File("./shuffle.data").delete();
+
+
+        //load
+        if(new File("./collections.data").exists()){
+
+            ArrayList<ArrayList<String>> playCollection = (ArrayList<ArrayList<String>>) Serialization.read("./collections.data");
+            ArrayList<ArrayList<String>> filtered = new ArrayList<>();
+
+            for(ArrayList<String> s : playCollection){
+
+                String check = s.get(0).replace("./","").replace(".data","");
+                if(guiObjects.getComboBox().getItems().contains(check)){
+                    filtered.add(s);
+                }
+            }
+
+            guiObjects.setCollection(filtered);
+        }
     }
 
     private ArrayList<String> fetchResourceFile() {
@@ -162,6 +213,7 @@ public class EventHandle {
         //set the context menu handlers
         setHandlersContextMenu();
 
+
         //set the main display handlers.
         guiObjects.getDisplayTableView().setOnMouseClicked(this::handleDisplayTableEvents);
 
@@ -174,6 +226,8 @@ public class EventHandle {
         //set stage handler on hidden
         guiObjects.getStage().setOnHidden(this::stageHandler);
 
+        guiObjects.getPrimaryStage().setOnHidden(this::primaryStageHandler);
+
         //set ok button handler
         guiObjects.getOkButton().setOnAction(this::okButtonHandler);
 
@@ -182,6 +236,53 @@ public class EventHandle {
 
         //set handler for play button
         guiObjects.getPlayButton().setOnAction(this::playButtonHandler);
+        guiObjects.getCheckBox().setOnAction(this::checkBoxHandler);
+    }
+
+    private void checkBoxHandler(ActionEvent e){
+        ArrayList<String> temp = new ArrayList<>();
+        for(String stat : states){
+            //System.out.println(stat);
+            temp.add(stat);
+        }
+
+        states = new ArrayList<>();
+
+        for(String str : temp){
+            String newStr = str.substring(str.indexOf(0)+1, str.indexOf("-"));
+            //System.out.println(newStr);
+            if(newStr.equals(guiObjects.getComboBox().getSelectionModel().getSelectedItem())){
+                if(guiObjects.getCheckBox().isSelected()){
+                    states.add(newStr + "-S");
+                    handleShuffle("SHUFFLE");
+                }else{
+                    states.add(newStr + "-O");
+                    handleShuffle("NO-SHUFFLE");
+                }
+            }else{
+                states.add(str);
+            }
+        }
+    }
+
+    private void primaryStageHandler(WindowEvent e){
+        for (String str : states){
+            new Write().storeData("./shuffle.data",str);
+        }
+
+        Serialization.write(guiObjects.getCollection(),"./collections.data");
+        for(ArrayList<String> s : guiObjects.getCollection()){
+            for(String ss : s){
+                //System.out.println(ss);
+            }
+        }
+
+        new File("./ComboBoxContent.data").delete();
+
+        ObservableList<String> observableList = guiObjects.getComboBox().getItems();
+        for(String str : observableList){
+            new Write().storeData("./ComboBoxContent.data",str);
+        }
     }
 
     //main display handler functionality
@@ -299,6 +400,19 @@ public class EventHandle {
             contextMenuOnclick(play.getText(), "NONE", "NONE");
         });
 
+
+
+        MenuItem remove = new MenuItem("Remove Selected Song");
+
+        remove.setOnAction(event -> {
+            //call a method to perform the functionality of each option
+            contextMenuOnclick(remove.getText(), "NONE", "NONE");
+        });
+
+        Menu removePlaylist = new Menu("Selected A Playlist To Remove");
+
+        cMenu.getItems().add(removePlaylist);
+        cMenu.getItems().add(remove);
         cMenu.getItems().add(play);
 
         //create new menu items each with their own handler
@@ -319,8 +433,7 @@ public class EventHandle {
                 });
 
                 subMenu.getItems().add(addSong);
-
-                subMenu.getItems().add(addPlaylistMenu(subMenu, observableList));
+                subMenu.getItems().add(addPlaylistMenu(choices.toString(), observableList));
                 menu.getItems().add(subMenu);
 
             } else if (choices.equals("New Playlist")) {
@@ -340,8 +453,55 @@ public class EventHandle {
                         contextMenuOnclick(playFromStart.getText(), "NONE", "NONE");
                     });
 
+                    Read read = new Read();
+                    read.setListOfPath("./"+ choices.toString() + ".data");
+
+                    for(String str : read.getListOfPath()){
+                        if(str.contains(".data")){
+                            String playlist = str.substring(str.indexOf("/")+1, str.indexOf(".data"));
+                            MenuItem pList = new MenuItem(playlist);
+                            pList.setOnAction(event -> {
+                                //call a method to perform the functionality of each option
+                                contextMenuOnclick(pList.getParentMenu().getText(), pList.getText(), "NONE");
+                            });
+                            removePlaylist.getItems().add(pList);
+                        }
+                    }
+
+                    MenuItem moveUp = new MenuItem("Move Selected Song Up");
+                    MenuItem moveDown = new MenuItem("Move Selected Song Down");
+
+                    moveUp.setOnAction(event -> {
+                        //call a method to perform the functionality of each option
+                        contextMenuOnclick(moveUp.getText(), "NONE", "NONE");
+                    });
+
+                    moveDown.setOnAction(event -> {
+                        //call a method to perform the functionality of each option
+                        contextMenuOnclick(moveDown.getText(), "NONE", "NONE");
+                    });
+
+
+                    //cMenu.getItems().add(moveUp);
+                    //cMenu.getItems().add(moveDown);
+
+                    //load the playlist here
+
+
                     cMenu.getItems().add(playFromStart);
-                    cMenu.getItems().add(addPlaylistMenu(cMenu, observableList));
+                    cMenu.getItems().add(addPlaylistMenu(choices.toString(), observableList));
+                }else if(choices.equals("Library")){
+                    for (String str : observableList) {
+                        if(!str.equals("Library") && !str.equals("New Playlist")){
+                            MenuItem libRemove = new MenuItem(str.toString());
+                            libRemove.setOnAction(event -> {
+                                //call a method to perform the functionality of each option
+                                contextMenuOnclick(libRemove.getParentMenu().getText(), libRemove.getText(), "NONE");
+                            });
+                            removePlaylist.getItems().add(libRemove);
+                        }
+                    }
+
                 }
             }
         }
@@ -350,23 +510,23 @@ public class EventHandle {
         guiObjects.getContextMenu().getItems().addAll(menu, cMenu);
     }
 
-    private Menu addPlaylistMenu(Menu subMenu, ObservableList<String> observableList) {
-        Menu menu = new Menu("Add a Playlist (under construction)");
+    private Menu addPlaylistMenu(String choices, ObservableList<String> observableList) {
+        Menu menu = new Menu("Add A Playlist");
 
         for (String innerChoices : observableList) {
-            if (!innerChoices.equals(subMenu.getText()) && !innerChoices.equals("Library") && !innerChoices.equals("New Playlist")) {
-                MenuItem innerMenuItem = new MenuItem(innerChoices.toString());
-                innerMenuItem.setOnAction(event -> {
-                    //call a method to perform the functionality of each option
-                            /*
-                            contextMenuOnclick(
-                                    innerMenuItem.getParentMenu().getText(),
-                                    innerMenuItem.getParentMenu().getParentMenu().getText(),
-                                    innerMenuItem.getText()
-                            );
-                            */
-                });
-                //innerSubMenu.getItems().add(innerMenuItem);
+            //TODO: exclude library and new playlist
+            if(!innerChoices.equals("Library") && !innerChoices.equals("New Playlist")){
+                //TODO: exclude itself from the choices.
+                if(!innerChoices.equals(choices)){
+                    MenuItem menuItem = new MenuItem(innerChoices.toString());
+
+                    menuItem.setOnAction(event -> {
+                        //call a method to perform the functionality of each option
+                        contextMenuOnclick(menu.getText(), choices.toString(), menuItem.getText());
+                    });
+
+                    menu.getItems().add(menuItem);
+                }
             }
         }
 
@@ -418,14 +578,15 @@ public class EventHandle {
 
             //check if the selected song is in the library
             if (player.getMusicList().exist(selectedSong) && new File(selectedSong).exists()) {
+
                 this.selectedSong = guiObjects.getDisplayTableView().getItems().get(0).getPath();
                 guiObjects.getDisplayTableView().getFocusModel().focus(0);
+                this.selectedIndex = 0;
 
                 this.currentComboBoxSelection = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
                 //TODO:stuff here
 
                 cleanTempDir();
-
 
                 for (Song readPath : player.getMusicList().getSubset()) {
                     new Write().storeData("./tList.data", readPath.getPath());
@@ -465,9 +626,51 @@ public class EventHandle {
             }
 
             //add song to play list
-            player.addSongToPlaylist(song, dataPath);
-        } else if (contextMenuSelection.equals("Add a Playlist")) {
-            System.out.println("under construction");
+            player.addSongToPlaylist(song, dataPath, guiObjects.getCollection());
+
+            //String current = guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString();
+
+                handleShuffle("NO-SHUFFLE");
+
+        } else if (contextMenuSelection.equals("Add A Playlist")) {
+
+            String dataPath = "./" + selectedPlaylist + ".data";
+            String playlist = "./" + toBeAddedPlaylist + ".data";
+
+            Read read = new Read();
+            read.setListOfPath(dataPath);
+
+            for (String links : read.getListOfPath()) {
+                if (links.equals(playlist)) {
+                    System.out.println("playlist is already in the playlist.");
+                    return;
+                }
+            }
+
+            //System.out.println(contextMenuSelection + " to " + dataPath + " ==> " + playlist);
+            player.addPlaylistToPlaylist(playlist,dataPath, guiObjects.getComboBox(),guiObjects.getCollection());
+
+            handleShuffle("NO-SHUFFLE");
+        }else if(contextMenuSelection.equals("Move Selected Song Up")){
+
+            //System.out.println(target);
+        }else if(contextMenuSelection.equals("Move Selected Song Down")){
+
+            //System.out.println(target);
+        }else if(contextMenuSelection.equals("Remove Selected Song")){
+            //create path from selected menu item value and get selected song information
+            String dataPath = "./" + guiObjects.getComboBox().getSelectionModel().getSelectedItem() + ".data";
+            Song song = guiObjects.getDisplayTableView().getItems().get(selectedIndex);
+
+            //System.out.println(dataPath);
+            //System.out.println(song.getPath());
+            player.remove(dataPath,song, guiObjects.getDisplayTableView(),selectedIndex);
+
+        }else if(contextMenuSelection.equals("Selected A Playlist To Remove")){
+            player.removePlay(guiObjects.getDisplayTableView(),selectedPlaylist,guiObjects.getComboBox(),states,selectedIndex);
+            if(player.getMP3Player().equals(player.getPlaylistMode())){
+                handleShuffle("NO-SHUFFLE");
+            }
         }
     }
 
@@ -484,9 +687,12 @@ public class EventHandle {
             //if it equal library just switch to library mode
             //if it equals a play list just switch to playlist mode
             if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "Library") {
+                guiObjects.getCheckBox().setVisible(false);
                 //switch to library mode
                 player.setMP3Player(player.getLibraryMode());
-                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), selectedSong, player.getMusicList().getMockupSong());
+                player.stopPlayer();
+                new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), selectedIndex, player.getMusicList().getLibrary(), selectedSong, "L");
+                System.out.println(new Player().totalDuration(guiObjects.getDisplayTableView(),selectedSong,selectedIndex));
 
             } else if (guiObjects.getComboBox().getSelectionModel().getSelectedItem() == "New Playlist") {
                 //show the create playlist stage and wait for user input
@@ -494,25 +700,49 @@ public class EventHandle {
                 guiObjects.getStage().showAndWait();
                 guiObjects.getComboBox().getSelectionModel().select(oldSelection);
             } else {
+                guiObjects.getCheckBox().setVisible(true);
 
-                //switch to playlist mode
+                for(String stat : states){
+                    String newStat = stat.substring(stat.indexOf("-")+1, stat.length());
+                    String box = stat.substring(stat.indexOf(0)+ 1, stat.indexOf("-"));
+                    if(box.equals(guiObjects.getComboBox().getSelectionModel().getSelectedItem())){
+                        //System.out.println(newStat);
+                        if(newStat.equals("S")){
+                            guiObjects.getCheckBox().setSelected(true);
+                        }else{
+                            guiObjects.getCheckBox().setSelected(false);
+                        }
+                    }
+                }
+
                 player.setMP3Player(player.getPlaylistMode());
-                Read reader = new Read();
-                reader.setListOfPath("./" + guiObjects.getComboBox().getSelectionModel().getSelectedItem() + ".data");
-                player.getMusicList().subSet(reader.getListOfPath());
-
-                if (currentComboBoxSelection == guiObjects.getComboBox().getSelectionModel().getSelectedItem().toString()) {
-                    reader.setListOfPath("./focus.data");
-                    this.selectedSong = reader.getListOfPath().get(0);
-                    new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), selectedSong, player.getMusicList().getSubset());
+                if(guiObjects.getCheckBox().isSelected()){
+                    handleShuffle("SHUFFLE");
                 }else{
-                    new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), null, player.getMusicList().getSubset());
+                    handleShuffle("NO-SHUFFLE");
                 }
 
 
             }
             setHandlersContextMenu();
         });
+    }
+
+    private void handleShuffle(String mode){
+
+        player.stopPlayer();
+
+        Read reader = new Read();
+        reader.setListOfPath("./" + guiObjects.getComboBox().getSelectionModel().getSelectedItem() + ".data");
+
+        ArrayList<String> templist = reader.getListOfPath();
+
+        if(mode.equals("SHUFFLE")){
+            Collections.shuffle(templist);
+        }
+
+        player.getMusicList().subSet(templist, guiObjects.getComboBox(),states, guiObjects.getCollection());
+        new Updates().updateTableViewAll(guiObjects.getDisplayTableView(), -1, player.getMusicList().getSubset(), selectedSong,"P");
     }
 
     //set file chooser handler functionality
@@ -562,7 +792,7 @@ public class EventHandle {
 
         //serialize the text field value
         write.storeData("./ComboBoxContent.data", guiObjects.getTextField().getText());
-
+        states.add(guiObjects.getTextField().getText()+ "-O");
         //close stage
         guiObjects.getStage().close();
     }

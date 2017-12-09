@@ -3,6 +3,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -46,19 +47,19 @@ public class LibraryMode implements MP3Player {
         this.tableView = tableView;
         TableView<Song> oneSong = new TableView<>();
 
-        for(Song song : tableView.getItems()){
-            if(path.equals(song.getPath())){
+        for (Song song : tableView.getItems()) {
+            if (path.equals(song.getPath())) {
                 oneSong.getItems().add(song);
                 break;
             }
         }
-
-        player.timer(timer,oneSong, path);
+        int selectedIndex = tableView.getSelectionModel().getFocusedIndex();
+        player.timer(timer, oneSong, path, selectedIndex);
 
         singleplay(path);
     }
 
-    private void singleplay(String path){
+    private void singleplay(String path) {
         player.setMediaPlayer(path);
         player.getMediaPlayer().setOnReady(new Runnable() {
             @Override
@@ -74,7 +75,7 @@ public class LibraryMode implements MP3Player {
      * play the song loaded in to the media player
      */
     @Override
-    public void focusValue(String current, ComboBox<String> comboBox){
+    public void focusValue(String current, ComboBox<String> comboBox) {
         this.current = current;
         this.comboBox = comboBox;
     }
@@ -107,8 +108,88 @@ public class LibraryMode implements MP3Player {
      * @param dataPath the path of the playlist i want add songs to
      */
     @Override
-    public void addSongToPlaylist(Song song, String dataPath) {
+    public void addSongToPlaylist(Song song, String dataPath, ArrayList<ArrayList<String>> collection) {
+
         //store the song link in the appropriate path
-        new Write().storeData(dataPath,song.getPath());
+        new Write().storeData(dataPath, song.getPath());
+
+        boolean build = true;
+        for(ArrayList<String> str : collection){
+            if(str.get(0).equals(dataPath)){
+                str.add(song.getPath());
+                build = false;
+            }
+        }
+
+        if(build == true){
+            ArrayList<String> temp = new ArrayList<>();
+            temp.add(dataPath);
+            temp.add(song.getPath());
+            collection.add(temp);
+        }
+
+
+    }
+
+    @Override
+    public void removeSong(String dataPath, Song song,TableView<Song> tableView, int selectedIndex) {
+        dataPath = libraryPath;
+        Read read = new Read();
+        read.setListOfPath(dataPath);
+        ArrayList<Song> arrayList = new ArrayList<>();
+
+        for(Song data : tableView.getItems()){
+            if(!data.equals(song)){
+                //System.out.println(data.getName());
+                arrayList.add(data);
+            }
+        }
+        new File(dataPath).delete();
+        //update display and music list
+        new Updates().remoceLib(tableView, selectedIndex, manageMp3PlayerState.getMusicList(), arrayList);
+
+
+    }
+
+    @Override
+    public void removePlaylist(TableView<Song> song, String dataPath, ComboBox comboBox, ArrayList<String> shuffle, int selectedIndex) {
+        //remove path
+        new File("./" + dataPath + ".data").delete();
+        comboBox.getItems().remove(dataPath);
+    }
+
+    @Override
+    public void addPlaylistToPlaylist(String playlist, String dataPath, ComboBox comboBox, ArrayList<ArrayList<String>> collection) {
+
+        Read read = new Read();
+        read.setListOfPath(playlist);
+
+        new Write().storeData(dataPath, playlist);
+
+        boolean build = true;
+        for(ArrayList<String> str : collection){
+            if(str.get(0).equals(dataPath)){
+                for(String r : read.getListOfPath()){
+                    str.add(r);
+                }
+                build = false;
+            }
+        }
+
+        if(build == true){
+            ArrayList<String> temp = new ArrayList<>();
+            temp.add(dataPath);
+            for(String r : read.getListOfPath()){
+                temp.add(r);
+            }
+            collection.add(temp);
+        }
+    }
+
+    @Override
+    public void stopPlayer() {
+        if (player.getMediaPlayer() != null) {
+            player.getMediaPlayer().stop();
+        }
     }
 }

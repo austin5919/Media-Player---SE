@@ -15,5 +15,10 @@ public interface MP3Player {
 
     void addSongToLibrary(TableView<Song> tableView, int selectedIndex, ArrayList<String> newSongs);
 
-    void addSongToPlaylist(Song song, String dataPath);
+    void addSongToPlaylist(Song song, String dataPath, ArrayList<ArrayList<String>> collection);
+    void removeSong(String dataPath, Song song,TableView<Song> tableView, int selectedIndex);
+    void removePlaylist(TableView<Song> song, String dataPath,ComboBox comboBox,ArrayList<String> shuffle, int selectedIndex);
+
+    void addPlaylistToPlaylist(String playlist, String dataPath, ComboBox comboBox, ArrayList<ArrayList<String>> collection);
+    void stopPlayer();
 }

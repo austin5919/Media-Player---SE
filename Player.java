@@ -79,12 +79,12 @@ public class Player {
                 TimeUnit.MILLISECONDS.toSeconds((long) duration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) duration)));
     }
 
-    public void timer(Label timer, TableView<Song> tableView, String path){
+    public void timer(Label timer, TableView<Song> tableView, String path, int selectedIndex){
         if(timeLine != null){
             timeLine.stop();
         }
 
-        String totalDuration = totalDuration(tableView, path);
+        String totalDuration = totalDuration(tableView, path, selectedIndex);
 
         this.timeLine = new Timeline();
         timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -96,19 +96,34 @@ public class Player {
                 if(formatDuration(counter * 1000).equals(totalDuration)){
                     timeLine.stop();
                 }
+                getMediaPlayer().setOnStopped(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeLine.stop();
+                    }
+                });
             }
         });
         timeLine.getKeyFrames().add(keyFrame);
         timeLine.playFromStart();
     }
 
-    private String totalDuration(TableView<Song> tableView, String path){
-        int duration = 0;
-        for (int i = 0; i < tableView.getItems().size(); i++) {
+    public String totalDuration(TableView<Song> tableView, String path, int selectedIndex){
 
-            if (tableView.getItems().get(i).getPath().equals(path)) {
-                this.counter = duration;
+        int duration = 0;
+
+        for (int i = 0; i < tableView.getItems().size(); i++) {
+            if(tableView.getItems().size() != 1){
+                if (selectedIndex == i) {
+                    this.counter = duration;
+                }
+            }else{
+
+                if (tableView.getItems().get(i).getPath().equals(path)) {
+                    this.counter = duration;
+                }
             }
+
 
             String parse = tableView.getItems().get(i).getDuration();
             String minutes = parse.substring(0, parse.indexOf(":"));

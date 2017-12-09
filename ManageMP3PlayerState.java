@@ -1,6 +1,7 @@
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -125,7 +126,23 @@ public class ManageMP3PlayerState {
      * @param song     the song i want to add
      * @param dataPath the path of the playlist i want to add song to
      */
-    public void addSongToPlaylist(Song song, String dataPath) {
-        MP3Player.addSongToPlaylist(song, dataPath);
+    public void addSongToPlaylist(Song song, String dataPath, ArrayList<ArrayList<String>> collection) {
+        MP3Player.addSongToPlaylist(song, dataPath, collection);
+    }
+
+    public void addPlaylistToPlaylist(String playlist, String dataPath, ComboBox comboBox, ArrayList<ArrayList<String>> collection){
+        //System.out.println(comboBox.getSelectionModel().getSelectedItem().toString());
+        MP3Player.addPlaylistToPlaylist(playlist,dataPath, comboBox, collection);
+    }
+
+    public void stopPlayer(){
+        MP3Player.stopPlayer();
+    }
+
+    public void remove(String dataPath, Song song,TableView<Song> tableView, int selectedIndex){
+        MP3Player.removeSong(dataPath,song,tableView,selectedIndex);
+    }
+    public void removePlay(TableView<Song> song, String dataPath,ComboBox comboBox, ArrayList<String> shuffle, int selectedIndex){
+        MP3Player.removePlaylist(song, dataPath,comboBox,shuffle,selectedIndex);
     }
 }

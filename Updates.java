@@ -1,3 +1,4 @@
+import com.sun.jdi.ArrayReference;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 
@@ -75,6 +76,29 @@ public class Updates {
         }
     }
 
+    public void remoceLib(TableView<Song> song, int selectedIndex, MusicList musicList,ArrayList<Song> list){
+        musicList.setLibrary(new ArrayList<>());
+        song.getItems().clear();
+        for(Song s : list){
+            //System.out.println(s.getName());
+            new Write().storeData("./library.data",s.getPath());
+            musicList.addSong(s.getName(),s.getDuration(),s.getPath());
+            updateTableView(song,selectedIndex,s);
+        }
+    }
+
+    public void removePlay(TableView<Song> song, int selectedIndex, MusicList musicList,ArrayList<Song> list, String path){
+        song.getItems().clear();
+        for(Song s : list){
+            new Write().storeData(path,s.getPath());
+            updateTableView(song,selectedIndex,s);
+        }
+    }
+
+    public void updateTableAfterRemove(){
+
+    }
+
     //update display
 
     private void updateTableView(TableView<Song> tableView, int selectedIndex, Song song) {
@@ -83,22 +107,33 @@ public class Updates {
         tableView.getFocusModel().focus(selectedIndex);
     }
 
-    public void updateTableViewAll(TableView<Song> tableView, String selectedSong, ArrayList<Song> list) {
+    public void updateTableViewAll(TableView<Song> tableView, int selectedIndex, ArrayList<Song> list, String selectedSong, String mode) {
         tableView.getItems().clear();
         if (list.isEmpty()) {
             return;
         }
 
         tableView.getItems().addAll(list);
-
-        int selectedIndex = 0;
-        for (Song song : tableView.getItems()) {
-            if (song.getPath().equals(selectedSong)) {
-                break;
+        if(mode.equals("L")){
+            int index = 0;
+            for (Song song : tableView.getItems()) {
+                if (song.getPath().equals(selectedSong)) {
+                    break;
+                }
+                index = index + 1;
             }
-            selectedIndex = selectedIndex + 1;
+            tableView.getFocusModel().focus(index);
+        }else if (mode.equals("P")){
+            tableView.getFocusModel().focus(selectedIndex);
         }
-        tableView.getFocusModel().focus(selectedIndex);
+    }
+
+    public void rebuildContent(ComboBox comboBox, ArrayList<String> arrayList){
+        if(arrayList.isEmpty()){return;}
+        //comboBox.getItems().clear();
+        for(String s : arrayList){
+            new Write().storeData("./ComboBoxContent.data",s);
+        }
     }
 
 
@@ -114,7 +149,7 @@ public class Updates {
             //check if the string already exist in the combo box
             //options.
             if (comboBox.getItems().contains(readContent)) {
-                System.out.println("this playlist already exist");
+                //System.out.println("this playlist already exist");
             } else {
                 //add to combo box
                 comboBox.getItems().add(readContent);
