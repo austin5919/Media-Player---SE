@@ -667,12 +667,17 @@ public class EventHandle {
             player.remove(dataPath,song, guiObjects.getDisplayTableView(),selectedIndex);
 
         }else if(contextMenuSelection.equals("Selected A Playlist To Remove")){
-            player.removePlay(guiObjects.getDisplayTableView(),selectedPlaylist,guiObjects.getComboBox(),states,selectedIndex);
-            guiObjects.getContextMenu().hide();
-            setHandlersContextMenu();
-            if(player.getMP3Player().equals(player.getPlaylistMode())){
-                handleShuffle("NO-SHUFFLE");
-            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    player.removePlay(guiObjects.getDisplayTableView(),selectedPlaylist,guiObjects.getComboBox(),states,selectedIndex);
+                    guiObjects.getContextMenu().hide();
+                    setHandlersContextMenu();
+                    if(player.getMP3Player().equals(player.getPlaylistMode())){
+                        handleShuffle("NO-SHUFFLE");
+                    }
+                }
+            });
         }
     }
 
