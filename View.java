@@ -130,6 +130,7 @@ public class View extends Application {
         //create bottom layer Grid pane
         //this layer will hold two buttons
         GridPane bottom = new GridPane();
+        bottom.setAlignment(Pos.CENTER_RIGHT);
         bottom.setHgap(1);
 
         //create the ok button
@@ -139,8 +140,8 @@ public class View extends Application {
         this.cancelButton = new Button("Cancel");
 
         //add both buttons to the grid pane
-        bottom.add(okButton, 190, 0);
-        bottom.add(cancelButton, 195, 0);
+        bottom.add(okButton, 0, 0);
+        bottom.add(cancelButton, 1, 0);
 
         //set the center and bottom layer
         border.setCenter(center);

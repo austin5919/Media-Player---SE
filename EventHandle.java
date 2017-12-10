@@ -668,6 +668,8 @@ public class EventHandle {
 
         }else if(contextMenuSelection.equals("Selected A Playlist To Remove")){
             player.removePlay(guiObjects.getDisplayTableView(),selectedPlaylist,guiObjects.getComboBox(),states,selectedIndex);
+            guiObjects.getContextMenu().hide();
+            setHandlersContextMenu();
             if(player.getMP3Player().equals(player.getPlaylistMode())){
                 handleShuffle("NO-SHUFFLE");
             }
@@ -782,19 +784,26 @@ public class EventHandle {
 
     //ok button handler functionality
     private void okButtonHandler(ActionEvent e) {
-        //place text content in comboBox content
-        ArrayList<String> comboBoxContent = new ArrayList<>();
-        comboBoxContent.add(guiObjects.getTextField().getText());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
-        //update combo box
-        new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
-        setHandlersContextMenu();
+                //place text content in comboBox content
+                ArrayList<String> comboBoxContent = new ArrayList<>();
+                comboBoxContent.add(guiObjects.getTextField().getText());
 
-        //serialize the text field value
-        write.storeData("./ComboBoxContent.data", guiObjects.getTextField().getText());
-        states.add(guiObjects.getTextField().getText()+ "-O");
-        //close stage
-        guiObjects.getStage().close();
+                //update combo box
+                new Updates().updateComboBox(guiObjects.getComboBox(), comboBoxContent);
+                setHandlersContextMenu();
+
+                //serialize the text field value
+                write.storeData("./ComboBoxContent.data", guiObjects.getTextField().getText());
+                states.add(guiObjects.getTextField().getText()+ "-O");
+                //close stage
+                guiObjects.getStage().close();
+            }
+        });
+
     }
 
     //cancel button handler functionality
