@@ -124,7 +124,7 @@ public class EventHandle {
 
         //load the shuffle data
         read.setListOfPath("./shuffle.data");
-        if(read.getListOfPath().isEmpty()){
+        if(!new File("./shuffle.data").exists()){
             ObservableList<String> observableList = guiObjects.getComboBox().getItems();
             for(String str : observableList){
                 if(!str.equals("Library") && !str.equals("New Playlist")){
