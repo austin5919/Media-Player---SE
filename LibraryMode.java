@@ -156,6 +156,7 @@ public class LibraryMode implements MP3Player {
     public void removePlaylist(TableView<Song> song, String dataPath, ComboBox comboBox, ArrayList<String> shuffle, int selectedIndex) {
         //remove path
         new File("./" + dataPath + ".data").delete();
+        new File("./" + dataPath + ".data").exists();
         comboBox.getItems().remove(dataPath);
     }
 

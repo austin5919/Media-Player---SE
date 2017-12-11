@@ -277,12 +277,17 @@ public class EventHandle {
             }
         }
 
-        new File("./ComboBoxContent.data").delete();
+        //new File("./ComboBoxContent.data").delete();
 
         ObservableList<String> observableList = guiObjects.getComboBox().getItems();
+        ArrayList<String> strWriter = new ArrayList<>();
         for(String str : observableList){
-            new Write().storeData("./ComboBoxContent.data",str);
+            strWriter.add(str);
         }
+
+        Serialization.write(strWriter,"./ComboBoxContent.data");
+
+
     }
 
     //main display handler functionality
