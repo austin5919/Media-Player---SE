@@ -180,13 +180,14 @@ public class PlaylistMode implements MP3Player {
                 arrayList.add(str);
             }
         }
-        song.getItems().clear();
 
+        song.getItems().clear();
+        Serialization.write(arrayList,playlist);
         for(String str : read.getListOfPath()){
             if(!str.equals("./"+dataPath+".data")){
                 //System.out.println(str);
-                new Write().storeData(playlist,str);
-                arrayList.add(str);
+                //new Write().storeData(playlist,str);
+                //arrayList.add(str);
             }
         }
 
