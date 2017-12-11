@@ -654,7 +654,8 @@ public class EventHandle {
 
             //System.out.println(contextMenuSelection + " to " + dataPath + " ==> " + playlist);
             player.addPlaylistToPlaylist(playlist,dataPath, guiObjects.getComboBox(),guiObjects.getCollection());
-
+            guiObjects.getContextMenu().hide();
+            setHandlersContextMenu();
             handleShuffle("NO-SHUFFLE");
         }else if(contextMenuSelection.equals("Move Selected Song Up")){
 
