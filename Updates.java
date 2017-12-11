@@ -81,7 +81,7 @@ public class Updates {
         song.getItems().clear();
         for(Song s : list){
             //System.out.println(s.getName());
-            new Write().storeData("./library.data",s.getPath());
+            //new Write().storeData("./library.data",s.getPath());
             musicList.addSong(s.getName(),s.getDuration(),s.getPath());
             updateTableView(song,selectedIndex,s);
         }
@@ -90,7 +90,7 @@ public class Updates {
     public void removePlay(TableView<Song> song, int selectedIndex, MusicList musicList,ArrayList<Song> list, String path){
         song.getItems().clear();
         for(Song s : list){
-            new Write().storeData(path,s.getPath());
+            //new Write().storeData(path,s.getPath());
             updateTableView(song,selectedIndex,s);
         }
     }

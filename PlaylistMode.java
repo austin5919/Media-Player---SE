@@ -150,13 +150,16 @@ public class PlaylistMode implements MP3Player {
         Read read = new Read();
         read.setListOfPath(dataPath);
         ArrayList<Song> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList1 = new ArrayList<>();
 
         for(Song data : tableView.getItems()){
             if(!data.equals(song)){
                 arrayList.add(data);
+                arrayList1.add(data.getPath());
             }
         }
-        new File(dataPath).delete();
+        //new File(dataPath).delete();
+        Serialization.write(arrayList1,dataPath);
         //update display and music list
         new Updates().removePlay(tableView, selectedIndex, manageMp3PlayerState.getMusicList(), arrayList,dataPath);
 

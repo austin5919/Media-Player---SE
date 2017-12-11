@@ -138,14 +138,18 @@ public class LibraryMode implements MP3Player {
         Read read = new Read();
         read.setListOfPath(dataPath);
         ArrayList<Song> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList1 = new ArrayList<>();
 
         for(Song data : tableView.getItems()){
             if(!data.equals(song)){
                 //System.out.println(data.getName());
                 arrayList.add(data);
+                arrayList1.add(data.getPath());
             }
         }
-        new File(dataPath).delete();
+
+        //new File(dataPath).delete();
+        Serialization.write(arrayList1,dataPath);
         //update display and music list
         new Updates().remoceLib(tableView, selectedIndex, manageMp3PlayerState.getMusicList(), arrayList);
 
