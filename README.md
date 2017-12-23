@@ -36,6 +36,12 @@ Click the dropdown menu to select and option. Its on the top right and will allo
 #### Add A Song To Playlist
 1)Right click on the song you want to add to a playlist.Then hover over "Select Other Playlist." Next, Hover over the playlist you want to add the song to, and then click on "Add Selected Song."
 
+#### Add Playlist to Playlist
+1)If in the library. RIght click on any song then choose select other playlist. After choose add a playlist and choose the playlist you want to add.
+
+2)If in a playlist. Right click on any song.
+  a) to add to the current playlist just select "Current Playlist" and then select Add Playlist. This will let you choose from the    `available playlist to add
+
 #### Current Song Playing
 Can be found on the bottom along with a timer that shows the current progress of the song/playlist and the total duration of that song/playlist. Also it will be highlited in blue in the display
 
