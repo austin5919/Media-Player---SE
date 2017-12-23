@@ -40,7 +40,19 @@ Click the dropdown menu to select and option. Its on the top right and will allo
 1)If in the library. RIght click on any song then choose select other playlist. After choose add a playlist and choose the playlist you want to add.
 
 2)If in a playlist. Right click on any song.
-  a) to add to the current playlist just select "Current Playlist" and then select Add Playlist. This will let you choose from the    `available playlist to add
+
+a) to add to the current playlist just select "Current Playlist" and then select Add Playlist. This will let you choose from the       available playlist to add.
+
+b) to add to a diffrent playlist. RIght click on any song then choose select other playlist. After choose add a playlist and choose the playlist you want to add.
+
+#### Shuffle
+Choose a playlist from the drop down and then click on the check box with shuffle written next to it. To unshuffle just re-click the check box
+
+#### Remove Song
+Choose the playlist or library. Then right click the song you want to remove. Then click on CUrrent Playlist and then click remove selected song
+
+#### remove a playlist
+Choose the playlist or library. Then right click on any song. Choose Current Playlist and then select Select a playlist to remove. That will allow you to select a playlist to remove. If you do that while in the library it will remove the playlist from the library and if you do it from whithin a playlist it will just remove it from the playlist.
 
 #### Current Song Playing
 Can be found on the bottom along with a timer that shows the current progress of the song/playlist and the total duration of that song/playlist. Also it will be highlited in blue in the display
